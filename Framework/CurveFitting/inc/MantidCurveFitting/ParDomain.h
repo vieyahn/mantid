@@ -42,13 +42,13 @@ public:
   /// Create and return i-th domain and i-th values, (i-1)th domain is released.
   virtual void getDomainAndValues(size_t i, API::FunctionDomain_sptr &domain,
                                   API::FunctionValues_sptr &values) const;
-  /// Calculate the value of a least squares cost function
+  /// Calculate the value of an additive cost function
   virtual void
-  leastSquaresVal(const CostFunctions::CostFuncLeastSquares &leastSquares);
-  /// Calculate the value, first and second derivatives of a least squares cost
+    additiveCostFunctionVal(const CostFunctions::CostFuncFitting &costFunction);
+  /// Calculate the value, first and second derivatives of an additive cost
   /// function
-  virtual void leastSquaresValDerivHessian(
-      const CostFunctions::CostFuncLeastSquares &leastSquares, bool evalDeriv,
+  virtual void additiveCostFunctionValDerivHessian(
+      const CostFunctions::CostFuncFitting &costFunction, bool evalDeriv,
       bool evalHessian);
 };
 

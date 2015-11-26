@@ -27,6 +27,7 @@ set ( SRC_FILES
 	src/Constraints/BoundaryConstraint.cpp
 	src/CostFunctions/CostFuncFitting.cpp
 	src/CostFunctions/CostFuncLeastSquares.cpp
+	src/CostFunctions/CostFuncPoisson.cpp
 	src/CostFunctions/CostFuncRwp.cpp
 	src/CostFunctions/CostFuncUnweightedLeastSquares.cpp
 	src/FitMW.cpp
@@ -150,6 +151,7 @@ set ( INC_FILES
 	inc/MantidCurveFitting/Constraints/BoundaryConstraint.h
 	inc/MantidCurveFitting/CostFunctions/CostFuncFitting.h
 	inc/MantidCurveFitting/CostFunctions/CostFuncLeastSquares.h
+	inc/MantidCurveFitting/CostFunctions/CostFuncPoisson.h
 	inc/MantidCurveFitting/CostFunctions/CostFuncRwp.h
 	inc/MantidCurveFitting/CostFunctions/CostFuncUnweightedLeastSquares.h
 	inc/MantidCurveFitting/DllConfig.h
@@ -273,6 +275,7 @@ set ( TEST_FILES
 	AugmentedLagrangianOptimizerTest.h
 	CompositeFunctionTest.h
 	Constraints/BoundaryConstraintTest.h
+	CostFuncPoissonTest.h
 	CostFunctions/CostFuncUnweightedLeastSquaresTest.h
 	CostFunctions/LeastSquaresTest.h
 	FitMWTest.h

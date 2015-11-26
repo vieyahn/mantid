@@ -2,7 +2,7 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidCurveFitting/FuncMinimizers/LevenbergMarquardtMDMinimizer.h"
-#include "MantidCurveFitting/CostFunctions/CostFuncLeastSquares.h"
+#include "MantidCurveFitting/CostFunctions/CostFuncFitting.h"
 
 #include "MantidAPI/CostFunctionFactory.h"
 #include "MantidAPI/FuncMinimizerFactory.h"
@@ -40,12 +40,13 @@ LevenbergMarquardtMDMinimizer::LevenbergMarquardtMDMinimizer()
 /// Initialize minimizer, i.e. pass a function to minimize.
 void LevenbergMarquardtMDMinimizer::initialize(API::ICostFunction_sptr function,
                                                size_t) {
-  m_leastSquares =
-      boost::dynamic_pointer_cast<CostFunctions::CostFuncLeastSquares>(
+  m_costFunction =
+      boost::dynamic_pointer_cast<CostFunctions::CostFuncFitting>(
           function);
-  if (!m_leastSquares) {
-    throw std::invalid_argument("Levenberg-Marquardt minimizer works only with "
-                                "least squares. Different function was given.");
+  if (!m_costFunction) {
+    throw std::invalid_argument(
+        "Levenberg-Marquardt minimizer works only with "
+        "functions which define the Hessian. Different function was given.");
   }
   m_mu = 0;
   m_nu = 2.0;
@@ -58,10 +59,10 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
   const double muMax = getProperty("MuMax");
   const double absError = getProperty("AbsError");
 
-  if (!m_leastSquares) {
+  if (!m_costFunction) {
     throw std::runtime_error("Cost function isn't set up.");
   }
-  size_t n = m_leastSquares->nParams();
+  size_t n = m_costFunction->nParams();
 
   if (n == 0) {
     m_errorString = "No parameters to fit.";
@@ -79,7 +80,7 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
   if (m_mu == 0.0 || m_rho > 0) {
     // calculate everything first time or
     // if last iteration was good
-    m_F = m_leastSquares->valDerivHessian();
+    m_F = m_costFunction->valDerivHessian();
   }
   // else if m_rho < 0 last iteration was bad: reuse m_der and m_hessian
 
@@ -103,8 +104,8 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
   }
 
   // copy the hessian
-  GSLMatrix H(m_leastSquares->getHessian());
-  GSLVector dd(m_leastSquares->getDeriv());
+  GSLMatrix H(m_costFunction->getHessian());
+  GSLVector dd(m_costFunction->getDeriv());
 
   // scaling factors
   std::vector<double> sf(n);
@@ -178,28 +179,28 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
   }
 
   // save previous state
-  m_leastSquares->push();
+  m_costFunction->push();
   // Update the parameters of the cost function.
   for (size_t i = 0; i < n; ++i) {
-    double d = m_leastSquares->getParameter(i) + dx.get(i);
-    m_leastSquares->setParameter(i, d);
+    double d = m_costFunction->getParameter(i) + dx.get(i);
+    m_costFunction->setParameter(i, d);
     if (debug) {
       g_log.warning() << "Parameter(" << i << ")=" << d << std::endl;
     }
   }
-  m_leastSquares->getFittingFunction()->applyTies();
+  m_costFunction->getFittingFunction()->applyTies();
 
   // --- prepare for the next iteration --- //
 
   double dL;
   // der -> - der - 0.5 * hessian * dx
-  gsl_blas_dgemv(CblasNoTrans, -0.5, m_leastSquares->getHessian().gsl(),
+  gsl_blas_dgemv(CblasNoTrans, -0.5, m_costFunction->getHessian().gsl(),
                  dx.gsl(), 1., dd.gsl());
   // calculate the linear part of the change in cost function
   // dL = - der * dx - 0.5 * dx * hessian * dx
   gsl_blas_ddot(dd.gsl(), dx.gsl(), &dL);
 
-  double F1 = m_leastSquares->val();
+  double F1 = m_costFunction->val();
   if (debug) {
     g_log.warning() << std::endl;
     g_log.warning() << "Old cost function " << m_F << std::endl;
@@ -210,7 +211,7 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
   // Try the stop condition
   if (m_rho >= 0) {
     GSLVector p(n);
-    m_leastSquares->getParameters(p);
+    m_costFunction->getParameters(p);
     double dx_norm = gsl_blas_dnrm2(dx.gsl());
     if (dx_norm < absError) {
       if (debug) {
@@ -264,13 +265,13 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
       g_log.warning() << "rho=" << m_rho << std::endl;
     }
     // drop saved state, accept new parameters
-    m_leastSquares->drop();
+    m_costFunction->drop();
   } else { // bad iteration. increase m_mu and revert changes to parameters
     m_mu *= m_nu;
     m_nu *= 2.0;
     // undo parameter update
-    m_leastSquares->pop();
-    m_F = m_leastSquares->val();
+    m_costFunction->pop();
+    m_F = m_costFunction->val();
     if (debug) {
       g_log.warning()
           << "Bad iteration, increase mu and revert changes to parameters."
@@ -283,10 +284,10 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
 
 /// Return current value of the cost function
 double LevenbergMarquardtMDMinimizer::costFunctionVal() {
-  if (!m_leastSquares) {
+  if (!m_costFunction) {
     throw std::runtime_error("Cost function isn't set up.");
   }
-  return m_leastSquares->val();
+  return m_costFunction->val();
 }
 
 } // namespace FuncMinimisers
