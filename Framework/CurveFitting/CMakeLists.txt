@@ -38,6 +38,7 @@ set ( SRC_FILES
 	src/FuncMinimizers/FRConjugateGradientMinimizer.cpp
 	src/FuncMinimizers/LevenbergMarquardtMDMinimizer.cpp
 	src/FuncMinimizers/LevenbergMarquardtMinimizer.cpp
+	src/FuncMinimizers/LocalSearchMinimizer.cpp
 	src/FuncMinimizers/PRConjugateGradientMinimizer.cpp
 	src/FuncMinimizers/SimplexMinimizer.cpp
 	src/FuncMinimizers/SteepestDescentMinimizer.cpp
@@ -164,6 +165,7 @@ set ( INC_FILES
 	inc/MantidCurveFitting/FuncMinimizers/FRConjugateGradientMinimizer.h
 	inc/MantidCurveFitting/FuncMinimizers/LevenbergMarquardtMDMinimizer.h
 	inc/MantidCurveFitting/FuncMinimizers/LevenbergMarquardtMinimizer.h
+	inc/MantidCurveFitting/FuncMinimizers/LocalSearchMinimizer.h
 	inc/MantidCurveFitting/FuncMinimizers/PRConjugateGradientMinimizer.h
 	inc/MantidCurveFitting/FuncMinimizers/SimplexMinimizer.h
 	inc/MantidCurveFitting/FuncMinimizers/SteepestDescentMinimizer.h
@@ -361,6 +363,7 @@ set ( TEST_FILES
 	IPeakFunctionIntensityTest.h
 	LatticeDomainCreatorTest.h
 	LatticeFunctionTest.h
+	LocalSearchMinimizerTest.h
 	MultiDomainCreatorTest.h
 	MultiDomainFunctionTest.h
 	ParameterEstimatorTest.h
