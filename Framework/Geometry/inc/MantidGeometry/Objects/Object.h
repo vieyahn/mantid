@@ -69,10 +69,10 @@ public:
   virtual ~Object();
 
   /// Return the top rule
-  const Rule *topRule() const { return TopRule.get(); }
+  const Rule *topRule() const { return m_TopRule.get(); }
 
-  void setName(const int nx) { ObjName = nx; } ///< Set Name
-  int getName() const { return ObjName; }      ///< Get Name
+  void setName(const int nx) { m_ObjName = nx; } ///< Set Name
+  int getName() const { return m_ObjName; }      ///< Get Name
 
   void setMaterial(const Kernel::Material &material);
   const Kernel::Material &material() const;
@@ -86,16 +86,13 @@ public:
   int hasComplement() const;
 
   int populate(const std::map<int, boost::shared_ptr<Surface>> &);
-  int createSurfaceList(const int outFlag = 0); ///< create Surface list
+  int createSurfaceList(); ///< create Surface list
   int addSurfString(const std::string &);       ///< Not implemented
   int removeSurface(const int SurfN);
   int substituteSurf(const int SurfN, const int NsurfN,
                      const boost::shared_ptr<Surface> &SPtr);
   void makeComplement();
   void convertComplement(const std::map<int, Object> &);
-
-  virtual void print() const;
-  void printTree() const;
 
   bool isValid(const Kernel::V3D &) const; ///< Check if a point is valid
   bool isValid(const std::map<int, int> &)
@@ -105,9 +102,9 @@ public:
 
   std::vector<int> getSurfaceIndex() const;
   /// Get the list of surfaces (const version)
-  const std::vector<const Surface *> &getSurfacePtr() const { return SurList; }
+  const std::vector<const Surface *> &getSurfacePtr() const { return m_SurList; }
   /// Get the list of surfaces
-  std::vector<const Surface *> &getSurfacePtr() { return SurList; }
+  std::vector<const Surface *> &getSurfacePtr() { return m_SurList; }
 
   std::string cellCompStr() const;
   std::string cellStr(const std::map<int, Object> &) const;
@@ -149,31 +146,39 @@ public:
 
   // Rendering member functions
   void draw() const;
+
   // Initialize Drawing
   void initDraw() const;
+
   // Get Geometry Handler
   boost::shared_ptr<GeometryHandler> getGeometryHandler();
+
   /// Set Geometry Handler
   void setGeometryHandler(boost::shared_ptr<GeometryHandler> h);
 
   /// set vtkGeometryCache writer
   void setVtkGeometryCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>);
+
   /// set vtkGeometryCache reader
   void setVtkGeometryCacheReader(boost::shared_ptr<vtkGeometryCacheReader>);
+
   void GetObjectGeom(int &type, std::vector<Kernel::V3D> &vectors,
                      double &myradius, double &myheight) const;
+
   /// Getter for the shape xml
   std::string getShapeXML() const;
 
 private:
-  int ObjName;                   ///< Creation number
-  std::unique_ptr<Rule> TopRule; ///< Top rule [ Geometric scope of object]
+  int m_ObjName;                   ///< Creation number
+  std::unique_ptr<Rule> m_TopRule; ///< Top rule [ Geometric scope of object]
+  BoundingBox m_boundingBox; ///< Object's bounding box
 
   int procPair(std::string &Ln, std::map<int, std::unique_ptr<Rule>> &Rlist,
                int &compUnit) const;
+
   std::unique_ptr<CompGrp> procComp(std::unique_ptr<Rule>) const;
+
   int checkSurfaceValid(const Kernel::V3D &, const Kernel::V3D &) const;
-  BoundingBox m_boundingBox; ///< Object's bounding box
 
   /// Calculate bounding box using Rule system
   void calcBoundingBoxByRule();
@@ -214,28 +219,33 @@ private:
                         const double height) const;
 
   /// Geometry Handle for rendering
-  boost::shared_ptr<GeometryHandler> handle;
   friend class CacheGeometryHandler;
+  boost::shared_ptr<GeometryHandler> m_handle;
+
   /// Is geometry caching enabled?
-  bool bGeometryCaching;
+  bool m_GeometryCaching;
+
   /// a pointer to a class for reading from the geometry cache
-  boost::shared_ptr<vtkGeometryCacheReader> vtkCacheReader;
+  boost::shared_ptr<vtkGeometryCacheReader> m_vtkCacheReader;
   /// a pointer to a class for writing to the geometry cache
-  boost::shared_ptr<vtkGeometryCacheWriter> vtkCacheWriter;
+  boost::shared_ptr<vtkGeometryCacheWriter> m_vtkCacheWriter;
+
   void updateGeometryHandler();
   /// for solid angle from triangulation
   int NumberOfTriangles() const;
   int NumberOfPoints() const;
   int *getTriangleFaces() const;
   double *getTriangleVertices() const;
+
   /// original shape xml used to generate this object.
   std::string m_shapeXML;
+
   /// material composition
   Kernel::Material m_material;
 
 protected:
   std::vector<const Surface *>
-      SurList; ///< Full surfaces (make a map including complementary object ?)
+      m_SurList; ///< Full surfaces (make a map including complementary object ?)
 };
 
 /// Typdef for a shared pointer

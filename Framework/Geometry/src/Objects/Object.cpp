@@ -18,7 +18,6 @@
 #include "MantidKernel/RegexStrings.h"
 #include "MantidKernel/Tolerance.h"
 #include <deque>
-#include <iostream>
 #include <stack>
 
 namespace Mantid {
@@ -31,14 +30,14 @@ using Kernel::Quat;
 *  Default constuctor
 */
 Object::Object()
-    : ObjName(0), TopRule(), m_boundingBox(), AABBxMax(0), AABByMax(0),
+    : m_ObjName(0), m_TopRule(), m_boundingBox(), AABBxMax(0), AABByMax(0),
       AABBzMax(0), AABBxMin(0), AABByMin(0), AABBzMin(0), boolBounded(false),
-      handle(), bGeometryCaching(false),
-      vtkCacheReader(boost::shared_ptr<vtkGeometryCacheReader>()),
-      vtkCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>()),
+      m_handle(), m_GeometryCaching(false),
+      m_vtkCacheReader(boost::shared_ptr<vtkGeometryCacheReader>()),
+      m_vtkCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>()),
       m_material() // empty by default
 {
-  handle = boost::shared_ptr<GeometryHandler>(new CacheGeometryHandler(this));
+  m_handle = boost::shared_ptr<GeometryHandler>(new CacheGeometryHandler(this));
 }
 
 /**
@@ -46,14 +45,14 @@ Object::Object()
 *  @param shapeXML : string with original shape xml.
 */
 Object::Object(const std::string &shapeXML)
-    : ObjName(0), TopRule(), m_boundingBox(), AABBxMax(0), AABByMax(0),
+    : m_ObjName(0), m_TopRule(), m_boundingBox(), AABBxMax(0), AABByMax(0),
       AABBzMax(0), AABBxMin(0), AABByMin(0), AABBzMin(0), boolBounded(false),
-      handle(), bGeometryCaching(false),
-      vtkCacheReader(boost::shared_ptr<vtkGeometryCacheReader>()),
-      vtkCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>()),
+      m_handle(), m_GeometryCaching(false),
+      m_vtkCacheReader(boost::shared_ptr<vtkGeometryCacheReader>()),
+      m_vtkCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>()),
       m_shapeXML(shapeXML), m_material() // empty by default
 {
-  handle = boost::shared_ptr<GeometryHandler>(new CacheGeometryHandler(this));
+  m_handle = boost::shared_ptr<GeometryHandler>(new CacheGeometryHandler(this));
 }
 
 /**
@@ -61,14 +60,14 @@ Object::Object(const std::string &shapeXML)
 * @param A :: The object to initialise this copy from
 */
 Object::Object(const Object &A)
-    : ObjName(A.ObjName), TopRule((A.TopRule) ? A.TopRule->clone() : NULL),
+    : m_ObjName(A.m_ObjName), m_TopRule((A.m_TopRule) ? A.m_TopRule->clone() : NULL),
       m_boundingBox(A.m_boundingBox), AABBxMax(A.AABBxMax),
       AABByMax(A.AABByMax), AABBzMax(A.AABBzMax), AABBxMin(A.AABBxMin),
       AABByMin(A.AABByMin), AABBzMin(A.AABBzMin), boolBounded(A.boolBounded),
-      handle(A.handle->clone()), bGeometryCaching(A.bGeometryCaching),
-      vtkCacheReader(A.vtkCacheReader), vtkCacheWriter(A.vtkCacheWriter),
+      m_handle(A.m_handle->clone()), m_GeometryCaching(A.m_GeometryCaching),
+      m_vtkCacheReader(A.m_vtkCacheReader), m_vtkCacheWriter(A.m_vtkCacheWriter),
       m_shapeXML(A.m_shapeXML), m_material(A.m_material) {
-  if (TopRule)
+  if (m_TopRule)
     createSurfaceList();
 }
 
@@ -79,8 +78,8 @@ Object::Object(const Object &A)
 */
 Object &Object::operator=(const Object &A) {
   if (this != &A) {
-    ObjName = A.ObjName;
-    TopRule = (A.TopRule) ? A.TopRule->clone() : 0;
+    m_ObjName = A.m_ObjName;
+    m_TopRule = (A.m_TopRule) ? A.m_TopRule->clone() : 0;
     AABBxMax = A.AABBxMax;
     AABByMax = A.AABByMax;
     AABBzMax = A.AABBzMax;
@@ -88,14 +87,14 @@ Object &Object::operator=(const Object &A) {
     AABByMin = A.AABByMin;
     AABBzMin = A.AABBzMin;
     boolBounded = A.boolBounded;
-    handle = A.handle->clone();
-    bGeometryCaching = A.bGeometryCaching;
-    vtkCacheReader = A.vtkCacheReader;
-    vtkCacheWriter = A.vtkCacheWriter;
+    m_handle = A.m_handle->clone();
+    m_GeometryCaching = A.m_GeometryCaching;
+    m_vtkCacheReader = A.m_vtkCacheReader;
+    m_vtkCacheWriter = A.m_vtkCacheWriter;
     m_shapeXML = A.m_shapeXML;
     m_material = A.m_material;
 
-    if (TopRule)
+    if (m_TopRule)
       createSurfaceList();
   }
   return *this;
@@ -126,7 +125,7 @@ const Kernel::Material &Object::material() const { return m_material; }
 */
 bool Object::hasValidShape() const {
   // Assume invalid shape if object has no 'TopRule' or surfaces
-  return (TopRule != NULL && !SurList.empty());
+  return (m_TopRule != NULL && !m_SurList.empty());
 }
 
 /**
@@ -143,8 +142,8 @@ int Object::setObject(const int ON, const std::string &Ln) {
 
   if (procString(Ln)) // this currently does not fail:
   {
-    SurList.clear();
-    ObjName = ON;
+    m_SurList.clear();
+    m_ObjName = ON;
     return 1;
   }
 
@@ -234,9 +233,9 @@ int Object::complementaryObject(const int Cnum, std::string &Ln) {
 
   std::string Part = Ln.substr(posA, posB - (posA + 1));
 
-  ObjName = Cnum;
+  m_ObjName = Cnum;
   if (procString(Part)) {
-    SurList.clear();
+    m_SurList.clear();
     Ln.erase(posA - 1, posB + 1); // Delete brackets ( Part ) .
     std::ostringstream CompCell;
     CompCell << Cnum << " ";
@@ -255,8 +254,8 @@ int Object::complementaryObject(const int Cnum, std::string &Ln) {
 */
 int Object::hasComplement() const {
 
-  if (TopRule)
-    return TopRule->isComplementary();
+  if (m_TopRule)
+    return m_TopRule->isComplementary();
   return 0;
 }
 
@@ -269,7 +268,7 @@ int Object::hasComplement() const {
 */
 int Object::populate(const std::map<int, boost::shared_ptr<Surface>> &Smap) {
   std::deque<Rule *> Rst;
-  Rst.push_back(TopRule.get());
+  Rst.push_back(m_TopRule.get());
   int Rcount(0);
   while (!Rst.empty()) {
     Rule *T1 = Rst.front();
@@ -418,7 +417,7 @@ bool Object::isOnSide(const Kernel::V3D &Pt) const {
   std::list<Kernel::V3D> Snorms; // Normals from the constact surface.
 
   std::vector<const Surface *>::const_iterator vc;
-  for (vc = SurList.begin(); vc != SurList.end(); ++vc) {
+  for (vc = m_SurList.begin(); vc != m_SurList.end(); ++vc) {
     if ((*vc)->onSurface(Pt)) {
       Snorms.push_back((*vc)->surfaceNormal(Pt));
       // can check direct normal here since one success
@@ -466,9 +465,9 @@ int Object::checkSurfaceValid(const Kernel::V3D &C,
 * @returns 1 if true and 0 if false
 */
 bool Object::isValid(const Kernel::V3D &Pt) const {
-  if (!TopRule)
+  if (!m_TopRule)
     return false;
-  return TopRule->isValid(Pt);
+  return m_TopRule->isValid(Pt);
 }
 
 /**
@@ -477,9 +476,9 @@ bool Object::isValid(const Kernel::V3D &Pt) const {
 * @returns 1 if true and 0 if false
 */
 bool Object::isValid(const std::map<int, int> &SMap) const {
-  if (!TopRule)
+  if (!m_TopRule)
     return false;
-  return TopRule->isValid(SMap);
+  return m_TopRule->isValid(SMap);
 }
 
 /**
@@ -488,10 +487,10 @@ bool Object::isValid(const std::map<int, int> &SMap) const {
 * @param outFlag :: Sends output to standard error if true
 * @return 1 (should be number of surfaces)
 */
-int Object::createSurfaceList(const int outFlag) {
-  SurList.clear();
+int Object::createSurfaceList() {
+  m_SurList.clear();
   std::stack<const Rule *> TreeLine;
-  TreeLine.push(TopRule.get());
+  TreeLine.push(m_TopRule.get());
   while (!TreeLine.empty()) {
     const Rule *tmpA = TreeLine.top();
     TreeLine.pop();
@@ -505,16 +504,8 @@ int Object::createSurfaceList(const int outFlag) {
     } else {
       const SurfPoint *SurX = dynamic_cast<const SurfPoint *>(tmpA);
       if (SurX) {
-        SurList.push_back(SurX->getKey());
+        m_SurList.push_back(SurX->getKey());
       }
-    }
-  }
-  if (outFlag) {
-
-    std::vector<const Surface *>::const_iterator vc;
-    for (vc = SurList.begin(); vc != SurList.end(); ++vc) {
-      std::cerr << "Point == " << *vc << std::endl;
-      std::cerr << (*vc)->getName() << std::endl;
     }
   }
   return 1;
@@ -526,7 +517,7 @@ int Object::createSurfaceList(const int outFlag) {
 */
 std::vector<int> Object::getSurfaceIndex() const {
   std::vector<int> out;
-  transform(SurList.begin(), SurList.end(),
+  transform(m_SurList.begin(), m_SurList.end(),
             std::insert_iterator<std::vector<int>>(out, out.begin()),
             std::mem_fun(&Surface::getName));
   return out;
@@ -540,9 +531,9 @@ std::vector<int> Object::getSurfaceIndex() const {
 * @return number of surfaces removes
 */
 int Object::removeSurface(const int SurfN) {
-  if (!TopRule)
+  if (!m_TopRule)
     return -1;
-  const int cnt = Rule::removeItem(TopRule, SurfN);
+  const int cnt = Rule::removeItem(m_TopRule, SurfN);
   if (cnt)
     createSurfaceList();
   return cnt;
@@ -557,69 +548,20 @@ int Object::removeSurface(const int SurfN) {
 */
 int Object::substituteSurf(const int SurfN, const int NsurfN,
                            const boost::shared_ptr<Surface> &SPtr) {
-  if (!TopRule)
+  if (!m_TopRule)
     return 0;
-  const int out = TopRule->substituteSurf(SurfN, NsurfN, SPtr);
+  const int out = m_TopRule->substituteSurf(SurfN, NsurfN, SPtr);
   if (out)
     createSurfaceList();
   return out;
 }
 
 /**
-* Prints almost everything
-*/
-void Object::print() const {
-  std::deque<Rule *> Rst;
-  std::vector<int> Cells;
-  int Rcount(0);
-  Rst.push_back(TopRule.get());
-  Rule *TA, *TB; // Temp. for storage
-
-  while (!Rst.empty()) {
-    Rule *T1 = Rst.front();
-    Rst.pop_front();
-    if (T1) {
-      Rcount++;
-      SurfPoint *KV = dynamic_cast<SurfPoint *>(T1);
-      if (KV)
-        Cells.push_back(KV->getKeyN());
-      else {
-        TA = T1->leaf(0);
-        TB = T1->leaf(1);
-        if (TA)
-          Rst.push_back(TA);
-        if (TB)
-          Rst.push_back(TB);
-      }
-    }
-  }
-
-  std::cout << "Name == " << ObjName << std::endl;
-  std::cout << "Rules == " << Rcount << std::endl;
-  std::vector<int>::const_iterator mc;
-  std::cout << "Surface included == ";
-  for (mc = Cells.begin(); mc < Cells.end(); ++mc) {
-    std::cout << (*mc) << " ";
-  }
-  std::cout << std::endl;
-  return;
-}
-
-/**
 * Takes the complement of a group
 */
 void Object::makeComplement() {
-  std::unique_ptr<Rule> NCG = procComp(std::move(TopRule));
-  TopRule = std::move(NCG);
-  return;
-}
-
-/**
-* Displays the rule tree
-*/
-void Object::printTree() const {
-  std::cout << "Name == " << ObjName << std::endl;
-  std::cout << TopRule->display() << std::endl;
+  std::unique_ptr<Rule> NCG = procComp(std::move(m_TopRule));
+  m_TopRule = std::move(NCG);
   return;
 }
 
@@ -630,8 +572,8 @@ void Object::printTree() const {
 */
 std::string Object::cellCompStr() const {
   std::ostringstream cx;
-  if (TopRule)
-    cx << TopRule->display();
+  if (m_TopRule)
+    cx << m_TopRule->display();
   return cx.str();
 }
 
@@ -642,9 +584,9 @@ std::string Object::cellCompStr() const {
 */
 std::string Object::str() const {
   std::ostringstream cx;
-  if (TopRule) {
-    cx << ObjName << " ";
-    cx << TopRule->display();
+  if (m_TopRule) {
+    cx << m_ObjName << " ";
+    cx << m_TopRule->display();
   }
   return cx.str();
 }
@@ -669,7 +611,7 @@ void Object::write(std::ostream &OX) const {
 * @returns 1 on success
 */
 int Object::procString(const std::string &Line) {
-  TopRule = 0;
+  m_TopRule = 0;
   std::map<int, std::unique_ptr<Rule>> RuleList; // List for the rules
   int Ridx = 0; // Current index (not necessary size of RuleList
   // SURFACE REPLACEMENT
@@ -737,13 +679,7 @@ int Object::procString(const std::string &Line) {
   while (procPair(Ln, RuleList, nullInt))
     ;
 
-  if (RuleList.size() != 1) {
-    std::cerr << "Map size not equal to 1 == " << RuleList.size() << std::endl;
-    std::cerr << "Error Object::ProcString : " << Ln << std::endl;
-    exit(1);
-    return 0;
-  }
-  TopRule = std::move((RuleList.begin())->second);
+  m_TopRule = std::move((RuleList.begin())->second);
   return 1;
 }
 
@@ -757,7 +693,7 @@ int Object::interceptSurface(Geometry::Track &UT) const {
   // Loop over all the surfaces.
   LineIntersectVisit LI(UT.startPoint(), UT.direction());
   std::vector<const Surface *>::const_iterator vc;
-  for (vc = SurList.begin(); vc != SurList.end(); ++vc) {
+  for (vc = m_SurList.begin(); vc != m_SurList.end(); ++vc) {
     (*vc)->acceptVisitor(LI);
   }
   const auto &IPts(LI.getPoints());
@@ -1475,7 +1411,7 @@ const BoundingBox &Object::getBoundingBox() const {
 
   // If we don't know the extent of the object, the bounding box doesn't mean
   // anything
-  if (!TopRule) {
+  if (!m_TopRule) {
     const_cast<Object *>(this)->setNullBoundingBox();
     return m_boundingBox;
   }
@@ -1517,7 +1453,7 @@ const BoundingBox &Object::getBoundingBox() const {
  */
 void Object::calcBoundingBoxByRule() {
   // Must have a top rule for this to work
-  if (!TopRule)
+  if (!m_TopRule)
     return;
 
   // Set up some unreasonable values that will be refined
@@ -1527,7 +1463,7 @@ void Object::calcBoundingBoxByRule() {
   double maxX(huge), maxY(huge), maxZ(huge);
 
   // Try to use the Rule system to derive the box
-  TopRule->getBoundingBox(maxX, maxY, maxZ, minX, minY, minZ);
+  m_TopRule->getBoundingBox(maxX, maxY, maxZ, minX, minY, minZ);
 
   // Check whether values are reasonable now. Rule system will fail to produce
   // a reasonable box if the shape is not axis-aligned.
@@ -1584,10 +1520,6 @@ void Object::calcBoundingBoxByVertices() {
  * shapes that are handled by GluGeometryHandler.
  */
 void Object::calcBoundingBoxByGeometry() {
-  // Must have a GeometryHandler for this to work
-  if (!handle)
-    return;
-
   // Extent of bounding box
   double minX, maxX, minY, maxY, minZ, maxZ;
 
@@ -1598,7 +1530,7 @@ void Object::calcBoundingBoxByGeometry() {
   double height;
 
   // Will only work for shapes handled by GluGeometryHandler
-  handle->GetObjectGeom(type, vectors, radius, height);
+  m_handle->GetObjectGeom(type, vectors, radius, height);
 
   // Type of shape is given as a simple integer
   switch (type) {
@@ -1706,7 +1638,7 @@ void Object::calcBoundingBoxByGeometry() {
 */
 void Object::getBoundingBox(double &xmax, double &ymax, double &zmax,
                             double &xmin, double &ymin, double &zmin) const {
-  if (!TopRule) { // If no rule defined then return zero boundbing box
+  if (!m_TopRule) { // If no rule defined then return zero boundbing box
     xmax = ymax = zmax = xmin = ymin = zmin = 0.0;
     return;
   }
@@ -1717,7 +1649,7 @@ void Object::getBoundingBox(double &xmax, double &ymax, double &zmax,
     AABBxMin = xmin;
     AABByMin = ymin;
     AABBzMin = zmin;
-    TopRule->getBoundingBox(AABBxMax, AABByMax, AABBzMax, AABBxMin, AABByMin,
+    m_TopRule->getBoundingBox(AABBxMax, AABByMax, AABBzMax, AABBxMin, AABByMin,
                             AABBzMin);
     if (AABBxMax >= xmax || AABBxMin <= xmin || AABByMax >= ymax ||
         AABByMin <= ymin || AABBzMax >= zmax || AABBzMin <= zmin)
@@ -1838,18 +1770,14 @@ int Object::searchForObject(Kernel::V3D &point) const {
 void Object::setGeometryHandler(boost::shared_ptr<GeometryHandler> h) {
   if (h == NULL)
     return;
-  handle = h;
+  m_handle = h;
 }
 
 /**
-* Draws the Object using geometry handler, If the handler is not set then this
-* function does nothing.
+* Draws the Object using geometry handler.
 */
 void Object::draw() const {
-  if (handle == NULL)
-    return;
-  // Render the Object
-  handle->Render();
+  m_handle->Render();
 }
 
 /**
@@ -1858,17 +1786,16 @@ void Object::draw() const {
 * If the handler is not set then this function does nothing.
 */
 void Object::initDraw() const {
-  if (handle == NULL)
-    return;
   // Render the Object
   handle->Initialize();
 }
+
 /**
 * set vtkGeometryCache writer
 */
 void Object::setVtkGeometryCacheWriter(
     boost::shared_ptr<vtkGeometryCacheWriter> writer) {
-  vtkCacheWriter = writer;
+  m_vtkCacheWriter = writer;
   updateGeometryHandler();
 }
 
@@ -1877,7 +1804,7 @@ void Object::setVtkGeometryCacheWriter(
 */
 void Object::setVtkGeometryCacheReader(
     boost::shared_ptr<vtkGeometryCacheReader> reader) {
-  vtkCacheReader = reader;
+  m_vtkCacheReader = reader;
   updateGeometryHandler();
 }
 
@@ -1885,30 +1812,26 @@ void Object::setVtkGeometryCacheReader(
 * Returns the geometry handler
 */
 boost::shared_ptr<GeometryHandler> Object::getGeometryHandler() {
-  // Check if the geometry handler is upto dated with the cache, if not then
-  // cache it now.
-  return handle;
+  return m_handle;
 }
 
 /**
 * Updates the geometry handler if needed
 */
 void Object::updateGeometryHandler() {
-  if (bGeometryCaching)
+  if (m_GeometryCaching)
     return;
-  bGeometryCaching = true;
+  m_GeometryCaching = true;
   // Check if the Geometry handler can be handled for cache
-  if (handle == NULL)
-    return;
-  if (!handle->canTriangulate())
+  if (!m_handle->canTriangulate())
     return;
   // Check if the reader exist then read the cache
-  if (vtkCacheReader.get() != NULL) {
-    vtkCacheReader->readCacheForObject(this);
+  if (m_vtkCacheReader.get() != NULL) {
+    m_vtkCacheReader->readCacheForObject(this);
   }
   // Check if the writer exist then write the cache
-  if (vtkCacheWriter.get() != NULL) {
-    vtkCacheWriter->addObject(this);
+  if (m_vtkCacheWriter.get() != NULL) {
+    m_vtkCacheWriter->addObject(this);
   }
 }
 
@@ -1919,36 +1842,28 @@ void Object::updateGeometryHandler() {
 * @return the number of triangles
 */
 int Object::NumberOfTriangles() const {
-  if (handle == NULL)
-    return 0;
-  return handle->NumberOfTriangles();
+  return m_handle->NumberOfTriangles();
 }
 
 /**
 * get number of points
 */
 int Object::NumberOfPoints() const {
-  if (handle == NULL)
-    return 0;
-  return handle->NumberOfPoints();
+  return m_handle->NumberOfPoints();
 }
 
 /**
 * get vertices
 */
 double *Object::getTriangleVertices() const {
-  if (handle == NULL)
-    return NULL;
-  return handle->getTriangleVertices();
+  return m_handle->getTriangleVertices();
 }
 
 /**
 * get faces
 */
 int *Object::getTriangleFaces() const {
-  if (handle == NULL)
-    return NULL;
-  return handle->getTriangleFaces();
+  return m_handle->getTriangleFaces();
 }
 
 /**
@@ -1957,9 +1872,7 @@ int *Object::getTriangleFaces() const {
 void Object::GetObjectGeom(int &type, std::vector<Kernel::V3D> &vectors,
                            double &myradius, double &myheight) const {
   type = 0;
-  if (handle == NULL)
-    return;
-  handle->GetObjectGeom(type, vectors, myradius, myheight);
+  m_handle->GetObjectGeom(type, vectors, myradius, myheight);
 }
 
 /** Getter for the shape xml
