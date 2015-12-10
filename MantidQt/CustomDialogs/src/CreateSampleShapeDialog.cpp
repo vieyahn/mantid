@@ -201,20 +201,7 @@ void CreateSampleShapeDialog::update3DView()
 
   Mantid::Geometry::ShapeFactory sFactory;
   boost::shared_ptr<Mantid::Geometry::Object> shape_sptr = sFactory.createShape(shapexml);
-  //std::cerr << "\n--------- XML String -----------\n" << shapexml << "\n---------------------\n";
-  if( shape_sptr == boost::shared_ptr<Mantid::Geometry::Object>() ) return;
-  try 
-  {
-    shape_sptr->initDraw();
-  }
-  catch( ... )
-  {
-    QMessageBox::information(this,"Create sample shape", 
-			     QString("An error occurred while attempting to initialize the shape.\n") +
-			     "Please check that all objects intersect each other.");
-    return;
-  }
-
+  if (!shape_sptr) return;
   m_object_viewer->setDisplayObject(shape_sptr);
 }
 

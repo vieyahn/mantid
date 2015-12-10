@@ -684,20 +684,6 @@ void RectangularDetector::drawObject() const {
   // if(shape!=NULL)    shape->draw();
 }
 
-/**
- * Initializes the ObjComponent for rendering, this function should be called
- * before rendering.
- */
-void RectangularDetector::initDraw() const {
-  // std::cout << "RectangularDetector::initDraw() called for " <<
-  // this->getName() << "\n";
-  if (Handle() == NULL)
-    return;
-  // Render the ObjComponent and then render the object
-  // if(shape!=NULL)    shape->initDraw();
-  Handle()->Initialize();
-}
-
 //-------------------------------------------------------------------------------------------------
 /// Returns the shape of the Object
 const boost::shared_ptr<const Object> RectangularDetector::shape() const {

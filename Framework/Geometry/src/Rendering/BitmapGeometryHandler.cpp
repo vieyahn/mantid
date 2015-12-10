@@ -125,10 +125,5 @@ void BitmapGeometryHandler::Render() {
       GL_TEXTURE_2D); // stop texture mapping - not sure if this is necessary.
 }
 
-//----------------------------------------------------------------------------------------------
-///< Prepare/Initialize Object/ObjComponent to be rendered
-void BitmapGeometryHandler::Initialize() {
-  // std::cout << "BitmapGeometryHandler::Initialize() called\n";
-}
 }
 }

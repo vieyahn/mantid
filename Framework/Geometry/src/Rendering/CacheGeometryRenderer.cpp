@@ -41,16 +41,8 @@ void CacheGeometryRenderer::Render(IObjComponent *ObjComp) const {
 
 void CacheGeometryRenderer::Render(int noPts, int noFaces, double *points,
                                    int *faces) const {
-  (void)noPts;
-  (void)noFaces;
-  (void)points;
-  (void)faces; // Avoid compiler warning
-  Initialize(noPts, noFaces, points, faces);
-}
-
-void CacheGeometryRenderer::Initialize(int noPts, int noFaces, double *points,
-                                       int *faces) const {
   (void)noPts; // Avoid compiler warning
+
   glBegin(GL_TRIANGLES);
   V3D normal;
   for (int i = 0; i < noFaces; i++) {
@@ -71,18 +63,5 @@ void CacheGeometryRenderer::Initialize(int noPts, int noFaces, double *points,
   glEnd();
 }
 
-void CacheGeometryRenderer::Initialize(IObjComponent *ObjComp) {
-  glPushMatrix();
-  V3D pos = ObjComp->getPos();
-  Quat rot = ObjComp->getRotation();
-  double rotGL[16];
-  rot.GLMatrix(&rotGL[0]);
-  glTranslated(pos[0], pos[1], pos[2]);
-  glMultMatrixd(rotGL);
-  V3D scaleFactor = ObjComp->getScaleFactor();
-  glScaled(scaleFactor[0], scaleFactor[1], scaleFactor[2]);
-  ObjComp->drawObject();
-  glPopMatrix();
-}
-}
-}
+} // namespace Geometry
+} // namespace Mantid

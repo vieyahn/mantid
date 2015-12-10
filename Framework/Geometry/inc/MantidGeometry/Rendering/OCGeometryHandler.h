@@ -64,19 +64,20 @@ public:
   GeometryHandler *createInstance(IObjComponent *comp);
   GeometryHandler *createInstance(boost::shared_ptr<Object> obj);
   GeometryHandler *createInstance(Object *);
-  void Triangulate();
-  void Render();
-  void Initialize();
+
+  virtual void Triangulate() override;
+  virtual void Render() override;
+
   /// Returns true if the shape can be triangulated
-  bool canTriangulate() { return true; }
+  virtual bool canTriangulate() override { return true; }
   /// get the number of Triangles
-  int NumberOfTriangles();
+  virtual int NumberOfTriangles() override;
   /// get the number of points or vertices
-  int NumberOfPoints();
+  virtual int NumberOfPoints() override;
   /// Extract the vertices of the triangles
-  double *getTriangleVertices();
+  virtual double *getTriangleVertices() override;
   /// Extract the Faces of the triangles
-  int *getTriangleFaces();
+  virtual int *getTriangleFaces() override;
 };
 
 } // NAMESPACE Geometry

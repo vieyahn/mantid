@@ -22,8 +22,7 @@ namespace Geometry {
 //----------------------------------------------------------------------
 
 /** Object Component class, this class brings together the physical attributes
-   of the component
-    to the positioning and geometry tree.
+    of the component to the positioning and geometry tree.
 
     @author Laurent C Chapon, ISIS, RAL
     @date 26/09/2007
@@ -31,7 +30,7 @@ namespace Geometry {
     @date 26/06/2008
 
     Copyright &copy; 2007-8 ISIS Rutherford Appleton Laboratory, NScD Oak Ridge
-   National Laboratory & European Spallation Source
+    National Laboratory & European Spallation Source
 
     This file is part of Mantid.
 
@@ -42,11 +41,11 @@ namespace Geometry {
 
     Mantid is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-          GNU General Public License for more details.
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-          along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     File change history is stored at: <https://github.com/mantidproject/mantid>.
     Code Documentation is available at: <http://doxygen.mantidproject.org>
@@ -92,7 +91,6 @@ public:
   // Rendering member functions
   void draw() const;
   void drawObject() const;
-  void initDraw() const;
 
   /// Return the shape of the component
   const Object_const_sptr shape() const;

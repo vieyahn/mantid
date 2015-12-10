@@ -90,11 +90,12 @@ public:
   void setCone(Kernel::V3D, Kernel::V3D, double, double);
   /// sets the geometry handler for a segmented cylinder
   void setSegmentedCylinder(Kernel::V3D, Kernel::V3D, double, double);
-  void Triangulate();
-  void Render();
-  void Initialize();
+
+  virtual void Triangulate() override;
+  virtual void Render() override;
+
   void GetObjectGeom(int &mytype, std::vector<Kernel::V3D> &vectors,
-                     double &myradius, double &myheight);
+                     double &myradius, double &myheight) override;
 };
 
 } // NAMESPACE Geometry

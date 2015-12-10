@@ -1781,31 +1781,27 @@ void Object::draw() const {
 }
 
 /**
-* Initializes/prepares the object to be rendered, this will generate geometry
-* for object,
-* If the handler is not set then this function does nothing.
-*/
-void Object::initDraw() const {
-  // Render the Object
-  handle->Initialize();
-}
-
-/**
-* set vtkGeometryCache writer
+* Set vtkGeometryCache writer and write out cache
 */
 void Object::setVtkGeometryCacheWriter(
     boost::shared_ptr<vtkGeometryCacheWriter> writer) {
   m_vtkCacheWriter = writer;
-  updateGeometryHandler();
+
+  // Write the cache if this object can be triangulated
+  if (m_handle->canTriangulate() && m_vtkCacheWriter.get() != NULL)
+    m_vtkCacheWriter->addObject(this);
 }
 
 /**
-* set vtkGeometryCache reader
+* Set vtkGeometryCache reader and read in cache
 */
 void Object::setVtkGeometryCacheReader(
     boost::shared_ptr<vtkGeometryCacheReader> reader) {
   m_vtkCacheReader = reader;
-  updateGeometryHandler();
+
+  // Read the cache if this object can be triangulated
+  if (m_handle->canTriangulate() && m_vtkCacheReader.get() != NULL)
+    m_vtkCacheReader->readCacheForObject(this);
 }
 
 /**
@@ -1813,26 +1809,6 @@ void Object::setVtkGeometryCacheReader(
 */
 boost::shared_ptr<GeometryHandler> Object::getGeometryHandler() {
   return m_handle;
-}
-
-/**
-* Updates the geometry handler if needed
-*/
-void Object::updateGeometryHandler() {
-  if (m_GeometryCaching)
-    return;
-  m_GeometryCaching = true;
-  // Check if the Geometry handler can be handled for cache
-  if (!m_handle->canTriangulate())
-    return;
-  // Check if the reader exist then read the cache
-  if (m_vtkCacheReader.get() != NULL) {
-    m_vtkCacheReader->readCacheForObject(this);
-  }
-  // Check if the writer exist then write the cache
-  if (m_vtkCacheWriter.get() != NULL) {
-    m_vtkCacheWriter->addObject(this);
-  }
 }
 
 // Initialize Draw Object

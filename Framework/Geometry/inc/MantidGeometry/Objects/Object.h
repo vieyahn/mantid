@@ -147,9 +147,6 @@ public:
   // Rendering member functions
   void draw() const;
 
-  // Initialize Drawing
-  void initDraw() const;
-
   // Get Geometry Handler
   boost::shared_ptr<GeometryHandler> getGeometryHandler();
 
@@ -230,7 +227,6 @@ private:
   /// a pointer to a class for writing to the geometry cache
   boost::shared_ptr<vtkGeometryCacheWriter> m_vtkCacheWriter;
 
-  void updateGeometryHandler();
   /// for solid angle from triangulation
   int NumberOfTriangles() const;
   int NumberOfPoints() const;

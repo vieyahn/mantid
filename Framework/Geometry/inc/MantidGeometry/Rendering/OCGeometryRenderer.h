@@ -47,8 +47,6 @@ public:
   ~OCGeometryRenderer(); ///< Destructor
   void Render(TopoDS_Shape *ObjSurf);
   void Render(IObjComponent *ObjComp);
-  void Initialize(TopoDS_Shape *ObjSurf);
-  void Initialize(IObjComponent *ObjComp);
   void WriteVTK(TopoDS_Shape *out);
 };
 

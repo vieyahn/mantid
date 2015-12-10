@@ -61,20 +61,23 @@ public:
   CacheGeometryHandler(Object *obj);                   ///< Constructor
   boost::shared_ptr<GeometryHandler> clone() const;
   ~CacheGeometryHandler(); ///< Destructor
+
   GeometryHandler *createInstance(IObjComponent *comp);
   GeometryHandler *createInstance(boost::shared_ptr<Object> obj);
   GeometryHandler *createInstance(Object *obj);
 
-  void Triangulate();
-  void Render();
-  void Initialize();
-  bool canTriangulate() { return true; }
-  int NumberOfTriangles();
-  int NumberOfPoints();
-  double *getTriangleVertices();
-  int *getTriangleFaces();
+  virtual void Triangulate() override;
+  virtual void Render() override;
+
+  virtual bool canTriangulate() override { return true; }
+  virtual int NumberOfTriangles() override;
+  virtual int NumberOfPoints() override;
+  virtual double *getTriangleVertices() override;
+  virtual int *getTriangleFaces() override;
+
   /// Sets the geometry cache using the triangulation information provided
-  void setGeometryCache(int noPts, int noFaces, double *pts, int *faces);
+  virtual void setGeometryCache(int noPts, int noFaces, double *pts,
+                                int *faces) override;
 };
 
 } // NAMESPACE Geometry

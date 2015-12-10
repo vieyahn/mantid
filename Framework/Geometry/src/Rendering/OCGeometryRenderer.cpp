@@ -62,7 +62,12 @@ OCGeometryRenderer::~OCGeometryRenderer() {}
  * Renders Object surface given as OpenCascade topology shape
  * @param ObjSurf :: object's surface stored in topology shape
  */
-void OCGeometryRenderer::Render(TopoDS_Shape *ObjSurf) { Initialize(ObjSurf); }
+void OCGeometryRenderer::Render(TopoDS_Shape *ObjSurf) {
+  glBegin(GL_TRIANGLES);
+  // Here goes the traversing through TopoDS_Shape triangles
+  RenderTopoDS(ObjSurf);
+  glEnd();
+}
 
 /**
  * Render ObjComponent
@@ -71,35 +76,6 @@ void OCGeometryRenderer::Render(TopoDS_Shape *ObjSurf) { Initialize(ObjSurf); }
 void OCGeometryRenderer::Render(IObjComponent *ObjComp) {
   if (ObjComp == NULL)
     return;
-  glPushMatrix();
-  V3D pos = ObjComp->getPos();
-  Quat rot = ObjComp->getRotation();
-  double rotGL[16];
-  rot.GLMatrix(&rotGL[0]);
-  glTranslated(pos[0], pos[1], pos[2]);
-  glMultMatrixd(rotGL);
-  V3D scaleFactor = ObjComp->getScaleFactor();
-  glScaled(scaleFactor[0], scaleFactor[1], scaleFactor[2]);
-  ObjComp->drawObject();
-  glPopMatrix();
-}
-
-/**
- * Initialze the object surface for rendering
- * @param ObjSurf :: input to create display list
- */
-void OCGeometryRenderer::Initialize(TopoDS_Shape *ObjSurf) {
-  glBegin(GL_TRIANGLES);
-  // Here goes the traversing through TopoDS_Shape triangles
-  RenderTopoDS(ObjSurf);
-  glEnd();
-}
-
-/**
- * Initializes creates a display for the input ObjComponent
- * @param ObjComp :: input object component for creating display
- */
-void OCGeometryRenderer::Initialize(IObjComponent *ObjComp) {
   glPushMatrix();
   V3D pos = ObjComp->getPos();
   Quat rot = ObjComp->getRotation();

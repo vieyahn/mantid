@@ -42,14 +42,12 @@ class MANTID_GEOMETRY_DLL CacheGeometryRenderer {
 public:
   CacheGeometryRenderer();  ///< Constructor
   ~CacheGeometryRenderer(); ///< Destructor
+
   /// Render using an object component
   void Render(IObjComponent *ObjComp) const;
+
   /// Render using triangulation information
   void Render(int noPts, int noFaces, double *points, int *faces) const;
-  /// Initialize using triangulation information
-  void Initialize(int noPts, int noFaces, double *points, int *faces) const;
-  /// Initialize using an object component
-  void Initialize(IObjComponent *ObjComp);
 };
 
 } // NAMESPACE Geometry

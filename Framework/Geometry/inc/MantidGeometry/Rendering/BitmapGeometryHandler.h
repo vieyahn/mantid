@@ -76,37 +76,20 @@ public:
       Object>); ///< Create an instance of concrete geometry handler for Object
   virtual GeometryHandler *createInstance(
       Object *); ///< Create an instance of concrete geometry handler for Object
-  virtual void Triangulate(); ///< Triangulate the Object
-  virtual void Render();      ///< Render Object or ObjComponent
-  virtual void
-  Initialize(); ///< Prepare/Initialize Object/ObjComponent to be rendered
+
+  virtual void Triangulate() override; ///< Triangulate the Object
+  virtual void Render() override;      ///< Render Object or ObjComponent
+
   /// Returns true if the shape can be triangulated
-  virtual bool canTriangulate() { return false; }
+  virtual bool canTriangulate() override { return false; }
   /// get the number of triangles
-  virtual int NumberOfTriangles() { return 0; }
+  virtual int NumberOfTriangles() override { return 0; }
   /// get the number of points or vertices
-  virtual int NumberOfPoints() { return 0; }
+  virtual int NumberOfPoints() override { return 0; }
   /// Extract the vertices of the triangles
-  virtual double *getTriangleVertices() { return NULL; }
+  virtual double *getTriangleVertices() override { return NULL; }
   /// Extract the Faces of the triangles
-  virtual int *getTriangleFaces() { return NULL; }
-  /// Sets the geometry cache using the triangulation information provided
-  virtual void setGeometryCache(int noPts, int noFaces, double *pts,
-                                int *faces) {
-    (void)noPts;
-    (void)noFaces;
-    (void)pts;
-    (void)faces; // Avoid compiler warning
-  };
-  /// return the actual type and points of one of the "standard" objects,
-  /// cuboid/cone/cyl/sphere
-  virtual void GetObjectGeom(int &mytype, std::vector<Kernel::V3D> &vectors,
-                             double &myradius, double &myheight) {
-    (void)mytype;
-    (void)vectors;
-    (void)myradius;
-    (void)myheight; // Avoid compiler warning
-  };
+  virtual int *getTriangleFaces() override { return NULL; }
 };
 
 } // NAMESPACE Geometry

@@ -143,10 +143,6 @@ public:
   /// Draws the Object.
   void drawObject() const;
 
-  /// Initializes the ObjComponent for rendering, this function should be called
-  /// before rendering.
-  void initDraw() const;
-
   /// Returns the shape of the Object
   const boost::shared_ptr<const Object> shape() const;
   /// Returns the material of the detector

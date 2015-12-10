@@ -18,12 +18,10 @@ class Object;
 class GeometryHandler;
 
 /** Object Component class, this class brings together the physical attributes
-   of the component
-    to the positioning and geometry tree.
+    of the component to the positioning and geometry tree.
 
     Notably, this contains a GeometryHandler and methods used to render the
-   component in
-    the instrument 3D view.
+    component in the instrument 3D view.
 
     @author Laurent C Chapon, ISIS, RAL
     @date 26/09/2007
@@ -31,7 +29,7 @@ class GeometryHandler;
     @date 26/06/2008
 
     Copyright &copy; 2007-8 ISIS Rutherford Appleton Laboratory, NScD Oak Ridge
-   National Laboratory & European Spallation Source
+    National Laboratory & European Spallation Source
 
     This file is part of Mantid.
 
@@ -42,11 +40,11 @@ class GeometryHandler;
 
     Mantid is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-          MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-          GNU General Public License for more details.
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-          along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     File change history is stored at: <https://github.com/mantidproject/mantid>.
     Code Documentation is available at: <http://doxygen.mantidproject.org>
@@ -91,10 +89,6 @@ public:
 
   /// Draws the Object.
   virtual void drawObject() const = 0;
-
-  /// Initializes the ObjComponent for rendering, this function should be called
-  /// before rendering.
-  virtual void initDraw() const = 0;
 
   /// Returns the shape of the Object
   virtual const boost::shared_ptr<const Object> shape() const = 0;

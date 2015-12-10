@@ -127,13 +127,6 @@ void GluGeometryHandler::GetObjectGeom(int &mytype,
   }
 }
 
-void GluGeometryHandler::Initialize() {
-  if (Obj != NULL) {
-    // There is no initialization or probably call render
-    Render();
-  }
-}
-
 void GluGeometryHandler::setCuboid(V3D p1, V3D p2, V3D p3, V3D p4) {
   type = CUBOID;
   Point1 = p1;

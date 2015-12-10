@@ -78,22 +78,8 @@ void CacheGeometryHandler::Render() {
   }
 }
 
-void CacheGeometryHandler::Initialize() {
-  if (Obj != NULL) {
-    Obj->updateGeometryHandler();
-    if (boolTriangulated == false)
-      Triangulate();
-    Renderer->Initialize(
-        Triangulator->getNumberOfPoints(), Triangulator->getNumberOfTriangles(),
-        Triangulator->getTriangleVertices(), Triangulator->getTriangleFaces());
-  } else if (ObjComp != NULL) {
-    Renderer->Initialize(ObjComp);
-  }
-}
-
 int CacheGeometryHandler::NumberOfTriangles() {
   if (Obj != NULL) {
-    Obj->updateGeometryHandler();
     if (boolTriangulated == false)
       Triangulate();
     return Triangulator->getNumberOfTriangles();
@@ -104,7 +90,6 @@ int CacheGeometryHandler::NumberOfTriangles() {
 
 int CacheGeometryHandler::NumberOfPoints() {
   if (Obj != NULL) {
-    Obj->updateGeometryHandler();
     if (boolTriangulated == false)
       Triangulate();
     return Triangulator->getNumberOfPoints();
@@ -115,7 +100,6 @@ int CacheGeometryHandler::NumberOfPoints() {
 
 double *CacheGeometryHandler::getTriangleVertices() {
   if (Obj != NULL) {
-    Obj->updateGeometryHandler();
     if (boolTriangulated == false)
       Triangulate();
     return Triangulator->getTriangleVertices();
@@ -126,7 +110,6 @@ double *CacheGeometryHandler::getTriangleVertices() {
 
 int *CacheGeometryHandler::getTriangleFaces() {
   if (Obj != NULL) {
-    Obj->updateGeometryHandler();
     if (boolTriangulated == false)
       Triangulate();
     return Triangulator->getTriangleFaces();

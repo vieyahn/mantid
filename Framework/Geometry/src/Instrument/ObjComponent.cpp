@@ -204,9 +204,9 @@ void ObjComponent::getBoundingBox(BoundingBox &absoluteBB) const {
   absoluteBB.zMin() *= scaleFactor.Z();
   absoluteBB.zMax() *= scaleFactor.Z();
   // Rotate
-  (this->getRotation())
-      .rotateBB(absoluteBB.xMin(), absoluteBB.yMin(), absoluteBB.zMin(),
-                absoluteBB.xMax(), absoluteBB.yMax(), absoluteBB.zMax());
+  (this->getRotation()).rotateBB(absoluteBB.xMin(), absoluteBB.yMin(),
+                                 absoluteBB.zMin(), absoluteBB.xMax(),
+                                 absoluteBB.yMax(), absoluteBB.zMax());
 
   // Shift
   const V3D localPos = this->getPos();
@@ -315,19 +315,6 @@ void ObjComponent::draw() const {
 void ObjComponent::drawObject() const {
   if (shape() != NULL)
     shape()->draw();
-}
-
-/**
-* Initializes the ObjComponent for rendering, this function should be called
-* before rendering.
-*/
-void ObjComponent::initDraw() const {
-  if (Handle() == NULL)
-    return;
-  // Render the ObjComponent and then render the object
-  if (shape() != NULL)
-    shape()->initDraw();
-  Handle()->Initialize();
 }
 
 } // namespace Geometry

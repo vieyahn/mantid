@@ -72,16 +72,6 @@ void OCGeometryHandler::Render() {
   }
 }
 
-void OCGeometryHandler::Initialize() {
-  if (Obj != NULL) {
-    if (boolTriangulated == false)
-      Triangulate();
-    Renderer->Initialize(Triangulator->getObjectSurface());
-  } else if (ObjComp != NULL) {
-    Renderer->Initialize(ObjComp);
-  }
-}
-
 int OCGeometryHandler::NumberOfTriangles() {
   if (Obj != NULL) {
     if (boolTriangulated == false)
