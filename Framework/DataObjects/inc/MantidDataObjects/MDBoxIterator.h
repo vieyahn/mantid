@@ -54,6 +54,8 @@ public:
 
   signal_t getSignal() const;
 
+  signal_t getSignalWithMask() const override;
+
   signal_t getError() const;
 
   coord_t *getVertexesArray(size_t &numVertices, const size_t outDimensions,

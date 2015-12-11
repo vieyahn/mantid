@@ -275,6 +275,14 @@ TMDE(signal_t MDBoxIterator)::getSignal() const {
   return m_current->getSignal();
 }
 
+/// Returns the signal or mask value for this box
+TMDE(signal_t MDBoxIterator)::getSignalWithMask() const {
+  if (this->getIsMasked()) {
+    return MDMaskValue;
+  }
+  return m_current->getSignal();
+}
+
 /// Returns the error for this box
 TMDE(signal_t MDBoxIterator)::getError() const { return m_current->getError(); }
 

@@ -192,6 +192,11 @@ signal_t MatrixWorkspaceMDIterator::getNormalizedSignalWithMask() const {
 /// Returns the signal for this box, same as innerSignal
 signal_t MatrixWorkspaceMDIterator::getSignal() const { return m_Y[m_xIndex]; }
 
+/// Returns the signal for this box, or the mask value
+signal_t MatrixWorkspaceMDIterator::getSignalWithMask() const {
+  return this->getSignal();
+}
+
 /// Returns the error for this box, same as innerError
 signal_t MatrixWorkspaceMDIterator::getError() const {
   if (!m_errorIsCached) {

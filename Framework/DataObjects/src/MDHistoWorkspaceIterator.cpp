@@ -396,6 +396,15 @@ signal_t MDHistoWorkspaceIterator::getSignal() const {
   return m_ws->getSignalAt(m_pos);
 }
 
+//----------------------------------------------------------------------------------------------
+/// Returns the signal or mask value for this box
+signal_t MDHistoWorkspaceIterator::getSignalWithMask() const {
+  if (this->getIsMasked()) {
+    return MDMaskValue;
+  }
+  return m_ws->getSignalAt(m_pos);
+}
+
 /// Returns the error for this box, same as innerError
 signal_t MDHistoWorkspaceIterator::getError() const {
   return m_ws->getErrorAt(m_pos);
