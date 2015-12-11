@@ -12,14 +12,6 @@
 #include "MantidDataObjects/MDHistoWorkspace.h"
 #include "MantidDataObjects/MDHistoWorkspaceIterator.h"
 
-#include <algorithm>
-#include <map>
-#include <utility>
-#include <cmath>
-
-#include <boost/make_shared.hpp>
-#include <boost/scoped_ptr.hpp>
-
 using namespace Mantid::API;
 using namespace Mantid::Kernel;
 using namespace Mantid::Geometry;
