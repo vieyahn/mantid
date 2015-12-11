@@ -83,7 +83,7 @@ public:
   virtual signal_t getSignal() const = 0;
 
   /// Returns the total signal or mask value for this box
-  virtual signal_t getSignalWithMask() const = 0;
+  virtual signal_t getSignalOrZeroIfMasked() const = 0;
 
   /// Returns the total error for this box
   virtual signal_t getError() const = 0;

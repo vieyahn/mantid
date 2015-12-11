@@ -95,7 +95,7 @@ public:
 
   virtual signal_t getSignal() const;
 
-  virtual signal_t getSignalWithMask() const override;
+  virtual signal_t getSignalOrZeroIfMasked() const override;
 
   virtual signal_t getError() const;
 

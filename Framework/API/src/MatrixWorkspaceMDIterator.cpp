@@ -193,7 +193,7 @@ signal_t MatrixWorkspaceMDIterator::getNormalizedSignalWithMask() const {
 signal_t MatrixWorkspaceMDIterator::getSignal() const { return m_Y[m_xIndex]; }
 
 /// Returns the signal for this box, or the mask value
-signal_t MatrixWorkspaceMDIterator::getSignalWithMask() const {
+signal_t MatrixWorkspaceMDIterator::getSignalOrZeroIfMasked() const {
   return this->getSignal();
 }
 

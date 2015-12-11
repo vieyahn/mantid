@@ -54,7 +54,7 @@ public:
 
   signal_t getSignal() const;
 
-  signal_t getSignalWithMask() const override;
+  signal_t getSignalOrZeroIfMasked() const override;
 
   signal_t getError() const;
 

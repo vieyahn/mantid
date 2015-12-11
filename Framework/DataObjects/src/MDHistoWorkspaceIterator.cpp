@@ -398,9 +398,9 @@ signal_t MDHistoWorkspaceIterator::getSignal() const {
 
 //----------------------------------------------------------------------------------------------
 /// Returns the signal or mask value for this box
-signal_t MDHistoWorkspaceIterator::getSignalWithMask() const {
+signal_t MDHistoWorkspaceIterator::getSignalOrZeroIfMasked() const {
   if (this->getIsMasked()) {
-    return MDMaskValue;
+    return 0.0;
   }
   return m_ws->getSignalAt(m_pos);
 }
