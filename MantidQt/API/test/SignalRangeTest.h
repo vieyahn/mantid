@@ -62,6 +62,7 @@ private:
     MOCK_CONST_METHOD0(getNormalizedError, Mantid::signal_t());
     MOCK_CONST_METHOD0(getNormalizedSignalWithMask, Mantid::signal_t());
     MOCK_CONST_METHOD0(getSignal, Mantid::signal_t());
+    MOCK_CONST_METHOD0(getSignalOrZeroIfMasked, Mantid::signal_t());
     MOCK_CONST_METHOD0(getError, Mantid::signal_t());
     MOCK_CONST_METHOD1(getVertexesArray, Mantid::coord_t *(size_t &));
     MOCK_CONST_METHOD3(getVertexesArray,

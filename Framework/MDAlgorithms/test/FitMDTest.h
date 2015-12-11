@@ -35,6 +35,7 @@ public:
   virtual signal_t getNormalizedSignal() const;
   virtual signal_t getNormalizedError() const;
   virtual signal_t getSignal() const { return 0; }
+  virtual signal_t getSignalOrZeroIfMasked() const { return 0; }
   virtual signal_t getError() const { return 0; }
   virtual coord_t *getVertexesArray(size_t &) const { return NULL; }
   virtual coord_t *getVertexesArray(size_t &, const size_t,
