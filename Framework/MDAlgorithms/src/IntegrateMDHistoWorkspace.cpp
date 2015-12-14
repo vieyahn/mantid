@@ -1,11 +1,9 @@
 #include "MantidMDAlgorithms/IntegrateMDHistoWorkspace.h"
 #include "MantidKernel/ArrayProperty.h"
-#include "MantidKernel/MultiThreaded.h"
 
 #include "MantidAPI/FrameworkManager.h"
 #include "MantidAPI/IMDHistoWorkspace.h"
 #include "MantidAPI/IMDIterator.h"
-#include "MantidAPI/Progress.h"
 
 #include "MantidGeometry/MDGeometry/MDHistoDimension.h"
 #include "MantidGeometry/MDGeometry/MDBoxImplicitFunction.h"
@@ -216,7 +214,7 @@ void performWeightedSum(MDHistoWorkspaceIterator const *const iterator,
                         MDBoxImplicitFunction &box, double &sumSignal,
                         double &sumSQErrors, double &sumNEvents) {
   const double weight = box.fraction(iterator->getBoxExtents());
-  sumSignal += weight * iterator->getSignal();
+  sumSignal += weight * iterator->getSignalOrZeroIfMasked();
   const double error = iterator->getError();
   sumSQErrors += weight * (error * error);
   sumNEvents += weight * double(iterator->getNumEventsFraction());
