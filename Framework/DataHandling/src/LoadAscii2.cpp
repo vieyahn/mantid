@@ -643,6 +643,10 @@ void LoadAscii2::init() {
   declareProperty(
       "SkipNumLines", EMPTY_INT(), mustBePosInt,
       "If given, skip this number of lines at the start of the file.");
+
+  declareProperty("Distribution", false,
+                  "If true, the loaded file will be marked as a distribution.",
+                  Direction::Input);
 }
 
 /**
@@ -678,7 +682,8 @@ void LoadAscii2::exec() {
   if (sep.empty()) {
     g_log.notice() << "\"UserDefined\" has been selected, but no custom "
                       "separator has been entered."
-                      " Using default instead." << std::endl;
+                      " Using default instead."
+                   << std::endl;
     sep = ",";
   }
   m_columnSep = sep;
@@ -713,9 +718,13 @@ void LoadAscii2::exec() {
     throw std::runtime_error("Failed to recognize this file as an ASCII file, "
                              "cannot continue.");
   }
+
   MatrixWorkspace_sptr outputWS =
       boost::dynamic_pointer_cast<MatrixWorkspace>(rd);
   outputWS->mutableRun().addProperty("Filename", filename);
+
+  outputWS->isDistribution(getProperty("Distribution"));
+
   setProperty("OutputWorkspace", outputWS);
 }
 } // namespace DataHandling
