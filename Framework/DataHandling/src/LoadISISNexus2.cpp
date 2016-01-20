@@ -62,18 +62,19 @@ LoadISISNexus2::LoadISISNexus2()
 * be used
 */
 int LoadISISNexus2::confidence(Kernel::NexusDescriptor &descriptor) const {
-  if (descriptor.pathOfTypeExists("/raw_data_1", "NXentry"))
-    return 80;
+  if (descriptor.pathOfTypeExists("/raw_data_1", "NXentry")) {
+    // It also could be an Event Nexus file or a TOFRaw file,
+    // so confidence is set to less than 80.
+    return 75;
+  }
   return 0;
 }
 
 /// Initialization method.
 void LoadISISNexus2::init() {
-  std::vector<std::string> exts;
-  exts.push_back(".nxs");
-  exts.push_back(".n*");
-  declareProperty(new FileProperty("Filename", "", FileProperty::Load, exts),
-                  "The name of the Nexus file to load");
+  declareProperty(
+      new FileProperty("Filename", "", FileProperty::Load, {".nxs", ".n*"}),
+      "The name of the Nexus file to load");
   declareProperty(new WorkspaceProperty<Workspace>("OutputWorkspace", "",
                                                    Direction::Output));
 
