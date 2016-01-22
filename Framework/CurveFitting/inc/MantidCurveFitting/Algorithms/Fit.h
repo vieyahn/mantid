@@ -9,6 +9,8 @@
 //#include "MantidAPI/Workspace_fwd.h"
 //#include "MantidAPI/IDomainCreator.h"
 #include "MantidCurveFitting/IFittingAlgorithm.h"
+//=====================================================
+#include "MantidCurveFitting/GSLVector.h"
 
 namespace Mantid {
 
@@ -17,9 +19,14 @@ class FunctionDomain;
 class FunctionValues;
 class Workspace;
 class IFuncMinimizer;
+class ICostFunction;
 }
 
 namespace CurveFitting {
+namespace CostFunctions {
+  class CostFuncFitting;
+}
+
 namespace Algorithms {
 /**
 
@@ -113,6 +120,10 @@ protected:
   void initConcrete();
   void execConcrete();
   void copyMinimizerOutput(const API::IFuncMinimizer &minimizer);
+  void outputSurface();
+  void pushParameters(const CostFunctions::CostFuncFitting& fun);
+
+  std::vector<GSLVector> m_points;
 };
 
 } // namespace Algorithms

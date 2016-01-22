@@ -16,6 +16,12 @@
 #include "MantidKernel/BoundedValidator.h"
 #include "MantidKernel/StartsWithValidator.h"
 
+//=====================================================
+#include "MantidCurveFitting/GSLVector.h"
+#include "MantidCurveFitting/FuncMinimizers/LocalSearchMinimizer.h"
+#include "MantidAPI/NumericAxis.h"
+#include "MantidKernel/UnitFactory.h"
+
 namespace Mantid {
 namespace CurveFitting {
 namespace Algorithms {
@@ -101,6 +107,8 @@ void Fit::initConcrete() {
                   "workspace(s) with the calculated values\n"
                   "(default is false, ignored if CreateOutput is false and "
                   "Output is an empty string).");
+  declareProperty("Surface", "", "Type of surface to output. No output if empty.");
+  declareProperty("SurfaceScaling", 0.0, "Scaling factor.");
 }
 
 /**
@@ -164,6 +172,7 @@ void Fit::execConcrete() {
   const int64_t nsteps = maxIterations * m_function->estimateNoProgressCalls();
   API::Progress prog(this, 0.0, 1.0, nsteps);
   m_function->setProgressReporter(&prog);
+  pushParameters(*costFunc);
 
   // do the fitting until success or iteration limit is reached
   size_t iter = 0;
@@ -184,6 +193,7 @@ void Fit::execConcrete() {
       }
       break;
     }
+    pushParameters(*costFunc);
     prog.report();
     m_function->iterationFinished();
     ++iter;
@@ -191,6 +201,7 @@ void Fit::execConcrete() {
   g_log.debug() << "Number of minimizer iterations=" << iter << "\n";
 
   minimizer->finalize();
+  pushParameters(*costFunc);
 
   if (iter >= maxIterations) {
     if (!errorString.empty()) {
@@ -360,7 +371,173 @@ void Fit::execConcrete() {
     }
   }
 
+  outputSurface();
+
   progress(1.0);
+}
+
+void Fit::pushParameters(const CostFunctions::CostFuncFitting& fun) {
+  GSLVector params;
+  fun.getParameters(params);
+  m_points.push_back(params);
+}
+
+void Fit::outputSurface() {
+  std::string surface = getPropertyValue("Surface");
+  if (surface.empty()) return;
+
+  size_t n = 100;
+  auto matrix = 
+    Mantid::API::WorkspaceFactory::Instance().create("Workspace2D", n, n, n);
+  API::Axis *const verticalAxis = new API::NumericAxis(n);
+  //verticalAxis->unit() =
+  //    Kernel::UnitFactory::Instance().create("Label");
+  matrix->replaceAxis(1, verticalAxis);
+
+  std::string outputBaseName = getPropertyValue("Output");
+  if (outputBaseName.empty()) {
+    outputBaseName = "out";
+  }
+
+  try {
+    const GSLVector& p0 = m_points.front();
+    const GSLVector& p1 = m_points.back();
+    auto funCopy = m_function->clone();
+
+    API::FunctionDomain_sptr domain;
+    API::FunctionValues_sptr values;
+    m_domainCreator->createDomain(domain, values);
+    m_domainCreator->initFunction(funCopy);
+    boost::shared_ptr<CostFunctions::CostFuncFitting> costFunc =
+        boost::dynamic_pointer_cast<CostFunctions::CostFuncFitting>(
+            API::CostFunctionFactory::Instance().create(
+                getPropertyValue("CostFunction")));
+
+    costFunc->setFittingFunction(funCopy, domain, values);
+    FuncMinimisers::LocalSearchMinimizer minimizer;
+    minimizer.initialize(costFunc);
+    auto val1 = costFunc->val();
+    costFunc->setParameters(p0);
+    auto val0 = costFunc->val();
+    costFunc->setParameters(p1);
+
+    auto y = p1;
+    y -= p0;
+    double yWidth = y.norm() * 2;
+    y.normalize();
+    double dy = yWidth / static_cast<double>(n);
+
+    auto x = costFunc->getDeriv();
+    {
+      x *= -1;
+      auto dotProd = x.dot(y);
+      auto pd = y;
+      pd *= dotProd;
+      x -= pd;
+      x.normalize();
+    }
+    std::cerr << "p0 " << p0 << std::endl;
+    std::cerr << "p1 " << p1 << std::endl;
+
+    std::cerr << "x " << x << std::endl;
+    std::cerr << "y " << y << std::endl;
+    std::cerr << x.dot(y) << std::endl;
+
+    double dx = yWidth / 2;
+    {
+      const double shift = 1e-6;
+      auto dp = p1;
+      dp *= shift;
+      for(size_t i = 0; i < dp.size(); ++i) {
+        if (dp[i] == 0.0) {
+          dp[i] = shift;
+        }
+      }
+      std::cerr << "dp " << dp << std::endl;
+      dx = dp.norm();
+    }
+
+    double scaling = getProperty("SurfaceScaling");
+    if (scaling != 0.0) {
+      dx *= scaling;
+    } else {
+      double oldVal = val1;
+      for (size_t j = 0; j < 100; ++j) {
+        auto px = x;
+        px *= dx;
+        px += p1;
+        costFunc->setParameters(px);
+        auto val = costFunc->val();
+        auto ratio = fabs(val / val0);
+        if (j > 0 && ratio < 1.1 && ratio > 0.9) {
+          if (val != oldVal) {
+            std::cerr << "Search stopped after " << j << " iterations " << val0
+                      << ' ' << val << std::endl;
+            break;
+          }
+        }
+        if (val < val0) {
+          dx *= 2;
+        } else {
+          dx *= 0.75;
+        }
+        oldVal = val;
+        if (j == 99) {
+          std::cerr << "Search didn't converge" << std::endl;
+        }
+      }
+    }
+    dx /= n;
+
+    std::cerr << "dx=" << dx << std::endl;
+    std::cerr << "dy=" << dy << std::endl;
+    for (size_t i = 0; i < n; ++i) {
+      double yi = i * dy;
+      auto py = y;
+      py *= yi;
+      verticalAxis->setValue(i, yi - yWidth / 2);
+      for (size_t j = 0; j < n; ++j) {
+        double xj = j * dx - dx * n / 2;
+        auto px = x;
+        px *= xj;
+        px += py;
+        px += p0;
+        costFunc->setParameters(px);
+        auto val = costFunc->val();
+        matrix->dataX(i)[j] = xj;
+        matrix->dataY(i)[j] = val;
+      }
+    }
+
+    declareProperty(
+        new API::WorkspaceProperty<API::ITableWorkspace>(
+            "SurfacePath", "", Kernel::Direction::Output),
+        "The name of the TableWorkspace ");
+    setPropertyValue("SurfacePath", outputBaseName + "_Path");
+    Mantid::API::ITableWorkspace_sptr path =
+        Mantid::API::WorkspaceFactory::Instance().createTable("TableWorkspace");
+    path->addColumn("double", "X")->setPlotType(1);
+    path->addColumn("double", "Y")->setPlotType(2);
+
+    for (size_t i = 0; i < m_points.size(); i++) {
+      auto p = m_points[i];
+      p -= p0;
+      Mantid::API::TableRow row = path->appendRow();
+      row << p.dot(x) << p.dot(y) - yWidth / 2;
+    }
+    setProperty("SurfacePath", path);
+
+  } catch (std::runtime_error &e) {
+    g_log.warning() << "Cannot create the surface, error happened:" << std::endl
+                    << e.what() << std::endl;
+  }
+
+  declareProperty(
+      new API::WorkspaceProperty<API::MatrixWorkspace>(
+          "SurfaceWorkspace", "", Kernel::Direction::Output),
+      "Name of the output Workspace holding resulting simulated spectrum");
+  setPropertyValue("SurfaceWorkspace", outputBaseName + "_Surface");
+  setProperty("SurfaceWorkspace", matrix);
 }
 
 } // namespace Algorithms
