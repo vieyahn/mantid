@@ -239,7 +239,7 @@ void GSLMatrix::invert() {
 }
 
 /// Calculate the determinant
-double GSLMatrix::det() {
+double GSLMatrix::det() const {
   if (size1() != size2()) {
     throw std::runtime_error("Matrix inverse: the matrix must be square.");
   }
@@ -288,6 +288,12 @@ GSLVector GSLMatrix::copyColumn(size_t i) const {
   }
   auto columnView = gsl_matrix_const_column(gsl(), i);
   return GSLVector(&columnView.vector);
+}
+
+GSLVector GSLMatrix::multiplyByVector(const GSLVector &v) const {
+  GSLVector res(size2());
+  gsl_blas_dgemv(CblasNoTrans, 1.0, gsl(), v.gsl(), 1.0, res.gsl());
+  return res;
 }
 
 } // namespace CurveFitting

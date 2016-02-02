@@ -79,6 +79,8 @@ public:
   double norm2() const;
   /// Calculate the dot product
   double dot(const GSLVector &v) const;
+  /// Convert to std::vector
+  const std::vector<double> &toStdVector() const { return m_data; }
 
   /// Add a vector
   GSLVector &operator+=(const GSLVector &v);

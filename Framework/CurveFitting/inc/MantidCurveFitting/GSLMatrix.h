@@ -174,9 +174,10 @@ public:
   /// Invert this matrix
   void invert();
   /// Calculate the determinant
-  double det();
+  double det() const;
   /// Calculate the eigensystem of a symmetric matrix
   void eigenSystem(GSLVector &eigenValues, GSLMatrix &eigenVectors);
+  GSLVector multiplyByVector(const GSLVector &v) const;
 };
 
 /// Overloaded operator for matrix multiplication
