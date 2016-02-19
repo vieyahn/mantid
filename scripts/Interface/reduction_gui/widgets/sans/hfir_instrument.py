@@ -32,6 +32,10 @@ class SANSInstrumentWidget(BaseWidget):
     _wavelength = None
     _wavelength_supplied = True
     _wavelength_spread = None
+    #
+    _sample_aperture_size = None
+    _beam_stop_size = None
+    _number_of_guides = None
 
     # Internal data members for mask editor logic
     mask_file = ''
@@ -105,6 +109,29 @@ class SANSInstrumentWidget(BaseWidget):
             if not self._summary.beamstop_chk.isChecked():
                 self._summary.scale_beam_radius_edit.setText(self._beam_diameter)
                 util._check_and_get_float_line_edit(self._summary.scale_beam_radius_edit, min=0.0)
+        #
+        elif key == "sample_aperture_size":
+            self._sample_aperture_size = value
+            value_float = float(value)
+            if not self._summary.sample_aperture_size_chk.isChecked():
+                self._summary.sample_aperture_size_edit.setText(str(value_float))
+                util._check_and_get_float_line_edit(self._summary.sample_aperture_size_edit, min=0.0)
+        
+        elif key == "beam_stop_size":
+            self._beam_stop_size = value
+            value_float = float(value)
+            if not self._summary.beam_stop_size_chk.isChecked():
+                self._summary.beam_stop_size_edit.setText(str(value_float))
+                util._check_and_get_float_line_edit(self._summary.beam_stop_size_edit, min=0.0)
+                
+        elif key == "number_of_guides":
+            self._number_of_guides = value
+            value_float = float(value)
+            if not self._summary.number_of_guides_chk.isChecked():
+                self._summary.number_of_guides_edit.setText(str(value_float))
+                util._check_and_get_float_line_edit(self._summary.number_of_guides_edit, min=0.0)
+        
+        
 
     def content(self):
         return self._summary

@@ -1320,6 +1320,81 @@ Values can be selected by hand by checking the boxes below.</string>
               </property>
              </widget>
             </item>
+            <item row="6" column="2">
+             <widget class="QLineEdit" name="sample_aperture_size_edit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0.0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="2">
+             <widget class="QLineEdit" name="beam_stop_size_edit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0.0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="4">
+             <widget class="QLineEdit" name="number_of_guides_edit">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>80</width>
+                <height>16777215</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QCheckBox" name="sample_aperture_size_chk">
+              <property name="text">
+               <string>Sample aperture size</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QCheckBox" name="beam_stop_size_chk">
+              <property name="text">
+               <string>Beam stop size</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="3" alignment="Qt::AlignRight">
+             <widget class="QCheckBox" name="number_of_guides_chk">
+              <property name="text">
+               <string>Number of guides</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

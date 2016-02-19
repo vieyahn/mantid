@@ -24,6 +24,10 @@ class DataProxy(object):
     sample_detector_distance = None
     sample_detector_distance_offset = None
     sample_si_window_distance = None
+    #
+    sample_aperture_size = None
+    beam_stop_size = None
+    number_of_guides = None 
     # If it was moved before that's where the distance is:
     sample_detector_distance_moved = None
     data = None
@@ -51,7 +55,11 @@ class DataProxy(object):
                 self.sample_detector_distance_offset = ws.getRun().getProperty("sample-detector-distance-offset").value
                 self.sample_si_window_distance = ws.getRun().getProperty("sample-si-window-distance").value
                 self.sample_detector_distance_moved = ws.getRun().getProperty("sample_detector_distance").value
-
+                # TODO: Confirm this html tags
+                self.sample_aperture_size = ws.getRun().getProperty("Header_sample_aperture_size").value
+                self.beam_stop_size = ws.getRun().getProperty("Header_beamtrap_diameter").value
+                self.number_of_guides = ws.getRun().getProperty("Motor_Positions_nguides").value
+                
                 self.sample_thickness = ws.getRun().getProperty("sample-thickness").value
                 self.beam_diameter = ws.getRun().getProperty("beam-diameter").value
 

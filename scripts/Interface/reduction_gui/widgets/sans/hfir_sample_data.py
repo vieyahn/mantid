@@ -450,5 +450,15 @@ class SampleDataWidget(BaseWidget):
             #    self._content.thickness_edit.setText(QtCore.QString(str(dataproxy.sample_thickness)))
             if dataproxy.beam_diameter is not None:
                 self._settings.emit_key_value("beam_diameter", str(dataproxy.beam_diameter))
+            
+            #
+            if dataproxy.sample_aperture_size is not None:
+                self._settings.emit_key_value("sample_aperture_size", str(dataproxy.sample_aperture_size))
+            
+            if dataproxy.beam_stop_size is not None:
+                self._settings.emit_key_value("beam_stop_size", str(dataproxy.beam_stop_size))
+            
+            if dataproxy.number_of_guides is not None:
+                self._settings.emit_key_value("number_of_guides", str(dataproxy.number_of_guides))
 
             self._emit_experiment_parameters()
