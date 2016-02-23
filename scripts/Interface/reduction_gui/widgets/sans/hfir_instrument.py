@@ -195,14 +195,6 @@ class SANSInstrumentWidget(BaseWidget):
         self.connect(self._summary.scale_chk, QtCore.SIGNAL("clicked(bool)"), self._scale_clicked)
         self._scale_clicked(self._summary.scale_chk.isChecked())
 
-        # If we are not in debug/expert mode, hide some advanced options
-        if not self._settings.debug:
-            self._summary.mask_side_layout.deleteLater()
-            self._summary.mask_side_label.hide()
-            self._summary.mask_side_none_radio.hide()
-            self._summary.mask_side_front_radio.hide()
-            self._summary.mask_side_back_radio.hide()
-
         if not self._in_mantidplot:
             self._summary.dark_plot_button.hide()
             self._summary.scale_data_plot_button.hide()
