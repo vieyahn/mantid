@@ -168,6 +168,10 @@ class ReductionGUI(QtGui.QMainWindow, ui.ui_reduction_main.Ui_SANSReduction):
             for tab in tab_list:
                 self.tabWidget.addTab(tab[1], tab[0])
             self._set_window_title()
+            
+            # If there's a default tab, show it at startup
+            if hasattr(self._interface, 'DEFAULT_TAB_INDEX'):
+                self.tabWidget.setCurrentIndex(self._interface.DEFAULT_TAB_INDEX)
 
             # Show the "advanced interface" check box if needed
             if self._interface.has_advanced_version():

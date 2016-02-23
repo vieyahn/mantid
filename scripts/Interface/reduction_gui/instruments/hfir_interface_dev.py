@@ -36,6 +36,9 @@ class HFIRInterface(InstrumentInterface):
         self.ERROR_REPORT_NAME = "sans_error_report.xml"
         self.LAST_REDUCTION_NAME = ".mantid_last_HFIR_reduction.xml"
 
+        # This will be the tab that shows up when the interface is launched
+        self.DEFAULT_TAB_INDEX = 2 # Sample
+
         # Scripter object to interface with Mantid
         self.scripter = HFIRReductionScripter(name=name, settings = self._settings)
 
