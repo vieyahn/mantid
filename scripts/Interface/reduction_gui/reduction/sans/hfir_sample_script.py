@@ -191,7 +191,7 @@ class SampleData(BaseScriptElement):
     calculation_method = DirectBeam()
     theta_dependent = True
     dark_current = ''
-    sample_thickness = 1.0
+    sample_thickness = 0.1
 
     # Data file
     data_files = []
