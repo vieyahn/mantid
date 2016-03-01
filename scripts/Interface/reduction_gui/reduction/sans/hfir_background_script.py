@@ -120,7 +120,7 @@ class Background(BaseScriptElement):
     theta_dependent = True
     trans_dark_current = ''
     trans_calculation_method = DirectBeam()
-    sample_thickness = 1.0
+    sample_thickness = 0.1
 
     def to_script(self):
         """
