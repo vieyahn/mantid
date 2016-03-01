@@ -329,10 +329,6 @@ void IntegratePeakTimeSlices::exec() {
           MatrixWorkspace_sptr Data = WorkspaceFactory::Instance().create(
               std::string("Workspace2D"), 3, NN, NN);
 
-          Kernel::V3D CentPos = m_center +
-                                m_yvec * (Centy - m_ROW) * m_cellHeight +
-                                m_xvec * (Centx - m_COL) * m_cellWidth;
-
           auto XXX = boost::make_shared<DataModeHandler>(
               R, R, Centy, Centx, m_cellWidth, m_cellHeight,
               getProperty("CalculateVariances"), NBadEdgeCells,
@@ -498,7 +494,7 @@ void IntegratePeakTimeSlices::exec() {
               auto XXX =
                   boost::make_shared<DataModeHandler>(*m_AttributeValues);
               m_AttributeValues = XXX;
-              if (X.size() > 0)
+              if (!X.empty())
                 m_AttributeValues->setTime((X[chanMax] + X[chanMin]) / 2.0);
 
             } else // lastAttributeList exists
@@ -820,7 +816,6 @@ int IntegratePeakTimeSlices::CalculateTimeChannelSpan(
   UNUSED_ARG(specNum);
   double Q = peak.getQLabFrame().norm(); // getQ( peak)/2/M_PI;
 
-  V3D pos = peak.getDetPos();
   double time = peak.getTOF();
   double dtime = dQ / Q * time;
   int chanCenter = find(X, time);
@@ -2396,7 +2391,7 @@ bool DataModeHandler::IsEnoughData(const double *ParameterValues,
   // Check if flat
   double Varx, Vary, Cov;
 
-  if (StatBase.size() <= 0)
+  if (StatBase.empty())
     return false;
 
   double ncells = static_cast<int>(StatBase[IIntensities]);
