@@ -101,7 +101,8 @@ class EVSSelectModel(PythonAlgorithm):
                                          bin_params)
 
         # Initial peak finding
-        self._find_peaks(sample_data)
+        self._detected_peaks = list()
+        self._find_peaks(sample_data, 25)
 
         # Cache positions of each mass if time of flight
         self._mass_tof_positions = {}
@@ -110,13 +111,25 @@ class EVSSelectModel(PythonAlgorithm):
             if spec not in self._mass_tof_positions:
                 self._cache_mass_tof(spec)
 
+        print MASSES
         print self._mass_tof_positions
 
         # Model generation
         for p in self._detected_peaks:
             spec, tof, width = p
 
+            hwhm = width * 0.5
+            tof_range = (tof - hwhm, tof + hwhm)
+
+            print spec, tof, width, tof_range
+
+            mass_positions = self._mass_tof_positions[spec]
+            in_fwhm = np.where(np.logical_and(tof_range[0] <= mass_positions, mass_positions <= tof_range[1]))[0]
+            masses_for_peak = MASSES[in_fwhm]
+
             # TODO
+            print in_fwhm
+            print masses_for_peak
 
 #------------------------------------------------------------------------------
 
@@ -134,12 +147,11 @@ class EVSSelectModel(PythonAlgorithm):
 
 #------------------------------------------------------------------------------
 
-    def _find_peaks(self, sample_data):
+    def _find_peaks(self, sample_data, fwhm):
         peak_table = FindPeaks(InputWorkspace=sample_data,
                                PeakFunction='Gaussian',
-                               FWHM=25)
+                               FWHM=fwhm)
 
-        self._detected_peaks = list()
         for row in range(peak_table.rowCount()):
             ws_idx = peak_table.cell('spectrum', row)
             spectrum = sample_data.getSpectrum(ws_idx).getSpectrumNo()
