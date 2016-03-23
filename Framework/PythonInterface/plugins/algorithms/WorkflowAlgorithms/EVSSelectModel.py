@@ -1,8 +1,11 @@
-from mantid.simpleapi import *
+import mantid.simpleapi as ms
 from mantid.api import *
 from mantid.kernel import *
-from vesuvio.commands import load_and_crop_data
+from vesuvio.commands import load_and_crop_data, _create_profile_strs_and_mass_list, _create_background_str
+from vesuvio.base import VesuvioBase, TableWorkspaceDictionaryFacade
 import math
+import functools
+import itertools
 import numpy as np
 import scipy
 
@@ -32,7 +35,7 @@ NEUTRON_MASS_AMU = scipy.constants.value("neutron mass in u")
 
 #==============================================================================
 
-class EVSSelectModel(PythonAlgorithm):
+class EVSSelectModel(VesuvioBase):
 
     _instrument_params = None
     _mass_tof_positions = None
@@ -102,7 +105,9 @@ class EVSSelectModel(PythonAlgorithm):
 
         # Initial peak finding
         self._detected_peaks = list()
+        self._find_peaks(sample_data, 20)
         self._find_peaks(sample_data, 25)
+        self._find_peaks(sample_data, 30)
 
         # Cache positions of each mass if time of flight
         self._mass_tof_positions = {}
@@ -111,15 +116,28 @@ class EVSSelectModel(PythonAlgorithm):
             if spec not in self._mass_tof_positions:
                 self._cache_mass_tof(spec)
 
-        print MASSES
-        print self._mass_tof_positions
+        # print MASSES
+        # for s, p in self._mass_tof_positions.items():
+            # print s
+            # print p
+
+        # TODO: make a property
+        peak_range = (350, 400)
 
         # Model generation
+        masses = set()
+
         for p in self._detected_peaks:
             spec, tof, width = p
 
+
+            if tof < peak_range[0] or tof > peak_range[1]:
+                continue
+
             hwhm = width * 0.5
-            tof_range = (tof - hwhm, tof + hwhm)
+
+            # TODO: make a property
+            tof_range = (tof - (hwhm * 0.4), tof + (hwhm * 0.2))
 
             print spec, tof, width, tof_range
 
@@ -127,9 +145,24 @@ class EVSSelectModel(PythonAlgorithm):
             in_fwhm = np.where(np.logical_and(tof_range[0] <= mass_positions, mass_positions <= tof_range[1]))[0]
             masses_for_peak = MASSES[in_fwhm]
 
-            # TODO
-            print in_fwhm
-            print masses_for_peak
+            masses.update(masses_for_peak)
+
+        # TODO: make a property
+        guessed_no_of_masses = [3, 4]
+
+        models = []
+        for mass_count in guessed_no_of_masses:
+            models.extend(itertools.combinations(masses, mass_count))
+
+        # Convert TOF to seconds
+        sample_data = self._execute_child_alg("ScaleX", InputWorkspace=sample_data, OutputWorkspace=sample_data,
+                                              Operation='Multiply', Factor=1e-06)
+
+        # Fitting
+        print "Num models: {}".format(len(models))
+        for i, m in enumerate(models):
+            print i, m
+            self._run_fabada(sample_data, m, i)
 
 #------------------------------------------------------------------------------
 
@@ -148,9 +181,10 @@ class EVSSelectModel(PythonAlgorithm):
 #------------------------------------------------------------------------------
 
     def _find_peaks(self, sample_data, fwhm):
-        peak_table = FindPeaks(InputWorkspace=sample_data,
-                               PeakFunction='Gaussian',
-                               FWHM=fwhm)
+        peak_table = ms.FindPeaks(InputWorkspace=sample_data,
+                                  PeakFunction='Gaussian',
+                                  Tolerance=8,
+                                  FWHM=fwhm)
 
         for row in range(peak_table.rowCount()):
             ws_idx = peak_table.cell('spectrum', row)
@@ -159,7 +193,7 @@ class EVSSelectModel(PythonAlgorithm):
             width = peak_table.cell('width', row)
             self._detected_peaks.append((spectrum, centre, width))
 
-        DeleteWorkspace(peak_table)
+        ms.DeleteWorkspace(peak_table)
 
 #------------------------------------------------------------------------------
 
@@ -175,6 +209,46 @@ class EVSSelectModel(PythonAlgorithm):
         tof = (((l_0 * r_t) + l_1) / FINAL_VELOCITY) / scipy.constants.micro
 
         self. _mass_tof_positions[spec] = tof
+
+#------------------------------------------------------------------------------
+
+    def _run_fabada(self, sample_data, model, model_idx):
+        function_str = 'composite=CompositeFunction,NumDeriv=1;'
+        constraints = []
+
+        for i, mass in enumerate(model):
+            function_str += 'name=GaussianComptonProfile,Mass={0:f};'.format(mass)
+            constraints.append('f{0}.Intensity > 0.0, f{0}.Mass >= {1:f}, f{0}.Width > 0'.format(i, NEUTRON_MASS_AMU))
+
+        function_str += 'name=Polynomial,n=2;'
+        constraints_str = ','.join(constraints)
+
+        print function_str
+        print constraints_str
+
+        fit_ws_name = '{}_fit'.format(model_idx)
+        params_name = '{}_params'.format(model_idx)
+
+        outputs = self._execute_child_alg("Fit",
+                                          Function=function_str,
+                                          InputWorkspace=sample_data,
+                                          WorkspaceIndex=0, #TODO
+                                          Constraints=constraints_str,
+                                          CreateOutput=True,
+                                          OutputCompositeMembers=True,
+                                          MaxIterations=1000000)#,
+                                          # Minimizer='FABADA')
+
+        reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
+
+        # Convert fitted TOF to micro seconds
+        fitted_data = self._execute_child_alg("ScaleX", InputWorkspace=fitted_data,
+                                              OutputWorkspace=fitted_data,
+                                              Operation='Multiply', Factor=1e06)
+
+        # TODO
+        AnalysisDataService.addOrReplace(fit_ws_name, fitted_data)
+        AnalysisDataService.addOrReplace(params_name, params)
 
 #==============================================================================
 
