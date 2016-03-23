@@ -223,9 +223,6 @@ class EVSSelectModel(VesuvioBase):
         function_str += 'name=Polynomial,n=2;'
         constraints_str = ','.join(constraints)
 
-        print function_str
-        print constraints_str
-
         fit_ws_name = '{}_fit'.format(model_idx)
         params_name = '{}_params'.format(model_idx)
 
