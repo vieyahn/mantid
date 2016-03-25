@@ -35,11 +35,10 @@ NEUTRON_MASS_AMU = scipy.constants.value("neutron mass in u")
 
 #==============================================================================
 
-class EVSSelectModel(VesuvioBase):
+class VesuvioModelSelection(VesuvioBase):
 
     _instrument_params = None
     _mass_tof_positions = None
-    _detected_peaks = None
 
 #------------------------------------------------------------------------------
 
@@ -87,6 +86,8 @@ class EVSSelectModel(VesuvioBase):
 #------------------------------------------------------------------------------
 
     def PyExec(self):
+        self._mass_tof_positions = {}
+
         # Load instrument and parameters
         ip_file = self.getPropertyValue('IPFile');
 
@@ -104,55 +105,49 @@ class EVSSelectModel(VesuvioBase):
                                          bin_params)
 
         # Initial peak finding
-        self._detected_peaks = list()
-        self._find_peaks(sample_data, 20)
-        self._find_peaks(sample_data, 25)
-        self._find_peaks(sample_data, 30)
+        summed = ms.SumSpectra(InputWorkspace=sample_data)
+        initial_peaks = self._find_peaks(summed, FWHM=25, Tolerance=15)
+        ms.DeleteWorkspace(summed)
 
-        # Cache positions of each mass if time of flight
-        self._mass_tof_positions = {}
-        for p in self._detected_peaks:
-            spec = p[0]
-            if spec not in self._mass_tof_positions:
-                self._cache_mass_tof(spec)
+        # Per spectra peak finding
+        peaks = []
+        for p in initial_peaks:
+            detected = self._find_peaks(sample_data, FWHM=25, Tolerance=8, PeakPositions=[p[1]])
 
-        # print MASSES
-        # for s, p in self._mass_tof_positions.items():
-            # print s
-            # print p
+            avg_mass_range = np.zeros(2)
+            i = 0
+            for dp in detected:
+                spec, tof, width = dp
 
-        # TODO: make a property
-        peak_range = (350, 400)
+                if spec not in self._mass_tof_positions:
+                    self._cache_mass_tof(spec)
+
+                hwhm = width * 0.5
+                tof_range = (tof - hwhm, tof + hwhm)
+
+                mass_positions = self._mass_tof_positions[spec]
+                in_fwhm = np.where(np.logical_and(tof_range[0] <= mass_positions, mass_positions <= tof_range[1]))[0]
+
+                if len(in_fwhm) == 0:
+                    continue
+
+                avg_mass_range[0] += MASSES[in_fwhm[0]]
+                avg_mass_range[1] += MASSES[in_fwhm[-1]]
+                i += 1
+
+            if i > 0:
+                avg_mass_range /= i
+                peaks.append(avg_mass_range)
+
+        possible_peaks = (0, 3)
 
         # Model generation
-        masses = set()
-
-        for p in self._detected_peaks:
-            spec, tof, width = p
-
-
-            if tof < peak_range[0] or tof > peak_range[1]:
-                continue
-
-            hwhm = width * 0.5
-
-            # TODO: make a property
-            tof_range = (tof - (hwhm * 0.4), tof + (hwhm * 0.2))
-
-            print spec, tof, width, tof_range
-
-            mass_positions = self._mass_tof_positions[spec]
-            in_fwhm = np.where(np.logical_and(tof_range[0] <= mass_positions, mass_positions <= tof_range[1]))[0]
-            masses_for_peak = MASSES[in_fwhm]
-
-            masses.update(masses_for_peak)
-
-        # TODO: make a property
-        guessed_no_of_masses = [3, 4]
-
         models = []
-        for mass_count in guessed_no_of_masses:
-            models.extend(itertools.combinations(masses, mass_count))
+        for model in itertools.product(range(possible_peaks[0], possible_peaks[1] + 1), repeat=len(peaks)):
+            p = []
+            for i in range(len(peaks)):
+                p.append((peaks[i], model[i]))
+            models.append(self._generate_model(p))
 
         # Convert TOF to seconds
         sample_data = self._execute_child_alg("ScaleX", InputWorkspace=sample_data, OutputWorkspace=sample_data,
@@ -180,20 +175,22 @@ class EVSSelectModel(VesuvioBase):
 
 #------------------------------------------------------------------------------
 
-    def _find_peaks(self, sample_data, fwhm):
+    def _find_peaks(self, sample_data, **kwargs):
         peak_table = ms.FindPeaks(InputWorkspace=sample_data,
                                   PeakFunction='Gaussian',
-                                  Tolerance=8,
-                                  FWHM=fwhm)
+                                  **kwargs)
 
+        detected_peaks = []
         for row in range(peak_table.rowCount()):
             ws_idx = peak_table.cell('spectrum', row)
             spectrum = sample_data.getSpectrum(ws_idx).getSpectrumNo()
             centre = peak_table.cell('centre', row)
             width = peak_table.cell('width', row)
-            self._detected_peaks.append((spectrum, centre, width))
+            detected_peaks.append((spectrum, centre, width))
 
         ms.DeleteWorkspace(peak_table)
+
+        return detected_peaks
 
 #------------------------------------------------------------------------------
 
@@ -212,25 +209,35 @@ class EVSSelectModel(VesuvioBase):
 
 #------------------------------------------------------------------------------
 
-    def _run_fabada(self, sample_data, model, model_idx):
-        function_str = 'composite=CompositeFunction,NumDeriv=1;'
+    def _generate_model(self, peaks):
+        model = {'function_str': 'composite=CompositeFunction,NumDeriv=1;'}
         constraints = []
 
-        for i, mass in enumerate(model):
-            function_str += 'name=GaussianComptonProfile,Mass={0:f};'.format(mass)
-            constraints.append('f{0}.Intensity > 0.0, f{0}.Mass >= {1:f}, f{0}.Width > 0'.format(i, NEUTRON_MASS_AMU))
+        i = 0
+        for p in peaks:
+            for n in range(p[1]):
+                mass_range = p[0]
+                half_mass = mass_range[0] + (mass_range[1] - mass_range[0]) * 0.5
+                model['function_str'] += 'name=GaussianComptonProfile,Mass={0:f};'.format(half_mass)
+                constraints.append('f{0}.Intensity > 0.0, f{0}.Mass > {1:f}, f{0}.Mass < {2:f}, f{0}.Width > 0'.format(i, mass_range[0], mass_range[1]))
+                i += 1
 
-        function_str += 'name=Polynomial,n=2;'
-        constraints_str = ','.join(constraints)
+        model['function_str'] += 'name=Polynomial,n=2;'
+        model['constraints_str'] = ','.join(constraints)
 
+        return model
+
+#------------------------------------------------------------------------------
+
+    def _run_fabada(self, sample_data, model, model_idx):
         fit_ws_name = '{}_fit'.format(model_idx)
         params_name = '{}_params'.format(model_idx)
 
         outputs = self._execute_child_alg("Fit",
-                                          Function=function_str,
+                                          Function=model['function_str'],
                                           InputWorkspace=sample_data,
                                           WorkspaceIndex=0, #TODO
-                                          Constraints=constraints_str,
+                                          Constraints=model['constraints_str'],
                                           CreateOutput=True,
                                           OutputCompositeMembers=True,
                                           MaxIterations=1000000)#,
@@ -250,4 +257,4 @@ class EVSSelectModel(VesuvioBase):
 #==============================================================================
 
 # Register algorithm with Mantid
-AlgorithmFactory.subscribe(EVSSelectModel)
+AlgorithmFactory.subscribe(VesuvioModelSelection)
