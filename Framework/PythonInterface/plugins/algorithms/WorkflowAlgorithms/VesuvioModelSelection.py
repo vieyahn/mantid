@@ -4,8 +4,8 @@ from mantid.kernel import *
 from vesuvio.commands import load_and_crop_data, _create_profile_strs_and_mass_list, _create_background_str
 from vesuvio.base import VesuvioBase, TableWorkspaceDictionaryFacade
 import math
-import functools
 import itertools
+import sys
 import numpy as np
 import scipy
 
@@ -114,10 +114,10 @@ class VesuvioModelSelection(VesuvioBase):
         for p in initial_peaks:
             detected = self._find_peaks(sample_data, FWHM=25, Tolerance=8, PeakPositions=[p[1]])
 
-            avg_mass_range = np.zeros(2)
+            avg_peak = np.zeros(3)
             i = 0
             for dp in detected:
-                spec, tof, width = dp
+                spec, tof, width, intensity = dp
 
                 if spec not in self._mass_tof_positions:
                     self._cache_mass_tof(spec)
@@ -131,13 +131,14 @@ class VesuvioModelSelection(VesuvioBase):
                 if len(in_fwhm) == 0:
                     continue
 
-                avg_mass_range[0] += MASSES[in_fwhm[0]]
-                avg_mass_range[1] += MASSES[in_fwhm[-1]]
+                avg_peak[0] += MASSES[in_fwhm[0]]
+                avg_peak[1] += MASSES[in_fwhm[-1]]
+                avg_peak[2] += intensity
                 i += 1
 
             if i > 0:
-                avg_mass_range /= i
-                peaks.append(avg_mass_range)
+                avg_peak /= i
+                peaks.append(avg_peak)
 
         possible_peaks = (0, 3)
 
@@ -154,10 +155,23 @@ class VesuvioModelSelection(VesuvioBase):
                                               Operation='Multiply', Factor=1e-06)
 
         # Fitting
+        best_chi2 = sys.float_info.max
+        best_model = None
+
         print "Num models: {}".format(len(models))
         for i, m in enumerate(models):
-            print i, m
-            self._run_fabada(sample_data, m, i)
+            try:
+                chi2, param = self._run_fabada(sample_data, m, i)
+            except RuntimeError:
+                continue
+
+            print i, m, chi2
+
+            if chi2 < best_chi2:
+                best_chi2 = chi2
+                best_model = param
+
+        print "Best Model (Chi2: {1:f}): {0}".format(best_model, best_chi2)
 
 #------------------------------------------------------------------------------
 
@@ -186,7 +200,8 @@ class VesuvioModelSelection(VesuvioBase):
             spectrum = sample_data.getSpectrum(ws_idx).getSpectrumNo()
             centre = peak_table.cell('centre', row)
             width = peak_table.cell('width', row)
-            detected_peaks.append((spectrum, centre, width))
+            intensity = peak_table.cell('height', row)
+            detected_peaks.append((spectrum, centre, width, intensity))
 
         ms.DeleteWorkspace(peak_table)
 
@@ -216,9 +231,10 @@ class VesuvioModelSelection(VesuvioBase):
         i = 0
         for p in peaks:
             for n in range(p[1]):
-                mass_range = p[0]
+                mass_range = p[0][:2]
+                intensity = p[0][2]
                 half_mass = mass_range[0] + (mass_range[1] - mass_range[0]) * 0.5
-                model['function_str'] += 'name=GaussianComptonProfile,Mass={0:f};'.format(half_mass)
+                model['function_str'] += 'name=GaussianComptonProfile,Mass={0:f},Intensity={1:f};'.format(half_mass, intensity)
                 constraints.append('f{0}.Intensity > 0.0, f{0}.Mass > {1:f}, f{0}.Mass < {2:f}, f{0}.Width > 0'.format(i, mass_range[0], mass_range[1]))
                 i += 1
 
@@ -230,9 +246,14 @@ class VesuvioModelSelection(VesuvioBase):
 #------------------------------------------------------------------------------
 
     def _run_fabada(self, sample_data, model, model_idx):
-        fit_ws_name = '{}_fit'.format(model_idx)
-        params_name = '{}_params'.format(model_idx)
+        # Set names
+        fit_ws_name = '{0}_fit'.format(model_idx)
+        params_name = '{0}_params'.format(model_idx)
+        pdf_name = '{0}_pdf'.format(model_idx)
 
+        minimizer_str = 'FABADA,PDF={0}'.format(pdf_name)
+
+        # Run fit
         outputs = self._execute_child_alg("Fit",
                                           Function=model['function_str'],
                                           InputWorkspace=sample_data,
@@ -240,10 +261,14 @@ class VesuvioModelSelection(VesuvioBase):
                                           Constraints=model['constraints_str'],
                                           CreateOutput=True,
                                           OutputCompositeMembers=True,
-                                          MaxIterations=1000000)#,
-                                          # Minimizer='FABADA')
+                                          MaxIterations=100000000,
+                                          Minimizer=minimizer_str)
 
-        reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
+        # Get output
+        if 'FABADA' in minimizer_str:
+            reduced_chi_square, pdf, params, fitted_data = outputs[1], outputs[2], outputs[5], outputs[6]
+        else:
+            reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
 
         # Convert fitted TOF to micro seconds
         fitted_data = self._execute_child_alg("ScaleX", InputWorkspace=fitted_data,
@@ -253,6 +278,9 @@ class VesuvioModelSelection(VesuvioBase):
         # TODO
         AnalysisDataService.addOrReplace(fit_ws_name, fitted_data)
         AnalysisDataService.addOrReplace(params_name, params)
+        AnalysisDataService.addOrReplace(pdf_name, pdf)
+
+        return reduced_chi_square, params
 
 #==============================================================================
 
