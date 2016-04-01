@@ -32,6 +32,8 @@ set ( SRC_FILES
 	src/FloatingPointComparison.cpp
 	src/FreeBlock.cpp
 	src/Glob.cpp
+        src/Histogram/BinStandardDeviations.cpp
+        src/Histogram/BinVariances.cpp
 	src/ICatalogInfo.cpp
 	src/IPropertyManager.cpp
 	src/ISaveable.cpp
@@ -175,6 +177,18 @@ set ( INC_FILES
 	inc/MantidKernel/FreeBlock.h
 	inc/MantidKernel/FunctionTask.h
 	inc/MantidKernel/Glob.h
+        inc/MantidKernel/Histogram/Addable.h
+        inc/MantidKernel/Histogram/BinCounts.h
+        inc/MantidKernel/Histogram/BinStandardDeviations.h
+        inc/MantidKernel/Histogram/BinValues.h
+        inc/MantidKernel/Histogram/BinVariances.h
+        inc/MantidKernel/Histogram/BinWidths.h
+        inc/MantidKernel/Histogram/ConstIterable.h
+        inc/MantidKernel/Histogram/Histogram.h
+        inc/MantidKernel/Histogram/Multipliable.h
+        inc/MantidKernel/Histogram/Offsetable.h
+        inc/MantidKernel/Histogram/Scalable.h
+        inc/MantidKernel/Histogram/VectorOf.h
 	inc/MantidKernel/ICatalogInfo.h
 	inc/MantidKernel/IPropertyManager.h
 	inc/MantidKernel/IPropertySettings.h
@@ -327,6 +341,18 @@ set ( TEST_FILES
 	FunctionTaskTest.h
 	GlobTest.h
 	HermitePolynomialsTest.h
+        HistogramAddableTest.h
+        HistogramBinCountsTest.h
+        HistogramBinStandardDeviationsTest.h
+        HistogramBinValuesTest.h
+        HistogramBinVariancesTest.h
+        HistogramBinWidthsTest.h
+        HistogramConstIterableTest.h
+        HistogramMultipliableTest.h
+        HistogramOffsetableTest.h
+        HistogramScalableTest.h
+	HistogramTest.h
+        HistogramVectorOfTest.h
 	IPropertySettingsTest.h
 	ISaveableTest.h
 	IValidatorTest.h
