@@ -161,7 +161,7 @@ class VesuvioModelSelection(VesuvioBase):
         print "Num models: {}".format(len(models))
         for i, m in enumerate(models):
             try:
-                chi2, param = self._run_fabada(sample_data, m, i)
+                chi2, model_ws = self._test_model(sample_data, m, i)
             except RuntimeError:
                 continue
 
@@ -169,7 +169,7 @@ class VesuvioModelSelection(VesuvioBase):
 
             if chi2 < best_chi2:
                 best_chi2 = chi2
-                best_model = param
+                best_model = model_ws
 
         print "Best Model (Chi2: {1:f}): {0}".format(best_model, best_chi2)
 
@@ -245,42 +245,57 @@ class VesuvioModelSelection(VesuvioBase):
 
 #------------------------------------------------------------------------------
 
-    def _run_fabada(self, sample_data, model, model_idx):
-        # Set names
-        fit_ws_name = '{0}_fit'.format(model_idx)
-        params_name = '{0}_params'.format(model_idx)
-        pdf_name = '{0}_pdf'.format(model_idx)
+    def _test_model(self, sample_data, model, model_idx):
+        workspaces = []
+        chi2 = []
 
-        minimizer_str = 'FABADA,PDF={0}'.format(pdf_name)
+        for ws_idx in range(sample_data.getNumberHistograms()):
+            # Set names
+            fit_ws_name = '{0}_{1}_fit'.format(model_idx, ws_idx)
+            params_name = '{0}_{1}_params'.format(model_idx, ws_idx)
+            pdf_name = '{0}_{1}_pdf'.format(model_idx, ws_idx)
 
-        # Run fit
-        outputs = self._execute_child_alg("Fit",
-                                          Function=model['function_str'],
-                                          InputWorkspace=sample_data,
-                                          WorkspaceIndex=0, #TODO
-                                          Constraints=model['constraints_str'],
-                                          CreateOutput=True,
-                                          OutputCompositeMembers=True,
-                                          MaxIterations=100000000,
-                                          Minimizer=minimizer_str)
+            minimizer_str = 'Levenberg-Marquardt' #'FABADA,PDF={0}'.format(pdf_name)
 
-        # Get output
-        if 'FABADA' in minimizer_str:
-            reduced_chi_square, pdf, params, fitted_data = outputs[1], outputs[2], outputs[5], outputs[6]
-        else:
-            reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
+            # Run fit
+            outputs = self._execute_child_alg("Fit",
+                                              Function=model['function_str'],
+                                              InputWorkspace=sample_data,
+                                              WorkspaceIndex=ws_idx,
+                                              Constraints=model['constraints_str'],
+                                              CreateOutput=True,
+                                              OutputCompositeMembers=True,
+                                              MaxIterations=100000000,
+                                              Minimizer=minimizer_str)
 
-        # Convert fitted TOF to micro seconds
-        fitted_data = self._execute_child_alg("ScaleX", InputWorkspace=fitted_data,
-                                              OutputWorkspace=fitted_data,
-                                              Operation='Multiply', Factor=1e06)
+            # Get output
+            if 'FABADA' in minimizer_str:
+                reduced_chi_square, pdf, params, fitted_data = outputs[1], outputs[2], outputs[5], outputs[6]
+            else:
+                reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
 
-        # TODO
-        AnalysisDataService.addOrReplace(fit_ws_name, fitted_data)
-        AnalysisDataService.addOrReplace(params_name, params)
-        AnalysisDataService.addOrReplace(pdf_name, pdf)
+            chi2.append(reduced_chi_square)
 
-        return reduced_chi_square, params
+            # Convert fitted TOF to micro seconds
+            fitted_data = self._execute_child_alg("ScaleX", InputWorkspace=fitted_data,
+                                                  OutputWorkspace=fitted_data,
+                                                  Operation='Multiply', Factor=1e06)
+
+            AnalysisDataService.add(fit_ws_name, fitted_data)
+            AnalysisDataService.add(params_name, params)
+            workspaces.append(fit_ws_name)
+            workspaces.append(params_name)
+            if 'FABADA' in minimizer_str:
+                AnalysisDataService.add(pdf_name, pdf)
+                workspaces.append(pdf_name)
+
+        group_name = '{0}_model'.format(model_idx)
+        ms.GroupWorkspaces(InputWorkspaces=workspaces,
+                           OutputWorkspace=group_name)
+
+        chi2 = np.average(np.array(chi2))
+
+        return chi2, group_name
 
 #==============================================================================
 
