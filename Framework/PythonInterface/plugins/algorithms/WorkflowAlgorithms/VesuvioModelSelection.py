@@ -250,10 +250,12 @@ class VesuvioModelSelection(VesuvioBase):
         chi2 = []
 
         for ws_idx in range(sample_data.getNumberHistograms()):
+            name_prefix = '{0}_{1}_'.format(sample_data, model_idx)
+
             # Set names
-            fit_ws_name = '{0}_{1}_fit'.format(model_idx, ws_idx)
-            params_name = '{0}_{1}_params'.format(model_idx, ws_idx)
-            pdf_name = '{0}_{1}_pdf'.format(model_idx, ws_idx)
+            fit_ws_name = '{0}{1}_fit'.format(name_prefix, ws_idx)
+            params_name = '{0}{1}_params'.format(name_prefix, ws_idx)
+            pdf_name = '{0}{1}_pdf'.format(name_prefix, ws_idx)
 
             minimizer_str = 'Levenberg-Marquardt' #'FABADA,PDF={0}'.format(pdf_name)
 
@@ -289,7 +291,7 @@ class VesuvioModelSelection(VesuvioBase):
                 AnalysisDataService.add(pdf_name, pdf)
                 workspaces.append(pdf_name)
 
-        group_name = '{0}_model'.format(model_idx)
+        group_name = '{0}model'.format(name_prefix)
         ms.GroupWorkspaces(InputWorkspaces=workspaces,
                            OutputWorkspace=group_name)
 
