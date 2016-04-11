@@ -55,6 +55,10 @@ def fit_tof(runs, flags, iterations=1, convergence_threshold=None):
 
     exit_iteration = 0
 
+    masses = flags['masses']
+    isolated_mass = flags['isolated_mass']
+    isolated_mass_index = masses.index(isolated_mass)
+    isolated_mass_value = isolated_mass['value']
     for iteration in range(1, iterations+1):
         iteration_flags = copy.deepcopy(flags)
         iteration_flags['iteration'] = iteration
@@ -80,6 +84,15 @@ def fit_tof(runs, flags, iterations=1, convergence_threshold=None):
                 break
 
         last_results = results
+
+        if isolated_mass is not None:
+            isolated_mass_ws = isolate_mass(sample_data,
+                                            iteration, runs,
+                                            spectra,
+                                            isolated_mass_index,
+                                            isolated_mass_value)
+            #construct_resolutions(isolated_mass_ws,
+
 
     return (last_results[0], last_results[2], last_results[3], exit_iteration)
 
@@ -428,3 +441,53 @@ def _create_intensity_constraint_str(intensity_constraints):
         intensity_constraints_str = ""
 
     return intensity_constraints_str
+
+def isolate_mass(tof_ws, iteration, runs, spectra, mass_to_isolate_index, mass_value):
+    """
+    Isolates the desired mass from the mass workspace
+    and returns a new workspace for just that mass
+    tof_ws                  :: Workspace that contains the time of flight data
+    iteration               :: The current itereation of the fit
+    mass_to_isolate_index   :: Index of which mass to isolate from the data
+    """
+    out_name = runs + '_corrected_isolated_mass_tof_iteration_' + str(iteration)
+    ms.CloneWorkspace(InputWorkspace=tof_ws, OutputWorkspace=out_name)
+    isolated_mass_ws = mtd[out_name]
+    num_bins = isolated_mass_ws.blocksize()
+    num_spectra = isolated_mass_ws.getNumberHistograms()
+    for index in range(num_spectra):
+        spectrum = int(isolated_mass_ws.getAxis(1).getValue(index))
+        fitted_data_name = runs + '_data_spectrum_' + str(spectrum) + '_iteration_' + str(iteration)
+        if mtd.doesExist(fitted_data_name):
+            fitted_data = mtd[fitted_data_name]
+            total_masses = fitted_data.getNumberHistograms()
+            for point in range(num_bins):
+                y_value = fitted_data.dataY(0)[point] # raw data
+                # Remove contributions from other masses
+                for contribution_index in range(4, total_masses):
+                    if contribution_index != mass_to_isolate_index:
+                        y_value -= fitted_data.dataY(contribution_index)[point]
+                isolated_mass_ws.dataY(index)[point] = y_value
+        else:
+            raise RuntimeError("Could not find workspace: %s." % fitted_data_name)
+
+    y_space_ws_name = runs + '_corrected_isolated_mass_y_iteration_' + str(iteration)
+    ms.ConvertToYSpace(InputWorkspace=out_name, Mass=mass_value, OutputWorkspace=y_space_ws_name)
+
+    ms.Rebin(InputWorkspace=y_space_ws_name, Params='-30,.5,30',
+             OutputWorkspace=y_space_ws_name)
+    normalise_workspace(y_space_ws_name, -30.0, 30.0)
+
+def normalise_workspace(ws_name, lower_range, upper_range):
+    """
+    Normalises the workspace so that each spectra within
+    the set upper/lower range has a sum area of 1
+    """
+    ws = mtd[ws_name]
+    normalised_ws_name = ws.getName() + '_norm'
+    ms.Integration(InputWorkspace=ws.getName(), RangeLower=lower_range,
+                   RangeUpper=upper_range, OutputWorkspace='integrated_ws')
+    ms.Divide(LHSWorkspace=ws, RHSWorkspace='integrated_ws',
+              OutputWorkspace=normalised_ws_name)
+    ms.DeleteWorkspace('integrated_ws')
+    return mtd[normalised_ws_name]
