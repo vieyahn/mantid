@@ -101,6 +101,7 @@ set ( SRC_FILES
 	src/SANSRunWindow.cpp
 	src/SampleTransmission.cpp
 	src/StepScan.cpp
+	src/Tomography/EnergyBandsViewQtGUI.cpp
 	src/Tomography/ImageROIPresenter.cpp
 	src/Tomography/ImageROIViewQtWidget.cpp
 	src/Tomography/ImageStackPreParams.cpp
@@ -391,6 +392,7 @@ set ( MOC_FILES inc/MantidQtCustomInterfaces/Background.h
                 inc/MantidQtCustomInterfaces/SANSDiagnostics.h
                 inc/MantidQtCustomInterfaces/StepScan.h
                 inc/MantidQtCustomInterfaces/Tomography/ImageROIViewQtWidget.h
+                inc/MantidQtCustomInterfaces/Tomography/ImageROIPresenter.h
                 inc/MantidQtCustomInterfaces/Tomography/TomographyIfacePresenter.h
                 inc/MantidQtCustomInterfaces/Tomography/TomographyIfaceViewQtGUI.h
                 inc/MantidQtCustomInterfaces/Tomography/TomoToolConfigDialog.h

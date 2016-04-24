@@ -959,7 +959,8 @@ createProcessedInelasticWS(const std::vector<double> &L2,
       Mantid::Kernel::make_unique<OrientedLattice>(1, 1, 1, 90., 90., 90.);
   ws->mutableSample().setOrientedLattice(latt.release());
 
-  // TODO: clarify if this property indeed goes there;
+  ws->mutableRun().addProperty(
+      new PropertyWithValue<std::string>("deltaE-mode", "Direct"), true);
   ws->mutableRun().addProperty(new PropertyWithValue<double>("Ei", Ei), true);
   // these properties have to be different -> specific for processed ws, as time
   // now should be reconciled
@@ -1310,7 +1311,7 @@ void processDetectorsPositions(const API::MatrixWorkspace_const_sptr &inputWS,
     detIDMap[liveDetectorsCount] = i;
     L2[liveDetectorsCount] = spDet->getDistance(*sample);
 
-    double polar = inputWS->detectorTwoTheta(spDet);
+    double polar = inputWS->detectorTwoTheta(*spDet);
     double azim = spDet->getPhi();
     TwoTheta[liveDetectorsCount] = polar;
     Azimuthal[liveDetectorsCount] = azim;
