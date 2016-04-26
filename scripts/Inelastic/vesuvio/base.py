@@ -34,6 +34,15 @@ class TableWorkspaceDictionaryFacade(object):
     def __init__(self, held_object):
         self._table_ws = held_object
 
+    def keys(self):
+        return self._table_ws.column('Name')
+
+    def values(self):
+        return self._table_ws.column('Value')
+
+    def items(self):
+        return zip(self.keys(), self.values())
+
     def __getitem__(self, item):
         for row in self._table_ws:
             if row['Name'] == item:

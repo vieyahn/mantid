@@ -257,9 +257,22 @@ class VesuvioModelSelection(VesuvioBase):
             params_name = '{0}{1}_params'.format(name_prefix, ws_idx)
             pdf_name = '{0}{1}_pdf'.format(name_prefix, ws_idx)
 
-            minimizer_str = 'Levenberg-Marquardt' #'FABADA,PDF={0}'.format(pdf_name)
+            # Run initial fit
+            outputs = self._execute_child_alg("Fit",
+                                              Function=model['function_str'],
+                                              InputWorkspace=sample_data,
+                                              WorkspaceIndex=ws_idx,
+                                              Constraints=model['constraints_str'],
+                                              CreateOutput=True,
+                                              OutputCompositeMembers=True,
+                                              MaxIterations=100000000,
+                                              Minimizer='Levenberg-Marquardt')
 
-            # Run fit
+            reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
+            refined_function_str = self._update_function_from_params(model['function_str'], params)
+
+            # Run FABADA fit
+            minimizer_str = 'FABADA,PDF={0}'.format(pdf_name)
             outputs = self._execute_child_alg("Fit",
                                               Function=model['function_str'],
                                               InputWorkspace=sample_data,
@@ -270,12 +283,7 @@ class VesuvioModelSelection(VesuvioBase):
                                               MaxIterations=100000000,
                                               Minimizer=minimizer_str)
 
-            # Get output
-            if 'FABADA' in minimizer_str:
-                reduced_chi_square, pdf, params, fitted_data = outputs[1], outputs[2], outputs[5], outputs[6]
-            else:
-                reduced_chi_square, params, fitted_data = outputs[1], outputs[3], outputs[4]
-
+            reduced_chi_square, pdf, params, fitted_data = outputs[1], outputs[2], outputs[5], outputs[6]
             chi2.append(reduced_chi_square)
 
             # Convert fitted TOF to micro seconds
@@ -283,6 +291,7 @@ class VesuvioModelSelection(VesuvioBase):
                                                   OutputWorkspace=fitted_data,
                                                   Operation='Multiply', Factor=1e06)
 
+            # Store results
             AnalysisDataService.add(fit_ws_name, fitted_data)
             AnalysisDataService.add(params_name, params)
             workspaces.append(fit_ws_name)
@@ -298,6 +307,34 @@ class VesuvioModelSelection(VesuvioBase):
         chi2 = np.average(np.array(chi2))
 
         return chi2, group_name
+
+#------------------------------------------------------------------------------
+
+    def _update_function_from_params(self, function_str, params):
+        params_dict = TableWorkspaceDictionaryFacade(params)
+
+        functions = function_str.split(';')
+        new_functions = [functions[0]]
+
+        idx = 0;
+        for func in functions[1:]:
+            new_params = []
+
+            for param in func.split(','):
+                if param.split('=')[0] == 'name':
+                    new_params.append(param)
+
+            param_prefix = 'f{0}.'.format(idx)
+            for name, value in params_dict.items():
+                if param_prefix in name:
+                    new_params.append('{0}={1}'.format(name, value))
+
+            new_functions.append(','.join(new_params))
+            idx += 1
+
+        new_function_str = ';'.join(new_functions)
+
+        return new_function_str
 
 #==============================================================================
 
