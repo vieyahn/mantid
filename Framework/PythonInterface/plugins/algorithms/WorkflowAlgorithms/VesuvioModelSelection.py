@@ -68,6 +68,9 @@ class VesuvioModelSelection(VesuvioBase):
         self.declareProperty(name='BinParameters', defaultValue='',
                              doc='Input binning parameters')
 
+        self.declareProperty(name='FWHM', defaultValue=25,
+                             doc='Peak finder FWHM')
+
         self.declareProperty(FileProperty('IPFile', '', action=FileAction.OptionalLoad,
                                           extensions=['dat', 'par']),
                              doc='Instrument parameter file')
@@ -106,7 +109,7 @@ class VesuvioModelSelection(VesuvioBase):
 
         # Initial peak finding
         summed = ms.SumSpectra(InputWorkspace=sample_data)
-        initial_peaks = self._find_peaks(summed, FWHM=25, Tolerance=15)
+        initial_peaks = self._find_peaks(summed, FWHM=self.getPropertyValue('FWHM'), Tolerance=40)
         ms.DeleteWorkspace(summed)
 
         # Per spectra peak finding
@@ -191,6 +194,7 @@ class VesuvioModelSelection(VesuvioBase):
 
     def _find_peaks(self, sample_data, **kwargs):
         peak_table = ms.FindPeaks(InputWorkspace=sample_data,
+                                  PeaksList='{0}_peaks'.format(sample_data),
                                   PeakFunction='Gaussian',
                                   **kwargs)
 
@@ -202,8 +206,6 @@ class VesuvioModelSelection(VesuvioBase):
             width = peak_table.cell('width', row)
             intensity = peak_table.cell('height', row)
             detected_peaks.append((spectrum, centre, width, intensity))
-
-        ms.DeleteWorkspace(peak_table)
 
         return detected_peaks
 
