@@ -200,11 +200,26 @@ void Elwin::run() {
     if (m_blnManager->value(m_properties["Normalise"]))
       addSaveAlgorithm(eltWorkspace);
   }
-
+  if (m_uiForm.ckGroupOutput->isChecked()) {
+    addUnGroupInput();
+  }
   m_batchAlgoRunner->executeBatchAsync();
-
   // Set the result workspace for Python script export
   m_pythonExportWsName = qSquaredWorkspace.toStdString();
+}
+
+/**
+ * Ungroups the output after the execution of the algorithm
+ */
+void Elwin::addUnGroupInput() {
+  WorkspaceGroup_sptr groupWorkspace =
+      AnalysisDataService::Instance().retrieveWS<WorkspaceGroup>(
+          m_pythonExportWsName);
+  IAlgorithm_sptr ungroupAlg =
+      AlgorithmManager::Instance().create("UnGroupWorkspace");
+  ungroupAlg->initialize();
+  ungroupAlg->setProperty("InputWorkspace", "IDA_Elwin_Input");
+  m_batchAlgoRunner->addAlgorithm(ungroupAlg);
 }
 
 /**
