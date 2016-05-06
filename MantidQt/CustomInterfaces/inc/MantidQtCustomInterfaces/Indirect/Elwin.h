@@ -37,6 +37,7 @@ namespace IDA
 
   private:
     void addSaveAlgorithm(QString workspaceName, QString filename="");
+	void addUnGroupInput();
 
     Ui::Elwin m_uiForm;
     QtTreePropertyBrowser* m_elwTree;
