@@ -68,12 +68,12 @@ private:
   void exec() override;
 
   /// Get the surface sample component
-  Mantid::Geometry::IComponent_const_sptr
-  getSurfaceSampleComponent(Mantid::Geometry::Instrument_const_sptr inst);
+  Mantid::Geometry::IComponent_const_sptr getSurfaceSampleComponent(
+      const Mantid::Geometry::Instrument_const_sptr &inst);
 
   /// Get the detector component
   Mantid::Geometry::IComponent_const_sptr
-  getDetectorComponent(Mantid::Geometry::Instrument_const_sptr inst,
+  getDetectorComponent(const Mantid::Geometry::Instrument_const_sptr &inst,
                        const bool isPointDetector);
 
   /// Correct detector positions.
@@ -83,15 +83,16 @@ private:
 
   /// Sum spectra.
   Mantid::API::MatrixWorkspace_sptr
-  sumSpectraOverRange(API::MatrixWorkspace_sptr inWS, const int startIndex,
-                      const int endIndex);
+  sumSpectraOverRange(const API::MatrixWorkspace_sptr &inWS,
+                      const int startIndex, const int endIndex);
 
   /// Perform a transmission correction on the input IvsLam workspace
   API::MatrixWorkspace_sptr transmissonCorrection(
-      API::MatrixWorkspace_sptr IvsLam, const MinMax &wavelengthInterval,
+      const API::MatrixWorkspace_sptr &IvsLam, const MinMax &wavelengthInterval,
       const MinMax &wavelengthMonitorBackgroundInterval,
       const MinMax &wavelengthMonitorIntegrationInterval,
-      const int &i0MonitorIndex, API::MatrixWorkspace_sptr firstTransmissionRun,
+      const int &i0MonitorIndex,
+      const API::MatrixWorkspace_sptr &firstTransmissionRun,
       OptionalMatrixWorkspace_sptr secondTransmissionRun,
       const OptionalDouble &stitchingStart,
       const OptionalDouble &stitchingDelta, const OptionalDouble &stitchingEnd,
@@ -102,14 +103,14 @@ private:
   /// Perform transmission correction using either PolynomialCorrection
   /// or ExponentialCorrection.
   API::MatrixWorkspace_sptr
-  algorithmicCorrection(API::MatrixWorkspace_sptr IvsLam);
+  algorithmicCorrection(const API::MatrixWorkspace_sptr &IvsLam);
 
   /// Verify spectrum maps
-  void verifySpectrumMaps(API::MatrixWorkspace_const_sptr ws1,
-                          API::MatrixWorkspace_const_sptr ws2,
+  void verifySpectrumMaps(const API::MatrixWorkspace_const_sptr &ws1,
+                          const API::MatrixWorkspace_const_sptr &ws2,
                           const bool severe = false);
   /// returns angle for source rotation
-  double getAngleForSourceRotation(API::MatrixWorkspace_sptr toConvert,
+  double getAngleForSourceRotation(const API::MatrixWorkspace_sptr &toConvert,
                                    double thetaOut);
 };
 

@@ -10,7 +10,7 @@ namespace Mantid {
 namespace MDAlgorithms {
 
 std::vector<std::string> DLLExport
-findOriginalQUnits(Mantid::API::IMDWorkspace_const_sptr inws,
+findOriginalQUnits(const Mantid::API::IMDWorkspace_const_sptr &inws,
                    Mantid::Kernel::Logger &logger);
 
 /** CutMD : Slices multidimensional workspaces.

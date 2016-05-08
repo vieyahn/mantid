@@ -47,7 +47,7 @@ public:
   void copyPropertyValuesFrom(const LiveDataAlgorithm &other);
 
   Mantid::API::ILiveListener_sptr getLiveListener();
-  void setLiveListener(Mantid::API::ILiveListener_sptr listener);
+  void setLiveListener(const Mantid::API::ILiveListener_sptr &listener);
 
   std::map<std::string, std::string> validateInputs() override;
 

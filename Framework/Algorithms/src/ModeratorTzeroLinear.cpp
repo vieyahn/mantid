@@ -218,8 +218,9 @@ void ModeratorTzeroLinear::execEvent() {
 } // end of void ModeratorTzeroLinear::execEvent()
 
 // calculate time from sample to detector
-void ModeratorTzeroLinear::calculateTfLi(MatrixWorkspace_const_sptr inputWS,
-                                         size_t i, double &t_f, double &L_i) {
+void ModeratorTzeroLinear::calculateTfLi(
+    const MatrixWorkspace_const_sptr &inputWS, size_t i, double &t_f,
+    double &L_i) {
   static const double convFact = 1.0e-6 * sqrt(2 * PhysicalConstants::meV /
                                                PhysicalConstants::NeutronMass);
   static const double TfError = -1.0; // signal error when calculating final

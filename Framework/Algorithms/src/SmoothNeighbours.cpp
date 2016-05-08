@@ -451,7 +451,7 @@ will throw during usage.
 @param strategyName : The name of the weighting strategy to use
 @param cutOff : The cutoff distance
 */
-void SmoothNeighbours::setWeightingStrategy(const std::string strategyName,
+void SmoothNeighbours::setWeightingStrategy(const std::string &strategyName,
                                             double &cutOff) {
   if (strategyName == "Flat") {
     boost::scoped_ptr<WeightingStrategy> flatStrategy(new FlatWeighting);
@@ -505,7 +505,7 @@ Translate the radius into meters.
 @param enteredRadius : The numerical value of the radius in whatever units have
 been specified
 */
-double SmoothNeighbours::translateToMeters(const std::string radiusUnits,
+double SmoothNeighbours::translateToMeters(const std::string &radiusUnits,
                                            const double &enteredRadius) {
   double translatedRadius = 0;
   if (radiusUnits == "Meters") {
@@ -686,7 +686,7 @@ void SmoothNeighbours::execWorkspace2D() {
 //--------------------------------------------------------------------------------------------
 /** Build the instrument/detector setup in workspace
   */
-void SmoothNeighbours::setupNewInstrument(MatrixWorkspace_sptr outws) {
+void SmoothNeighbours::setupNewInstrument(const MatrixWorkspace_sptr &outws) {
   // Copy geometry over.
   API::WorkspaceFactory::Instance().initializeFromParent(inWS, outws, false);
 
@@ -724,7 +724,7 @@ void SmoothNeighbours::setupNewInstrument(MatrixWorkspace_sptr outws) {
 //--------------------------------------------------------------------------------------------
 /** Spread the average over all the pixels
   */
-void SmoothNeighbours::spreadPixels(MatrixWorkspace_sptr outws) {
+void SmoothNeighbours::spreadPixels(const MatrixWorkspace_sptr &outws) {
   // Get some stuff from the input workspace
   const size_t numberOfSpectra = inWS->getNumberHistograms();
 
@@ -791,7 +791,8 @@ void SmoothNeighbours::spreadPixels(MatrixWorkspace_sptr outws) {
 /** Execute the algorithm for a EventWorkspace input
  * @param ws :: EventWorkspace
  */
-void SmoothNeighbours::execEvent(Mantid::DataObjects::EventWorkspace_sptr ws) {
+void SmoothNeighbours::execEvent(
+    const Mantid::DataObjects::EventWorkspace_sptr &ws) {
   m_prog->resetNumSteps(inWS->getNumberHistograms(), 0.5, 1.0);
 
   // Get some stuff from the input workspace

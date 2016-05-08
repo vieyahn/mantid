@@ -51,7 +51,7 @@ public:
 
 protected:
   ImplicitFunctionParameterParser::SuccessorType m_successor;
-  InvalidParameter *parseInvalidParameter(std::string value);
+  InvalidParameter *parseInvalidParameter(const std::string &value);
 };
 }
 }

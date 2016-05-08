@@ -177,7 +177,7 @@ void Rebin2D::exec() {
  * @return A pointer to the output workspace
  */
 MatrixWorkspace_sptr
-Rebin2D::createOutputWorkspace(MatrixWorkspace_const_sptr parent,
+Rebin2D::createOutputWorkspace(const MatrixWorkspace_const_sptr &parent,
                                MantidVec &newXBins, MantidVec &newYBins,
                                const bool useFractionalArea) const {
   using Kernel::VectorHelper::createAxisFromRebinParams;

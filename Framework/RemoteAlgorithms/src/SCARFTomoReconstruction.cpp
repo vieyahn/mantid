@@ -1319,7 +1319,7 @@ const std::string SCARFTomoReconstruction::checkDownloadOutputFile(
  * string if fails.
  */
 const std::string
-SCARFTomoReconstruction::filterPACFilename(const std::string PACName) const {
+SCARFTomoReconstruction::filterPACFilename(const std::string &PACName) const {
   // discard up to last / (path)
   std::string name = PACName.substr(PACName.rfind('/') + 1);
   // remove trailing parameters
@@ -1355,7 +1355,7 @@ void SCARFTomoReconstruction::getOneJobFile(const std::string &jobId,
       {"Content-Type", "application/xml"},
       {"Cookie", token},
       {"Accept", m_acceptType}};
-  std::string body = remotePath;
+  const std::string &body = remotePath;
   int code;
   std::stringstream ss;
   try {

@@ -89,8 +89,8 @@ void XDataConverter::exec() {
  * @param inputWS :: The input workspace
  * @param index :: The index
  */
-void XDataConverter::setXData(API::MatrixWorkspace_sptr outputWS,
-                              const API::MatrixWorkspace_sptr inputWS,
+void XDataConverter::setXData(const API::MatrixWorkspace_sptr &outputWS,
+                              const API::MatrixWorkspace_sptr &inputWS,
                               const int index) {
   if (m_sharedX) {
     PARALLEL_CRITICAL(XDataConverter_para) {

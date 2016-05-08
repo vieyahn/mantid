@@ -51,7 +51,7 @@ public:
                          boost::shared_ptr<PoldiAbstractDetector> detector =
                              boost::shared_ptr<PoldiAbstractDetector>());
 
-  void setDeadWires(std::set<int> deadWires);
+  void setDeadWires(const std::set<int> &deadWires);
   std::set<int> deadWires();
 
   size_t elementCount() override;
@@ -61,8 +61,9 @@ protected:
   void detectorSetHook() override;
   std::vector<int> getGoodElements(std::vector<int> rawElements);
 
-  static bool detectorIsNotMasked(Geometry::Instrument_const_sptr instrument,
-                                  detid_t detectorId);
+  static bool
+  detectorIsNotMasked(const Geometry::Instrument_const_sptr &instrument,
+                      detid_t detectorId);
   bool isDeadElement(int index);
 
   std::set<int> m_deadWireSet;

@@ -78,16 +78,16 @@ protected:
   void calActiveCovarianceMatrix(GSLMatrix &covar,
                                  double epsrel = 1e-8) override;
 
-  void addVal(API::FunctionDomain_sptr domain,
-              API::FunctionValues_sptr values) const;
-  void addValDerivHessian(API::IFunction_sptr function,
-                          API::FunctionDomain_sptr domain,
-                          API::FunctionValues_sptr values,
+  void addVal(const API::FunctionDomain_sptr &domain,
+              const API::FunctionValues_sptr &values) const;
+  void addValDerivHessian(const API::IFunction_sptr &function,
+                          const API::FunctionDomain_sptr &domain,
+                          const API::FunctionValues_sptr &values,
                           bool evalDeriv = true, bool evalHessian = true) const;
 
   /// Get mapped weights from FunctionValues
   virtual std::vector<double>
-  getFitWeights(API::FunctionValues_sptr values) const;
+  getFitWeights(const API::FunctionValues_sptr &values) const;
 
   /// Flag to include constraint in cost function value
   bool m_includePenalty;

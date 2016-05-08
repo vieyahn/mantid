@@ -246,9 +246,10 @@ MatrixWorkspace_sptr ConvertSpectrumAxis2::createOutputWorkspace(
   return outputWorkspace;
 }
 
-double ConvertSpectrumAxis2::getEfixed(IDetector_const_sptr detector,
-                                       MatrixWorkspace_const_sptr inputWS,
-                                       int emode) const {
+double
+ConvertSpectrumAxis2::getEfixed(const IDetector_const_sptr &detector,
+                                const MatrixWorkspace_const_sptr &inputWS,
+                                int emode) const {
   double efixed(0);
   double efixedProp = getProperty("Efixed");
   if (efixedProp != EMPTY_DBL()) {

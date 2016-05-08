@@ -81,12 +81,13 @@ private:
   /// Generate peaks in output data workspaces
   void generatePeaks(
       const std::map<specnum_t,
-                     std::vector<std::pair<double, API::IFunction_sptr>>> &
-          functionmap,
-      API::MatrixWorkspace_sptr dataWS);
+                     std::vector<std::pair<double, API::IFunction_sptr>>>
+          &functionmap,
+      const API::MatrixWorkspace_sptr &dataWS);
 
   /// Check whether function has a certain parameter
-  bool hasParameter(API::IFunction_sptr function, std::string paramname);
+  bool hasParameter(const API::IFunction_sptr &function,
+                    const std::string &paramname);
 
   /// Create output workspace
   API::MatrixWorkspace_sptr createOutputWorkspace();
@@ -96,10 +97,11 @@ private:
 
   void createFunction(std::string &peaktype, std::string &bkgdtype);
 
-  void getSpectraSet(DataObjects::TableWorkspace_const_sptr peakParmsWS);
+  void getSpectraSet(const DataObjects::TableWorkspace_const_sptr &peakParmsWS);
 
   /// Get the IPeakFunction part in the input function
-  API::IPeakFunction_sptr getPeakFunction(API::IFunction_sptr infunction);
+  API::IPeakFunction_sptr
+  getPeakFunction(const API::IFunction_sptr &infunction);
 
   /// Add function parameter names to
   std::vector<std::string>

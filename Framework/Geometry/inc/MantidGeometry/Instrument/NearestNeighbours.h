@@ -74,7 +74,7 @@ public:
 protected:
   /// Get the spectra associated with all in the instrument
   std::map<specnum_t, IDetector_const_sptr>
-  getSpectraDetectors(boost::shared_ptr<const Instrument> instrument,
+  getSpectraDetectors(const boost::shared_ptr<const Instrument> &instrument,
                       const ISpectrumDetectorMapping &spectraMap);
 
   /// A pointer the the instrument

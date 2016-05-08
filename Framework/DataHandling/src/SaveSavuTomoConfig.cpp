@@ -128,7 +128,7 @@ SaveSavuTomoConfig::checkTables(const std::vector<std::string> &workspaces) {
  * steps information
  */
 void SaveSavuTomoConfig::saveFile(
-    const std::string fname, const std::vector<ITableWorkspace_sptr> &wss) {
+    const std::string &fname, const std::vector<ITableWorkspace_sptr> &wss) {
   // Ensure it has a .nxs extension
   std::string fileName = fname;
   if (!boost::ends_with(fileName, ".nxs")) {

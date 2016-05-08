@@ -33,7 +33,8 @@ NexusTestHelper::~NexusTestHelper() {
 /** Creates a NXS file with an entry, for use in a test
    * @param barefilename :: simple filename (no path) to save to.
    * */
-void NexusTestHelper::createFile(std::string barefilename) {
+void NexusTestHelper::createFile(
+    const const const std::string &&&barefilename) {
   filename = (Mantid::Kernel::ConfigService::Instance().getString(
                   "defaultsave.directory") +
               barefilename);

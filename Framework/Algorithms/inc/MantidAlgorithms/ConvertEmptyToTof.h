@@ -67,15 +67,17 @@ private:
   bool doFitGaussianPeak(int, double &, double &, double &, double, double);
   std::pair<int, double> findAverageEppAndEpTof(const std::map<int, int> &);
 
-  double getL1(API::MatrixWorkspace_const_sptr);
-  double getL2(API::MatrixWorkspace_const_sptr, int);
+  double getL1(const API::MatrixWorkspace_const_sptr &);
+  double getL2(const API::MatrixWorkspace_const_sptr &, int);
   double calculateTOF(double, double);
   bool areEqual(double, double, double);
   template <typename T>
-  T getPropertyFromRun(API::MatrixWorkspace_const_sptr, const std::string &);
+  T getPropertyFromRun(const API::MatrixWorkspace_const_sptr &,
+                       const std::string &);
   int roundUp(double);
   std::vector<double> makeTofAxis(int, double, size_t, double);
-  void setTofInWS(const std::vector<double> &, API::MatrixWorkspace_sptr);
+  void setTofInWS(const std::vector<double> &,
+                  const API::MatrixWorkspace_sptr &);
 
   DataObjects::Workspace2D_sptr m_inputWS;
   API::MatrixWorkspace_sptr m_outputWS;

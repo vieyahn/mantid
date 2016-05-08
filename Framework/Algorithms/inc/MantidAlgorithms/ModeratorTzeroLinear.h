@@ -106,7 +106,7 @@ private:
   // Execution code for event workspace
   void execEvent();
   // Calculate time from sample to detector and initial flight path
-  void calculateTfLi(API::MatrixWorkspace_const_sptr inputWS, size_t i,
+  void calculateTfLi(const API::MatrixWorkspace_const_sptr &inputWS, size_t i,
                      double &t_f, double &L_i);
 };
 

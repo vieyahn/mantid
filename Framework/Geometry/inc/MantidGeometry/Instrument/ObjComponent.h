@@ -97,7 +97,7 @@ public:
   /// Return the shape of the component
   const Object_const_sptr shape() const override;
   /// Set a new shape on the component
-  void setShape(Object_const_sptr newShape);
+  void setShape(const Object_const_sptr &newShape);
   /// Return the material this component is made from
   const Kernel::Material_const_sptr material() const override;
 

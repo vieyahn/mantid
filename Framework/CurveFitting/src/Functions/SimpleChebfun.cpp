@@ -163,7 +163,7 @@ double SimpleChebfun::integrate() const { return m_base->integrate(m_P); }
 
 /// Add a C++ function to the function
 /// @param fun :: A function to add.
-SimpleChebfun &SimpleChebfun::operator+=(ChebfunFunctionType fun) {
+SimpleChebfun &SimpleChebfun::operator+=(const ChebfunFunctionType &fun) {
   auto &x = xPoints();
   for (size_t i = 0; i < x.size(); ++i) {
     m_P[i] += fun(x[i]);

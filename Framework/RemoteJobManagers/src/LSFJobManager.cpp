@@ -1129,7 +1129,7 @@ void LSFJobManager::getOneJobFile(const std::string &jobId,
   const Poco::URI fullURL = makeFullURI(t.m_url, g_downloadOneBasePath, jobId);
   const StringToStringMap headers =
       makeHeaders(std::string("application/xml"), token, g_acceptType);
-  const std::string body = remotePath;
+  const std::string &body = remotePath;
   int code = 0;
   std::stringstream ss;
   try {

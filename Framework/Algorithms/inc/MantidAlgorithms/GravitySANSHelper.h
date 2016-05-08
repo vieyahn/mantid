@@ -75,8 +75,8 @@ private:
     return m_dropPerAngstrom2 * wav * wav;
   }
 
-  double gravitationalDrop(API::MatrixWorkspace_const_sptr ws,
-                           Geometry::IDetector_const_sptr det,
+  double gravitationalDrop(const API::MatrixWorkspace_const_sptr &ws,
+                           const Geometry::IDetector_const_sptr &det,
                            const double waveLength,
                            const double extraLength) const;
   double calcSinTheta() const;

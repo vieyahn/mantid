@@ -83,7 +83,7 @@ public:
   /// Integrate the function on its interval
   double integrate() const;
   /// Add a C++ function to the function
-  SimpleChebfun &operator+=(ChebfunFunctionType fun);
+  SimpleChebfun &operator+=(const ChebfunFunctionType &fun);
 
 private:
   /// Constructor

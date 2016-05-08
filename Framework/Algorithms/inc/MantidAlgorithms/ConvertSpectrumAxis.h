@@ -79,8 +79,9 @@ private:
   /// Execution code
   void exec() override;
   /// Getting Efixed
-  double getEfixed(Geometry::IDetector_const_sptr detector,
-                   API::MatrixWorkspace_const_sptr inputWS, int emode) const;
+  double getEfixed(const Geometry::IDetector_const_sptr &detector,
+                   const API::MatrixWorkspace_const_sptr &inputWS,
+                   int emode) const;
 };
 
 } // namespace Algorithms

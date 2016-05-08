@@ -326,7 +326,7 @@ public:
     * or Direction::InOut (Input & Output) property
     */
   PropertyWithValue(const std::string &name, const TYPE &defaultValue,
-                    const std::string defaultValueStr,
+                    const std::string &defaultValueStr,
                     IValidator_sptr validator, const unsigned int direction)
       : Property(name, typeid(TYPE), direction),
         m_value(extractToValueVector<TYPE>(defaultValueStr)),

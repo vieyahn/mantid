@@ -57,7 +57,7 @@ void IDomainCreator::declareProperty(Kernel::Property *prop,
  * Initialize the function with the workspace. Default is to call
  * IFunction::setWorkspace().
  */
-void IDomainCreator::initFunction(API::IFunction_sptr function) {
+void IDomainCreator::initFunction(const API::IFunction_sptr &function) {
   if (!function) {
     throw std::runtime_error(
         "IDomainCreator: cannot initialize empty function.");

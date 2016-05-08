@@ -101,7 +101,7 @@ protected:
 private:
   /// Use all the dimensions in the workspace
   virtual void
-  useAllDimensions(boost::shared_ptr<const IMDWorkspace> workspace);
+  useAllDimensions(const boost::shared_ptr<const IMDWorkspace> &workspace);
 };
 
 } // namespace API

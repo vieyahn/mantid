@@ -302,7 +302,7 @@ void SpatialGrouping::sortByDistance(
 * through for finding group
 */
 void SpatialGrouping::createBox(
-    boost::shared_ptr<const Geometry::IDetector> det,
+    const boost::shared_ptr<const Geometry::IDetector> &det,
     Geometry::BoundingBox &bndbox, double searchDist) {
 
   // We may have DetectorGroups here

@@ -35,7 +35,7 @@ AlgorithmObserver::~AlgorithmObserver() {}
 /**   Connect to algorithm alg and observe all its notifications
       @param alg :: Algorithm to be observed
 */
-void AlgorithmObserver::observeAll(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::observeAll(const IAlgorithm_const_sptr &alg) {
   alg->addObserver(m_progressObserver);
   alg->addObserver(m_startObserver);
   alg->addObserver(m_finishObserver);
@@ -45,7 +45,7 @@ void AlgorithmObserver::observeAll(IAlgorithm_const_sptr alg) {
 /**   Connect to algorithm alg and observe its progress notification
       @param alg :: Algorithm to be observed
 */
-void AlgorithmObserver::observeProgress(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::observeProgress(const IAlgorithm_const_sptr &alg) {
   alg->addObserver(m_progressObserver);
 }
 
@@ -59,21 +59,21 @@ void AlgorithmObserver::observeStarting() {
 /**   Connect to algorithm alg and observe its start notification
       @param alg :: Algorithm to be observed
 */
-void AlgorithmObserver::observeStart(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::observeStart(const IAlgorithm_const_sptr &alg) {
   alg->addObserver(m_startObserver);
 }
 
 /**   Connect to algorithm alg and observe its finish notification
       @param alg :: Algorithm to be observed
 */
-void AlgorithmObserver::observeFinish(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::observeFinish(const IAlgorithm_const_sptr &alg) {
   alg->addObserver(m_finishObserver);
 }
 
 /**   Connect to algorithm alg and observe its error notification
       @param alg :: Algorithm to be observed
 */
-void AlgorithmObserver::observeError(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::observeError(const IAlgorithm_const_sptr &alg) {
   alg->addObserver(m_errorObserver);
 }
 
@@ -81,7 +81,7 @@ void AlgorithmObserver::observeError(IAlgorithm_const_sptr alg) {
    inherited classes.
       @param alg :: Algorithm to be disconnected
 */
-void AlgorithmObserver::stopObserving(IAlgorithm_const_sptr alg) {
+void AlgorithmObserver::stopObserving(const IAlgorithm_const_sptr &alg) {
   alg->removeObserver(m_progressObserver);
   alg->removeObserver(m_startObserver);
   alg->removeObserver(m_finishObserver);

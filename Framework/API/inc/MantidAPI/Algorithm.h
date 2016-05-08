@@ -286,7 +286,8 @@ public:
 
   /// set whether we wish to track the child algorithm's history and pass it the
   /// parent object to fill.
-  void trackAlgorithmHistory(boost::shared_ptr<AlgorithmHistory> parentHist);
+  void
+  trackAlgorithmHistory(const boost::shared_ptr<AlgorithmHistory> &parentHist);
 
   typedef std::vector<boost::shared_ptr<Workspace>> WorkspaceVector;
 

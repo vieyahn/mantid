@@ -31,7 +31,7 @@ using namespace API;
  *  a tie or a constraint.
  */
 BoundaryConstraint::BoundaryConstraint(API::IFunction *fun,
-                                       const std::string paramName,
+                                       const std::string &paramName,
                                        const double lowerBound,
                                        const double upperBound, bool isDefault)
     : m_penaltyFactor(1000.0), m_parameterName(paramName),
@@ -41,7 +41,7 @@ BoundaryConstraint::BoundaryConstraint(API::IFunction *fun,
 }
 
 BoundaryConstraint::BoundaryConstraint(API::IFunction *fun,
-                                       const std::string paramName,
+                                       const std::string &paramName,
                                        const double lowerBound, bool isDefault)
     : m_penaltyFactor(1000.0), m_parameterName(paramName),
       m_hasLowerBound(true), m_hasUpperBound(false), m_lowerBound(lowerBound),

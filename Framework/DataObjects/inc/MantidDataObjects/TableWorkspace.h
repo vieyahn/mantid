@@ -323,7 +323,7 @@ private:
     }
   }
 
-  bool addColumn(boost::shared_ptr<API::Column> column);
+  bool addColumn(const boost::shared_ptr<API::Column> &column);
 
   /** This method finds the row and column index of an integer cell value in a
   * table workspace
@@ -340,7 +340,7 @@ private:
   * @param  row  row number of the value  searched
   * @param  col  column number of the value searched
   */
-  virtual void find(std::string value, size_t &row, size_t &col) {
+  virtual void find(const std::string &value, size_t &row, size_t &col) {
     findValue(value, row, col);
   }
   /** This method finds the row and column index of an float value in a table

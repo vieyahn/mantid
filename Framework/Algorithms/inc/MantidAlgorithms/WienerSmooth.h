@@ -48,7 +48,7 @@ private:
 
   std::pair<double, double> getStartEnd(const MantidVec &X,
                                         bool isHistogram) const;
-  API::MatrixWorkspace_sptr copyInput(API::MatrixWorkspace_sptr inputWS,
+  API::MatrixWorkspace_sptr copyInput(const API::MatrixWorkspace_sptr &inputWS,
                                       size_t wsIndex);
   API::MatrixWorkspace_sptr
   smoothSingleSpectrum(API::MatrixWorkspace_sptr inputWS, size_t wsIndex);

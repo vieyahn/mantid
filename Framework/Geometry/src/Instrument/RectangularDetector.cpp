@@ -365,7 +365,7 @@ V3D RectangularDetector::getRelativePosAtXY(int x, int y) const {
  *            and idstep=100 and idstart=1 then (0,0)=1; (0,1)=101; and so on
  *
  */
-void RectangularDetector::initialize(boost::shared_ptr<Object> shape,
+void RectangularDetector::initialize(const boost::shared_ptr<Object> &shape,
                                      int xpixels, double xstart, double xstep,
                                      int ypixels, double ystart, double ystep,
                                      int idstart, bool idfillbyfirst_y,

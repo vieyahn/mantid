@@ -454,7 +454,7 @@ ChebfunBase::bestFitTempl(double start, double end, FunctionType f,
 
 /// Template specialization for a generic function type.
 ChebfunBase_sptr ChebfunBase::bestFit(double start, double end,
-                                      ChebfunFunctionType f,
+                                      const ChebfunFunctionType &f,
                                       std::vector<double> &p,
                                       std::vector<double> &a, double maxA,
                                       double tolerance, size_t maxSize) {
@@ -594,7 +594,7 @@ std::vector<double> ChebfunBase::calcP(const std::vector<double> &a) const {
  * @param f :: A function pointer.
  * @return Function values at the base x-points.
  */
-std::vector<double> ChebfunBase::fit(ChebfunFunctionType f) const {
+std::vector<double> ChebfunBase::fit(const ChebfunFunctionType &f) const {
   std::vector<double> res(size());
   std::transform(m_x.begin(), m_x.end(), res.begin(), f);
   return res;
@@ -619,7 +619,7 @@ std::vector<double> ChebfunBase::fit(const API::IFunction &f) const {
  * @param f :: Function to calculate.
  * @param p :: Values of function f at the even-valued indices of m_x.
  */
-std::vector<double> ChebfunBase::fitOdd(ChebfunFunctionType f,
+std::vector<double> ChebfunBase::fitOdd(const ChebfunFunctionType &f,
                                         std::vector<double> &p) const {
   assert(size() == p.size() * 2 - 1);
   assert(size() % 2 == 1);

@@ -220,7 +220,7 @@ void memoryCheck(size_t nPoints) {
  * @param nThreads : Optional argument of number of threads to use.
  */
 ConnectedComponentLabeling::ConnectedComponentLabeling(
-    const size_t &startId, const boost::optional<int> nThreads)
+    const size_t &startId, const boost::optional<int> &nThreads)
     : m_startId(startId), m_nThreads(nThreads) {
   if (m_nThreads.is_initialized() && m_nThreads.get() < 0) {
     throw std::invalid_argument(
@@ -272,7 +272,7 @@ int ConnectedComponentLabeling::getNThreads() const {
  * @return : Map of label ids to clusters.
  */
 ClusterMap ConnectedComponentLabeling::calculateDisjointTree(
-    IMDHistoWorkspace_sptr ws, BackgroundStrategy *const baseStrategy,
+    const IMDHistoWorkspace_sptr &ws, BackgroundStrategy *const baseStrategy,
     Progress &progress) const {
   std::map<size_t, boost::shared_ptr<ICluster>> clusterMap;
   VecElements neighbourElements(ws->getNPoints());
@@ -400,7 +400,7 @@ ClusterMap ConnectedComponentLabeling::calculateDisjointTree(
  * @return Cluster output workspace of results
  */
 boost::shared_ptr<Mantid::API::IMDHistoWorkspace>
-ConnectedComponentLabeling::execute(IMDHistoWorkspace_sptr ws,
+ConnectedComponentLabeling::execute(const IMDHistoWorkspace_sptr &ws,
                                     BackgroundStrategy *const strategy,
                                     Progress &progress) const {
   ClusterTuple result = executeAndFetchClusters(ws, strategy, progress);

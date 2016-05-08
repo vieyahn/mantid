@@ -45,7 +45,7 @@ const detid_t LOQ_TRANSMISSION_MONITOR_UDET = 3;
  *
  * @returns workspace index corresponding to the given detector ID
  */
-size_t getIndexFromDetectorID(MatrixWorkspace_sptr ws, detid_t detid) {
+size_t getIndexFromDetectorID(const MatrixWorkspace_sptr &ws, detid_t detid) {
   const std::vector<detid_t> input = {detid};
   std::vector<size_t> result = ws->getIndicesFromDetectorIDs(input);
   if (result.empty())
@@ -263,7 +263,7 @@ void CalculateTransmission::exec() {
  *execution
  */
 API::MatrixWorkspace_sptr
-CalculateTransmission::extractSpectra(API::MatrixWorkspace_sptr ws,
+CalculateTransmission::extractSpectra(const API::MatrixWorkspace_sptr &ws,
                                       const std::vector<size_t> &indices) {
   // Compile a comma separated list of indices that we can pass to SumSpectra.
   std::vector<std::string> indexStrings(indices.size());
@@ -300,9 +300,9 @@ CalculateTransmission::extractSpectra(API::MatrixWorkspace_sptr ws,
 * execution
 */
 API::MatrixWorkspace_sptr
-CalculateTransmission::fit(API::MatrixWorkspace_sptr raw,
+CalculateTransmission::fit(const API::MatrixWorkspace_sptr &raw,
                            std::vector<double> rebinParams,
-                           const std::string fitMethod) {
+                           const std::string &fitMethod) {
   MatrixWorkspace_sptr output =
       this->extractSpectra(raw, std::vector<size_t>(1, 0));
 
@@ -402,8 +402,8 @@ CalculateTransmission::fit(API::MatrixWorkspace_sptr raw,
  *  @throw runtime_error if the Linear algorithm fails during execution
  */
 API::MatrixWorkspace_sptr
-CalculateTransmission::fitData(API::MatrixWorkspace_sptr WS, double &grad,
-                               double &offset) {
+CalculateTransmission::fitData(const API::MatrixWorkspace_sptr &WS,
+                               double &grad, double &offset) {
   g_log.information("Fitting the experimental transmission curve");
   double start = m_done;
   IAlgorithm_sptr childAlg = createChildAlgorithm("Fit", start, m_done = 0.9);
@@ -435,7 +435,8 @@ CalculateTransmission::fitData(API::MatrixWorkspace_sptr WS, double &grad,
  * @param[out] coeficients of the polynomial. c[0] + c[1]x + c[2]x^2 + ...
  */
 API::MatrixWorkspace_sptr
-CalculateTransmission::fitPolynomial(API::MatrixWorkspace_sptr WS, int order,
+CalculateTransmission::fitPolynomial(const API::MatrixWorkspace_sptr &WS,
+                                     int order,
                                      std::vector<double> &coeficients) {
   g_log.notice("Fitting the experimental transmission curve fitpolyno");
   double start = m_done;
@@ -472,7 +473,7 @@ CalculateTransmission::fitPolynomial(API::MatrixWorkspace_sptr WS, int order,
 */
 API::MatrixWorkspace_sptr
 CalculateTransmission::rebin(std::vector<double> &binParams,
-                             API::MatrixWorkspace_sptr ws) {
+                             const API::MatrixWorkspace_sptr &ws) {
   double start = m_done;
   IAlgorithm_sptr childAlg =
       createChildAlgorithm("Rebin", start, m_done += 0.05);
@@ -492,9 +493,9 @@ CalculateTransmission::rebin(std::vector<double> &binParams,
  * @param directWS :: the input direct workspace
  * @param index    :: the index of the detector to checked
  */
-void CalculateTransmission::logIfNotMonitor(API::MatrixWorkspace_sptr sampleWS,
-                                            API::MatrixWorkspace_sptr directWS,
-                                            size_t index) {
+void CalculateTransmission::logIfNotMonitor(
+    const API::MatrixWorkspace_sptr &sampleWS,
+    const API::MatrixWorkspace_sptr &directWS, size_t index) {
   const std::string message = "The detector at index " +
                               boost::lexical_cast<std::string>(index) +
                               " is not a monitor in the ";

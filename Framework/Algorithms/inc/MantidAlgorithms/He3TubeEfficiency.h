@@ -98,15 +98,15 @@ private:
   /// Log any errors with spectra that occurred
   void logErrors() const;
   /// Retrieve the detector parameters from workspace or detector properties
-  double getParameter(std::string wsPropName, std::size_t currentIndex,
-                      std::string detPropName,
-                      boost::shared_ptr<const Geometry::IDetector> idet);
+  double getParameter(const std::string &wsPropName, std::size_t currentIndex,
+                      const std::string &detPropName,
+                      const boost::shared_ptr<const Geometry::IDetector> &idet);
   /// Helper for event handling
   template <class T> void eventHelper(std::vector<T> &events, double expval);
   /// Function to calculate exponential contribution
-  double
-  calculateExponential(std::size_t spectraIndex,
-                       boost::shared_ptr<const Geometry::IDetector> idet);
+  double calculateExponential(
+      std::size_t spectraIndex,
+      const boost::shared_ptr<const Geometry::IDetector> &idet);
 
   /// The user selected (input) workspace
   API::MatrixWorkspace_const_sptr inputWS;

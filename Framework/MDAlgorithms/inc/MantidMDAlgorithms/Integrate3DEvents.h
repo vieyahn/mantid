@@ -71,7 +71,7 @@ public:
 
   /// Find the net integrated intensity of a peak, using ellipsoidal volumes
   boost::shared_ptr<const Mantid::Geometry::PeakShape> ellipseIntegrateEvents(
-      std::vector<Kernel::V3D> E1Vec, Mantid::Kernel::V3D const &peak_q,
+      const std::vector<Kernel::V3D> &E1Vec, Mantid::Kernel::V3D const &peak_q,
       bool specify_size, double peak_radius, double back_inner_radius,
       double back_outer_radius, std::vector<double> &axes_radii, double &inti,
       double &sigi);
@@ -116,7 +116,7 @@ private:
   /// Find the net integrated intensity of a list of Q's using ellipsoids
   boost::shared_ptr<const Mantid::DataObjects::PeakShapeEllipsoid>
   ellipseIntegrateEvents(
-      std::vector<Kernel::V3D> E1Vec, Kernel::V3D const &peak_q,
+      const std::vector<Kernel::V3D> &E1Vec, Kernel::V3D const &peak_q,
       std::vector<std::pair<double, Mantid::Kernel::V3D>> const &ev_list,
       std::vector<Mantid::Kernel::V3D> const &directions,
       std::vector<double> const &sigmas, bool specify_size, double peak_radius,

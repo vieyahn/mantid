@@ -48,7 +48,7 @@ public:
   PoldiPeak_sptr clone() const;
 
   const MillerIndices &hkl() const;
-  void setHKL(MillerIndices hkl);
+  void setHKL(const MillerIndices &hkl);
 
   UncertainValue d() const;
   UncertainValue q() const;
@@ -68,8 +68,8 @@ public:
   static PoldiPeak_sptr create(double qValue);
   static PoldiPeak_sptr create(UncertainValue qValue, UncertainValue intensity);
   static PoldiPeak_sptr create(double qValue, double intensity);
-  static PoldiPeak_sptr create(MillerIndices hkl, double dValue);
-  static PoldiPeak_sptr create(MillerIndices hkl, UncertainValue dValue,
+  static PoldiPeak_sptr create(const MillerIndices &hkl, double dValue);
+  static PoldiPeak_sptr create(const MillerIndices &hkl, UncertainValue dValue,
                                UncertainValue intensity,
                                UncertainValue fwhmRelative);
 

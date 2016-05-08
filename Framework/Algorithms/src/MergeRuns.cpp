@@ -307,7 +307,8 @@ void MergeRuns::execEvent() {
 // std::list::sort(compare)
 // to order the input workspaces by the start of their frame (i.e. the first X
 // value).
-static bool compare(MatrixWorkspace_sptr first, MatrixWorkspace_sptr second) {
+static bool compare(const MatrixWorkspace_sptr &first,
+                    const MatrixWorkspace_sptr &second) {
   return (first->readX(0).front() < second->readX(0).front());
 }
 /// @endcond
@@ -322,10 +323,10 @@ provided.
 @param instrument : name of the instrument
 @throws an invalid argument if a full match is not acheived.
 */
-void MergeRuns::testCompatibility(MatrixWorkspace_const_sptr ws,
+void MergeRuns::testCompatibility(const MatrixWorkspace_const_sptr &ws,
                                   const std::string &xUnitID,
                                   const std::string &YUnit, const bool dist,
-                                  const std::string instrument) const {
+                                  const std::string &instrument) const {
   std::string errors;
   if (ws->getAxis(0)->unit()->unitID() != xUnitID)
     errors += "different X units; ";

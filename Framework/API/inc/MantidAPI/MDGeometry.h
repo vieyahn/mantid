@@ -58,7 +58,7 @@ public:
   virtual boost::shared_ptr<const Mantid::Geometry::IMDDimension>
   getDimension(size_t index) const;
   virtual boost::shared_ptr<const Mantid::Geometry::IMDDimension>
-  getDimensionWithId(std::string id) const;
+  getDimensionWithId(const std::string &id) const;
   size_t getDimensionIndexByName(const std::string &name) const;
   size_t getDimensionIndexById(const std::string &id) const;
   Mantid::Geometry::VecIMDDimension_const_sptr
@@ -73,7 +73,8 @@ public:
 
   std::string getGeometryXML() const;
 
-  void addDimension(boost::shared_ptr<Mantid::Geometry::IMDDimension> dim);
+  void
+  addDimension(const boost::shared_ptr<Mantid::Geometry::IMDDimension> &dim);
   void addDimension(Mantid::Geometry::IMDDimension *dim);
 
   // --------------------------------------------------------------------------------------------
@@ -86,7 +87,8 @@ public:
   bool hasOriginalWorkspace(size_t index = 0) const;
   size_t numOriginalWorkspaces() const;
   boost::shared_ptr<Workspace> getOriginalWorkspace(size_t index = 0) const;
-  void setOriginalWorkspace(boost::shared_ptr<Workspace> ws, size_t index = 0);
+  void setOriginalWorkspace(const boost::shared_ptr<Workspace> &ws,
+                            size_t index = 0);
   Mantid::API::CoordTransform const *
   getTransformFromOriginal(size_t index = 0) const;
   void setTransformFromOriginal(Mantid::API::CoordTransform *transform,

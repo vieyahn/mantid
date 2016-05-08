@@ -63,7 +63,7 @@ public:
   /// Append an workspace history to this one
   void addHistory(const WorkspaceHistory &otherHistory);
   /// Append an algorithm history to this one
-  void addHistory(AlgorithmHistory_sptr algHistory);
+  void addHistory(const AlgorithmHistory_sptr &algHistory);
   /// How many entries are there
   size_t size() const;
   /// Is the history empty
@@ -93,9 +93,9 @@ private:
   /// Private, unimplemented copy assignment operator
   WorkspaceHistory &operator=(const WorkspaceHistory &);
   /// Recursive function to load the algorithm history tree from file
-  void loadNestedHistory(
-      ::NeXus::File *file,
-      AlgorithmHistory_sptr parent = boost::shared_ptr<AlgorithmHistory>());
+  void loadNestedHistory(::NeXus::File *file,
+                         const AlgorithmHistory_sptr &parent =
+                             boost::shared_ptr<AlgorithmHistory>());
   /// Parse an algorithm history string loaded from file
   AlgorithmHistory_sptr parseAlgorithmHistory(const std::string &rawData);
   /// Find the history entries at this level in the file.

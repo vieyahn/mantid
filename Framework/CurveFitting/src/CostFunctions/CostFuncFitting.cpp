@@ -58,9 +58,9 @@ size_t CostFuncFitting::nParams() const {
  *  also contains the data to fit to and the fitting weights (reciprocal
  * errors).
  */
-void CostFuncFitting::setFittingFunction(API::IFunction_sptr function,
-                                         API::FunctionDomain_sptr domain,
-                                         API::FunctionValues_sptr values) {
+void CostFuncFitting::setFittingFunction(
+    const API::IFunction_sptr &function, const API::FunctionDomain_sptr &domain,
+    const API::FunctionValues_sptr &values) {
   m_function = function;
   m_domain = domain;
   m_values = values;

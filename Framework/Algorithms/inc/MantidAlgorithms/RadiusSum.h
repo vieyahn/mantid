@@ -51,13 +51,14 @@ public:
   int version() const override;
   const std::string category() const override;
 
-  static bool inputWorkspaceHasInstrumentAssociated(API::MatrixWorkspace_sptr);
+  static bool
+  inputWorkspaceHasInstrumentAssociated(const API::MatrixWorkspace_sptr &);
 
   static std::vector<double>
-      getBoundariesOfNumericImage(API::MatrixWorkspace_sptr);
+  getBoundariesOfNumericImage(const API::MatrixWorkspace_sptr &);
 
   static std::vector<double>
-      getBoundariesOfInstrument(API::MatrixWorkspace_sptr);
+  getBoundariesOfInstrument(const API::MatrixWorkspace_sptr &);
 
   static void centerIsInsideLimits(const std::vector<double> &centre,
                                    const std::vector<double> &boundaries);
@@ -87,8 +88,8 @@ private:
   API::MatrixWorkspace_sptr inputWS;
   double min_radius, max_radius;
 
-  double getMinBinSizeForInstrument(API::MatrixWorkspace_sptr);
-  double getMinBinSizeForNumericImage(API::MatrixWorkspace_sptr);
+  double getMinBinSizeForInstrument(const API::MatrixWorkspace_sptr &);
+  double getMinBinSizeForNumericImage(const API::MatrixWorkspace_sptr &);
 
   /** Return the bin position for a given distance
    *  From the input, it is defined the limits of distances as:

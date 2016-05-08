@@ -100,7 +100,7 @@ private:
 
   void execQuickStatistics();
 
-  void exportErrorLog(API::MatrixWorkspace_sptr ws,
+  void exportErrorLog(const API::MatrixWorkspace_sptr &ws,
                       std::vector<Kernel::DateAndTime> abstimevec, double dts);
 
   void checkLogValueChanging(std::vector<Kernel::DateAndTime> timevec,

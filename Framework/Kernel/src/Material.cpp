@@ -172,7 +172,7 @@ getAtomName(std::string &text) // TODO change to get number after letters
 }
 
 Material::ChemicalFormula
-Material::parseChemicalFormula(const std::string chemicalSymbol) {
+Material::parseChemicalFormula(const std::string &chemicalSymbol) {
   Material::ChemicalFormula CF;
 
   const boost::char_separator<char> ATOM_DELIM(" -");

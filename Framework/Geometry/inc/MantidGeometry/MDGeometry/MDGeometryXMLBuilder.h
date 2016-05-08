@@ -129,7 +129,7 @@ struct StrictDimensionPolicy
     : public std::unary_function<IMDDimension_const_sptr, void> {
 public:
   StrictDimensionPolicy() {}
-  void operator()(IMDDimension_const_sptr item) {
+  void operator()(const IMDDimension_const_sptr &item) {
     if (true == item->getIsIntegrated()) {
       std::string message = "StrictDimensionPolicy bans the use of integrated "
                             "IMDDimensions mapped to x, y, z or t in a "
@@ -149,7 +149,7 @@ public:
 */
 struct NoDimensionPolicy
     : public std::unary_function<IMDDimension_const_sptr, void> {
-  void operator()(IMDDimension_const_sptr) {
+  void operator()(const IMDDimension_const_sptr &) {
     // Do nothing.
   }
 };

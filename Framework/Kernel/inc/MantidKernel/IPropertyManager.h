@@ -288,7 +288,7 @@ protected:
   */
   void declareProperty(
       const std::string &name, const char *value,
-      IValidator_sptr validator = IValidator_sptr(new NullValidator),
+      const IValidator_sptr &validator = IValidator_sptr(new NullValidator),
       const std::string &doc = "",
       const unsigned int direction = Direction::Input) {
     // Simply call templated method, converting character array to a string
@@ -314,7 +314,7 @@ protected:
   */
   void declareProperty(
       const std::string &name, const char *value, const std::string &doc,
-      IValidator_sptr validator = IValidator_sptr(new NullValidator),
+      const IValidator_sptr &validator = IValidator_sptr(new NullValidator),
       const unsigned int direction = Direction::Input) {
     // Simply call templated method, converting character array to a string
     declareProperty(name, std::string(value), validator, doc, direction);

@@ -121,8 +121,8 @@ map<string, string> ResampleX::validateInputs() {
  *everything
  * went according to plan.
  */
-string determineXMinMax(MatrixWorkspace_sptr inputWS, vector<double> &xmins,
-                        vector<double> &xmaxs) {
+string determineXMinMax(const MatrixWorkspace_sptr &inputWS,
+                        vector<double> &xmins, vector<double> &xmaxs) {
   bool updateXMins = xmins.empty(); // they weren't set
   bool updateXMaxs = xmaxs.empty(); // they weren't set
 

@@ -68,7 +68,7 @@ void RebinToWorkspace::exec() {
  * calculated
  */
 std::vector<double> RebinToWorkspace::createRebinParameters(
-    Mantid::API::MatrixWorkspace_sptr toMatch) {
+    const Mantid::API::MatrixWorkspace_sptr &toMatch) {
   using namespace Mantid::API;
 
   const MantidVec &matchXdata = toMatch->readX(0);

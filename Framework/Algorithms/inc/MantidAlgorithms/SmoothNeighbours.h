@@ -105,22 +105,22 @@ private:
   void exec() override;
 
   void execWorkspace2D();
-  void execEvent(Mantid::DataObjects::EventWorkspace_sptr ws);
+  void execEvent(const Mantid::DataObjects::EventWorkspace_sptr &ws);
   void findNeighboursRectangular();
   void findNeighboursUbiqutious();
   Mantid::Geometry::Instrument_const_sptr fetchInstrument() const;
 
   /// Sets the weighting stragegy.
-  void setWeightingStrategy(const std::string strategyName, double &cutOff);
+  void setWeightingStrategy(const std::string &strategyName, double &cutOff);
   /// Translate the entered radius into meters.
-  double translateToMeters(const std::string radiusUnits,
+  double translateToMeters(const std::string &radiusUnits,
                            const double &enteredRadius);
 
   /// Build the instrument/detector setup in workspace
-  void setupNewInstrument(API::MatrixWorkspace_sptr outws);
+  void setupNewInstrument(const API::MatrixWorkspace_sptr &outws);
 
   /// Build the instrument/detector setup in workspace
-  void spreadPixels(API::MatrixWorkspace_sptr outws);
+  void spreadPixels(const API::MatrixWorkspace_sptr &outws);
 
   /// Non rectangular detector group name
   static const std::string NON_UNIFORM_GROUP;

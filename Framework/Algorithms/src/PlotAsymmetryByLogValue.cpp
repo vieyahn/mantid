@@ -548,8 +548,8 @@ void PlotAsymmetryByLogValue::parseRunNames(std::string &firstFN,
 *   @param loadedWs :: [input/output] Workspace to apply corrections to
 *   @param deadTimes :: [input] Corrections to apply
 */
-void PlotAsymmetryByLogValue::applyDeadtimeCorr(Workspace_sptr &loadedWs,
-                                                Workspace_sptr deadTimes) {
+void PlotAsymmetryByLogValue::applyDeadtimeCorr(
+    Workspace_sptr &loadedWs, const Workspace_sptr &deadTimes) {
   ScopedWorkspace ws(loadedWs);
   ScopedWorkspace dt(deadTimes);
 
@@ -592,7 +592,7 @@ PlotAsymmetryByLogValue::createCustomGrouping(const std::vector<int> &fwd,
 *   @param grouping :: [input] Workspace containing grouping to apply
 */
 void PlotAsymmetryByLogValue::groupDetectors(Workspace_sptr &loadedWs,
-                                             Workspace_sptr grouping) {
+                                             const Workspace_sptr &grouping) {
 
   // Could be groups of workspaces, so need to work with ADS
   ScopedWorkspace inWS(loadedWs);
@@ -613,7 +613,7 @@ void PlotAsymmetryByLogValue::groupDetectors(Workspace_sptr &loadedWs,
 *   @param loadedWs :: [input] Workspace to apply analysis to
 *   @param index :: [input] Vector index where results will be stored
 */
-void PlotAsymmetryByLogValue::doAnalysis(Workspace_sptr loadedWs,
+void PlotAsymmetryByLogValue::doAnalysis(const Workspace_sptr &loadedWs,
                                          size_t index) {
 
   // Check if workspace is a workspace group
@@ -683,7 +683,7 @@ void PlotAsymmetryByLogValue::doAnalysis(Workspace_sptr loadedWs,
 *   @param Y :: Reference to a variable receiving the value of asymmetry
 *   @param E :: Reference to a variable receiving the value of the error
 */
-void PlotAsymmetryByLogValue::calcIntAsymmetry(MatrixWorkspace_sptr ws,
+void PlotAsymmetryByLogValue::calcIntAsymmetry(const MatrixWorkspace_sptr &ws,
                                                double &Y, double &E) {
 
   if (!m_int) { //  "Differential asymmetry"
@@ -730,9 +730,9 @@ void PlotAsymmetryByLogValue::calcIntAsymmetry(MatrixWorkspace_sptr ws,
 *   @param Y :: Reference to a variable receiving the value of asymmetry
 *   @param E :: Reference to a variable receiving the value of the error
 */
-void PlotAsymmetryByLogValue::calcIntAsymmetry(MatrixWorkspace_sptr ws_red,
-                                               MatrixWorkspace_sptr ws_green,
-                                               double &Y, double &E) {
+void PlotAsymmetryByLogValue::calcIntAsymmetry(
+    const MatrixWorkspace_sptr &ws_red, const MatrixWorkspace_sptr &ws_green,
+    double &Y, double &E) {
   if (!m_int) { //  "Differential asymmetry"
 
     MatrixWorkspace_sptr tmpWS = WorkspaceFactory::Instance().create(

@@ -106,8 +106,8 @@ void ScriptBuilder::buildChildren(
 * @param algHistory :: pointer to an algorithm history object
 * @returns std::string to run this algorithm
 */
-const std::string
-ScriptBuilder::buildCommentString(AlgorithmHistory_const_sptr algHistory) {
+const std::string ScriptBuilder::buildCommentString(
+    const AlgorithmHistory_const_sptr &algHistory) {
   std::ostringstream comment;
   const std::string name = algHistory->name();
   if (name == COMMENT_ALG) {
@@ -127,8 +127,8 @@ ScriptBuilder::buildCommentString(AlgorithmHistory_const_sptr algHistory) {
 * @param algHistory :: pointer to an algorithm history object
 * @returns std::string to run this algorithm
 */
-const std::string
-ScriptBuilder::buildAlgorithmString(AlgorithmHistory_const_sptr algHistory) {
+const std::string ScriptBuilder::buildAlgorithmString(
+    const AlgorithmHistory_const_sptr &algHistory) {
   std::ostringstream properties;
   const std::string name = algHistory->name();
   std::string prop = "";
@@ -185,8 +185,8 @@ ScriptBuilder::buildAlgorithmString(AlgorithmHistory_const_sptr algHistory) {
  * @param propHistory :: reference to a property history object
  * @returns std::string for this property
  */
-const std::string
-ScriptBuilder::buildPropertyString(PropertyHistory_const_sptr propHistory) {
+const std::string ScriptBuilder::buildPropertyString(
+    const PropertyHistory_const_sptr &propHistory) {
   using Mantid::Kernel::Direction;
 
   // Create a vector of all non workspace property type names

@@ -121,7 +121,7 @@ public:
   }
   /// Initialize the function
   /// @param function :: A function to initialize.
-  virtual void initFunction(API::IFunction_sptr function);
+  virtual void initFunction(const API::IFunction_sptr &function);
 
   /// Return the size of the domain to be created.
   virtual size_t getDomainSize() const = 0;

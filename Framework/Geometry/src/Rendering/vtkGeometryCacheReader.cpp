@@ -104,7 +104,7 @@ void vtkGeometryCacheReader::readCacheForObject(Object *obj) {
  * Get the Element by using the object name
  */
 Poco::XML::Element *
-vtkGeometryCacheReader::getElementByObjectName(std::string name) {
+vtkGeometryCacheReader::getElementByObjectName(const std::string &name) {
   Element *pRoot = mDoc->documentElement();
   if (pRoot == nullptr || pRoot->nodeName().compare("VTKFile") != 0)
     return nullptr;

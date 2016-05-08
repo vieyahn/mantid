@@ -61,8 +61,8 @@ public:
   InstrumentDefinitionParser(const std::string &filename,
                              const std::string &instName,
                              const std::string &xmlText);
-  InstrumentDefinitionParser(const IDFObject_const_sptr xmlFile,
-                             const IDFObject_const_sptr expectedCacheFile,
+  InstrumentDefinitionParser(const IDFObject_const_sptr &xmlFile,
+                             const IDFObject_const_sptr &expectedCacheFile,
                              const std::string &instName,
                              const std::string &xmlText);
   ~InstrumentDefinitionParser() = default;
@@ -166,7 +166,7 @@ private:
                       const Poco::XML::Element *pCompElem, IdList &idList);
   /// Return true if assembly, false if not assembly and throws exception if
   /// string not in assembly
-  bool isAssembly(std::string) const;
+  bool isAssembly(const std::string &) const;
 
   /// Add XML element to parent assuming the element contains no other component
   /// elements
@@ -246,11 +246,11 @@ public: // for testing
 
 private:
   /// Reads from a cache file.
-  void applyCache(IDFObject_const_sptr cacheToApply);
+  void applyCache(const IDFObject_const_sptr &cacheToApply);
 
   /// Write out a cache file.
-  CachingOption writeAndApplyCache(IDFObject_const_sptr firstChoiceCache,
-                                   IDFObject_const_sptr fallBackCache);
+  CachingOption writeAndApplyCache(const IDFObject_const_sptr &firstChoiceCache,
+                                   const IDFObject_const_sptr &fallBackCache);
 
   /// This method returns the parent appended which its child components and
   /// also name of type of the last child component

@@ -13,7 +13,7 @@ PoldiPeak_sptr PoldiPeak::clone() const {
 
 const MillerIndices &PoldiPeak::hkl() const { return m_hkl; }
 
-void PoldiPeak::setHKL(MillerIndices hkl) { m_hkl = hkl; }
+void PoldiPeak::setHKL(const MillerIndices &hkl) { m_hkl = hkl; }
 
 UncertainValue PoldiPeak::d() const { return m_d; }
 
@@ -112,12 +112,13 @@ PoldiPeak_sptr PoldiPeak::create(double qValue, double intensity) {
   return PoldiPeak::create(UncertainValue(qValue), UncertainValue(intensity));
 }
 
-PoldiPeak_sptr PoldiPeak::create(MillerIndices hkl, double dValue) {
+PoldiPeak_sptr PoldiPeak::create(const MillerIndices &hkl, double dValue) {
   return PoldiPeak_sptr(new PoldiPeak(
       UncertainValue(dValue), UncertainValue(0.0), UncertainValue(0.0), hkl));
 }
 
-PoldiPeak_sptr PoldiPeak::create(MillerIndices hkl, UncertainValue dValue,
+PoldiPeak_sptr PoldiPeak::create(const MillerIndices &hkl,
+                                 UncertainValue dValue,
                                  UncertainValue intensity,
                                  UncertainValue fwhmRelative) {
   return PoldiPeak_sptr(new PoldiPeak(dValue, intensity, fwhmRelative, hkl));

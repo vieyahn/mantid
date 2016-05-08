@@ -141,7 +141,7 @@ public:
   virtual bool operator!=(const Property &right) const;
 
   /// Set name of property
-  void setName(const std::string name);
+  void setName(const std::string &name);
 
   /// Filter out a run by time.
   void filterByTime(const Kernel::DateAndTime &start,

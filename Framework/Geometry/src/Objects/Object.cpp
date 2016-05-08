@@ -1141,7 +1141,7 @@ double Object::triangleSolidAngle(const V3D &observer,
 * @return :: solid angle of sphere
 */
 double Object::SphereSolidAngle(const V3D observer,
-                                const std::vector<Kernel::V3D> vectors,
+                                const std::vector<Kernel::V3D> &vectors,
                                 const double radius) const {
   const double distance = (observer - vectors[0]).norm();
   const double tol = Kernel::Tolerance;
@@ -1164,7 +1164,7 @@ double Object::SphereSolidAngle(const V3D observer,
 * @return :: solid angle of cuboid - good accuracy
 */
 double Object::CuboidSolidAngle(const V3D observer,
-                                const std::vector<Kernel::V3D> vectors) const {
+                                const std::vector<Kernel::V3D> &vectors) const {
   // Build bounding points, then set up map of 12 bounding
   // triangles defining the 6 surfaces of the bounding box. Using a consistent
   // ordering of points the "away facing" triangles give -ve contributions to
@@ -1843,7 +1843,7 @@ int Object::searchForObject(Kernel::V3D &point) const {
 * @param[in] h is pointer to the geometry handler. don't delete this pointer in
 * the calling function.
 */
-void Object::setGeometryHandler(boost::shared_ptr<GeometryHandler> h) {
+void Object::setGeometryHandler(const boost::shared_ptr<GeometryHandler> &h) {
   if (h == nullptr)
     return;
   handle = h;
@@ -1875,7 +1875,7 @@ void Object::initDraw() const {
 * set vtkGeometryCache writer
 */
 void Object::setVtkGeometryCacheWriter(
-    boost::shared_ptr<vtkGeometryCacheWriter> writer) {
+    const boost::shared_ptr<vtkGeometryCacheWriter> &writer) {
   vtkCacheWriter = writer;
   updateGeometryHandler();
 }
@@ -1884,7 +1884,7 @@ void Object::setVtkGeometryCacheWriter(
 * set vtkGeometryCache reader
 */
 void Object::setVtkGeometryCacheReader(
-    boost::shared_ptr<vtkGeometryCacheReader> reader) {
+    const boost::shared_ptr<vtkGeometryCacheReader> &reader) {
   vtkCacheReader = reader;
   updateGeometryHandler();
 }

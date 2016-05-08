@@ -70,7 +70,7 @@ private:
   void exec() override;
   /// Setup the output workspace
   API::MatrixWorkspace_sptr
-  createOutputWorkspace(API::MatrixWorkspace_const_sptr parent,
+  createOutputWorkspace(const API::MatrixWorkspace_const_sptr &parent,
                         MantidVec &newXBins, MantidVec &newYBins,
                         const bool useFractionalArea) const;
 };

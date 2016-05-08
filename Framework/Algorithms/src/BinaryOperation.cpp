@@ -327,8 +327,8 @@ void BinaryOperation::execEvent(DataObjects::EventWorkspace_const_sptr lhs,
  * @return flag for the compatibility to the two workspaces
  */
 bool BinaryOperation::checkCompatibility(
-    const API::MatrixWorkspace_const_sptr lhs,
-    const API::MatrixWorkspace_const_sptr rhs) const {
+    const API::MatrixWorkspace_const_sptr &lhs,
+    const API::MatrixWorkspace_const_sptr &rhs) const {
   Unit_const_sptr lhs_unit;
   Unit_const_sptr rhs_unit;
   if (lhs->axes() && rhs->axes()) // If one of these is a WorkspaceSingleValue
@@ -367,8 +367,8 @@ bool BinaryOperation::checkCompatibility(
  * @return false by default; will be overridden by specific algorithms
  */
 bool BinaryOperation::checkEventCompatibility(
-    const API::MatrixWorkspace_const_sptr lhs,
-    const API::MatrixWorkspace_const_sptr rhs) {
+    const API::MatrixWorkspace_const_sptr &lhs,
+    const API::MatrixWorkspace_const_sptr &rhs) {
   UNUSED_ARG(lhs);
   UNUSED_ARG(rhs);
   return false;
@@ -386,8 +386,8 @@ bool BinaryOperation::checkEventCompatibility(
  * compatible
  */
 std::string BinaryOperation::checkSizeCompatibility(
-    const API::MatrixWorkspace_const_sptr lhs,
-    const API::MatrixWorkspace_const_sptr rhs) const {
+    const API::MatrixWorkspace_const_sptr &lhs,
+    const API::MatrixWorkspace_const_sptr &rhs) const {
   const size_t lhsSize = lhs->size();
   const size_t rhsSize = rhs->size();
   // A SingleValueWorkspace on the right matches anything
@@ -458,9 +458,9 @@ std::string BinaryOperation::checkSizeCompatibility(
  * the binary operation should be performed.
  */
 bool BinaryOperation::propagateSpectraMask(
-    const API::MatrixWorkspace_const_sptr lhs,
-    const API::MatrixWorkspace_const_sptr rhs, const int64_t index,
-    API::MatrixWorkspace_sptr out) {
+    const API::MatrixWorkspace_const_sptr &lhs,
+    const API::MatrixWorkspace_const_sptr &rhs, const int64_t index,
+    const API::MatrixWorkspace_sptr &out) {
   bool continueOp(true);
   IDetector_const_sptr det_lhs, det_rhs;
   try {
@@ -815,7 +815,8 @@ void BinaryOperation::do2D(bool mismatchedSpectra) {
  *  @param out :: The result workspace
  */
 void BinaryOperation::propagateBinMasks(
-    const API::MatrixWorkspace_const_sptr rhs, API::MatrixWorkspace_sptr out) {
+    const API::MatrixWorkspace_const_sptr &rhs,
+    const API::MatrixWorkspace_sptr &out) {
   const int64_t outHists = out->getNumberHistograms();
   const int64_t rhsHists = rhs->getNumberHistograms();
   for (int64_t i = 0; i < outHists; ++i) {
@@ -838,7 +839,8 @@ void BinaryOperation::propagateBinMasks(
  * Apply the requested masking to the output workspace
  * @param out :: The workspace to mask
  */
-void BinaryOperation::applyMaskingToOutput(API::MatrixWorkspace_sptr out) {
+void BinaryOperation::applyMaskingToOutput(
+    const API::MatrixWorkspace_sptr &out) {
   int64_t nindices = static_cast<int64_t>(m_indicesToMask.size());
   ParameterMap &pmap = out->instrumentParameters();
   PARALLEL_FOR1(out)
@@ -930,7 +932,7 @@ void BinaryOperation::performEventBinaryOperation(DataObjects::EventList &lhs,
  * @return OperandType describing what type of workspace it will be operated as.
  */
 OperandType
-BinaryOperation::getOperandType(const API::MatrixWorkspace_const_sptr ws) {
+BinaryOperation::getOperandType(const API::MatrixWorkspace_const_sptr &ws) {
   // An event workspace?
   EventWorkspace_const_sptr ews =
       boost::dynamic_pointer_cast<const EventWorkspace>(ws);

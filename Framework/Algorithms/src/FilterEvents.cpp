@@ -1027,7 +1027,8 @@ Kernel::TimeSplitterType FilterEvents::generateSplitters(int wsindex) {
 //----------------------------------------------------------------------------------------------
 /** Split a log by splitters
  */
-void FilterEvents::splitLog(EventWorkspace_sptr eventws, std::string logname,
+void FilterEvents::splitLog(const EventWorkspace_sptr &eventws,
+                            const std::string &logname,
                             TimeSplitterType &splitters) {
   Kernel::TimeSeriesProperty<double> *prop =
       dynamic_cast<Kernel::TimeSeriesProperty<double> *>(

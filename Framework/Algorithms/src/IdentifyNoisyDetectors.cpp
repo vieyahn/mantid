@@ -141,8 +141,8 @@ void IdentifyNoisyDetectors::exec() {
 * @param values :: stddeviations of each spectra (I think)
 */
 void IdentifyNoisyDetectors::getStdDev(API::Progress &progress,
-                                       MatrixWorkspace_sptr valid,
-                                       MatrixWorkspace_sptr values) {
+                                       const MatrixWorkspace_sptr &valid,
+                                       const MatrixWorkspace_sptr &values) {
   const int nhist = static_cast<int>(valid->getNumberHistograms());
   int count = 0;
   double mean = 0.0;

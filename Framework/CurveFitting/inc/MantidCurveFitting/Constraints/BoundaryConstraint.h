@@ -55,12 +55,12 @@ public:
         m_hasLowerBound(false), m_hasUpperBound(false) {}
 
   /// Constructor with boundary arguments
-  BoundaryConstraint(API::IFunction *fun, const std::string paramName,
+  BoundaryConstraint(API::IFunction *fun, const std::string &paramName,
                      const double lowerBound, const double upperBound,
                      bool isDefault = false);
 
   /// Constructor with lower boundary argument
-  BoundaryConstraint(API::IFunction *fun, const std::string paramName,
+  BoundaryConstraint(API::IFunction *fun, const std::string &paramName,
                      const double lowerBound, bool isDefault = false);
 
   /// Initialize the constraint from an expression

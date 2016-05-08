@@ -232,7 +232,7 @@ bool TimeSeriesProperty<TYPE>::operator!=(const Property &right) const {
  * Set name of the property
  */
 template <typename TYPE>
-void TimeSeriesProperty<TYPE>::setName(const std::string name) {
+void TimeSeriesProperty<TYPE>::setName(const std::string &name) {
   m_name = name;
 }
 

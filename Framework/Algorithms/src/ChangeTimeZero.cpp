@@ -119,7 +119,7 @@ void ChangeTimeZero::exec() {
  * @returns :: pointer to the outputworkspace
  */
 API::MatrixWorkspace_sptr
-ChangeTimeZero::createOutputWS(API::MatrixWorkspace_sptr input,
+ChangeTimeZero::createOutputWS(const API::MatrixWorkspace_sptr &input,
                                double startProgress, double stopProgress) {
   MatrixWorkspace_sptr output = getProperty("OutputWorkspace");
   // Check whether input == output to see whether a new workspace is required.
@@ -142,7 +142,7 @@ ChangeTimeZero::createOutputWS(API::MatrixWorkspace_sptr input,
  * @param ws :: a workspace with time stamp information
  * @returns A time shift in seconds
  */
-double ChangeTimeZero::getTimeShift(API::MatrixWorkspace_sptr ws) const {
+double ChangeTimeZero::getTimeShift(const API::MatrixWorkspace_sptr &ws) const {
   auto timeShift = m_defaultTimeShift;
   // Check if we are dealing with an absolute time
   std::string timeOffset = getProperty("AbsoluteTimeOffset");
@@ -163,9 +163,9 @@ double ChangeTimeZero::getTimeShift(API::MatrixWorkspace_sptr ws) const {
  * @param startProgress :: start point of the progress
  * @param stopProgress :: end point of the progress
  */
-void ChangeTimeZero::shiftTimeOfLogs(Mantid::API::MatrixWorkspace_sptr ws,
-                                     double timeShift, double startProgress,
-                                     double stopProgress) {
+void ChangeTimeZero::shiftTimeOfLogs(
+    const Mantid::API::MatrixWorkspace_sptr &ws, double timeShift,
+    double startProgress, double stopProgress) {
   // We need to change the entries for each log which can be:
   // 1. any time series: here we change the time values
   // 2. string properties: here we change the values if they are ISO8601 times
@@ -191,7 +191,7 @@ void ChangeTimeZero::shiftTimeOfLogs(Mantid::API::MatrixWorkspace_sptr ws,
  * @param timeShift :: the time shift in seconds
  */
 void ChangeTimeZero::shiftTimeInLogForTimeSeries(
-    Mantid::API::MatrixWorkspace_sptr ws, Mantid::Kernel::Property *prop,
+    const Mantid::API::MatrixWorkspace_sptr &ws, Mantid::Kernel::Property *prop,
     double timeShift) const {
   if (auto timeSeries =
           dynamic_cast<Mantid::Kernel::ITimeSeriesProperty *>(prop)) {
@@ -223,9 +223,9 @@ void ChangeTimeZero::shiftTimeOfLogForStringProperty(
  * @param startProgress :: start point of the progress
  * @param stopProgress :: end point of the progress
  */
-void ChangeTimeZero::shiftTimeOfNeutrons(Mantid::API::MatrixWorkspace_sptr ws,
-                                         double timeShift, double startProgress,
-                                         double stopProgress) {
+void ChangeTimeZero::shiftTimeOfNeutrons(
+    const Mantid::API::MatrixWorkspace_sptr &ws, double timeShift,
+    double startProgress, double stopProgress) {
   if (auto eventWs =
           boost::dynamic_pointer_cast<Mantid::API::IEventWorkspace>(ws)) {
     // Use the change pulse time algorithm to change the neutron time stamp
@@ -244,8 +244,8 @@ void ChangeTimeZero::shiftTimeOfNeutrons(Mantid::API::MatrixWorkspace_sptr ws,
  * @param ws :: a workspace
  * @returns the date and time of the first good frame
  */
-DateAndTime
-ChangeTimeZero::getStartTimeFromWorkspace(API::MatrixWorkspace_sptr ws) const {
+DateAndTime ChangeTimeZero::getStartTimeFromWorkspace(
+    const API::MatrixWorkspace_sptr &ws) const {
   auto run = ws->run();
   // Check for the first good frame in the log
   Mantid::Kernel::TimeSeriesProperty<double> *goodFrame = nullptr;
@@ -325,7 +325,7 @@ std::map<std::string, std::string> ChangeTimeZero::validateInputs() {
  * @param val :: value to check
  * @return True if the string can be cast to double and otherwise false.
  */
-bool ChangeTimeZero::checkForDouble(std::string val) const {
+bool ChangeTimeZero::checkForDouble(const std::string &val) const {
   auto isDouble = false;
   try {
     boost::lexical_cast<double>(val);

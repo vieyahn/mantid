@@ -1028,7 +1028,7 @@ void Algorithm::linkHistoryWithLastChild() {
 *  @param parentHist :: the parent algorithm history object the history in.
 */
 void Algorithm::trackAlgorithmHistory(
-    boost::shared_ptr<AlgorithmHistory> parentHist) {
+    const boost::shared_ptr<AlgorithmHistory> &parentHist) {
   enableHistoryRecordingForChild(true);
   m_parentHistory = parentHist;
 }

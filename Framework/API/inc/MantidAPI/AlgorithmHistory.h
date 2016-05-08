@@ -83,7 +83,7 @@ public:
                    bool isdefault, const unsigned int &direction = 99);
 
   /// add a child algorithm history record to this history object
-  void addChildHistory(AlgorithmHistory_sptr childHist);
+  void addChildHistory(const AlgorithmHistory_sptr &childHist);
   // get functions
   /// get name of algorithm in history const
   const std::string &name() const { return m_name; }
@@ -120,8 +120,8 @@ public:
     return (execCount() == other.execCount() && name() == other.name());
   }
   /// Less than operator for pointers
-  inline bool compareHistory(const boost::shared_ptr<AlgorithmHistory> lhs,
-                             const boost::shared_ptr<AlgorithmHistory> rhs) {
+  inline bool compareHistory(const boost::shared_ptr<AlgorithmHistory> &lhs,
+                             const boost::shared_ptr<AlgorithmHistory> &rhs) {
     return *lhs < *rhs;
   }
   /// Create a concrete algorithm based on a history record
@@ -164,8 +164,8 @@ private:
 
 struct CompareHistory {
   /// Less than operator for pointers
-  static bool compare(const AlgorithmHistory_const_sptr lhs,
-                      const AlgorithmHistory_const_sptr rhs) {
+  static bool compare(const AlgorithmHistory_const_sptr &lhs,
+                      const AlgorithmHistory_const_sptr &rhs) {
     return (*lhs) < (*rhs);
   }
 };

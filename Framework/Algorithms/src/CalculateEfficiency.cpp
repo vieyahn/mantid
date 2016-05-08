@@ -118,9 +118,9 @@ void CalculateEfficiency::exec() {
  * @param error: error on sum (counts)
  * @param nPixels: number of unmasked detector pixels that contributed to sum
  */
-void CalculateEfficiency::sumUnmaskedDetectors(MatrixWorkspace_sptr rebinnedWS,
-                                               double &sum, double &error,
-                                               int &nPixels) {
+void CalculateEfficiency::sumUnmaskedDetectors(
+    const MatrixWorkspace_sptr &rebinnedWS, double &sum, double &error,
+    int &nPixels) {
   // Number of spectra
   const int numberOfSpectra =
       static_cast<int>(rebinnedWS->getNumberHistograms());
@@ -163,11 +163,10 @@ void CalculateEfficiency::sumUnmaskedDetectors(MatrixWorkspace_sptr rebinnedWS,
  * @param nPixels: number of unmasked detector pixels that contributed to sum
  */
 
-void CalculateEfficiency::normalizeDetectors(MatrixWorkspace_sptr rebinnedWS,
-                                             MatrixWorkspace_sptr outputWS,
-                                             double sum, double error,
-                                             int nPixels, double min_eff,
-                                             double max_eff) {
+void CalculateEfficiency::normalizeDetectors(
+    const MatrixWorkspace_sptr &rebinnedWS,
+    const MatrixWorkspace_sptr &outputWS, double sum, double error, int nPixels,
+    double min_eff, double max_eff) {
   // Number of spectra
   const size_t numberOfSpectra = rebinnedWS->getNumberHistograms();
 

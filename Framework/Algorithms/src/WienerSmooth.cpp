@@ -419,7 +419,8 @@ std::pair<double, double> WienerSmooth::getStartEnd(const MantidVec &X,
  * @return :: Workspace with the copied spectrum.
  */
 API::MatrixWorkspace_sptr
-WienerSmooth::copyInput(API::MatrixWorkspace_sptr inputWS, size_t wsIndex) {
+WienerSmooth::copyInput(const API::MatrixWorkspace_sptr &inputWS,
+                        size_t wsIndex) {
   auto alg = createChildAlgorithm("ExtractSingleSpectrum");
   alg->initialize();
   alg->setProperty("InputWorkspace", inputWS);

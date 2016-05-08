@@ -55,7 +55,7 @@ public:
   /// Convert the input workspace to wavelength, splitting according to the
   /// properties provided.
   DetectorMonitorWorkspacePair
-  toLam(Mantid::API::MatrixWorkspace_sptr toConvert,
+  toLam(const Mantid::API::MatrixWorkspace_sptr &toConvert,
         const std::string &processingCommands, const int monitorIndex,
         const MinMax &wavelengthMinMax, const MinMax &backgroundMinMax,
         const double &wavelengthStep);

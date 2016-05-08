@@ -395,7 +395,8 @@ private:
   *  @param wsGroup :: the WorkspaceGroup of which to check the validity
   *  @returns A user level description of the problem or "" if it is valid.
   */
-  std::string isValidGroup(boost::shared_ptr<WorkspaceGroup> wsGroup) const {
+  std::string
+  isValidGroup(const boost::shared_ptr<WorkspaceGroup> &wsGroup) const {
     g_log.debug() << " Input WorkspaceGroup found " << std::endl;
 
     std::vector<std::string> wsGroupNames = wsGroup->getNames();

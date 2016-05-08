@@ -68,36 +68,37 @@ private:
   void init() override;
   void exec() override;
   /// Apply a given mask
-  void applyMask(API::MatrixWorkspace_sptr inputWS,
-                 API::MatrixWorkspace_sptr maskWS);
+  void applyMask(const API::MatrixWorkspace_sptr &inputWS,
+                 const API::MatrixWorkspace_sptr &maskWS);
   /// Perform checks on detector vanadium
-  API::MatrixWorkspace_sptr doDetVanTest(API::MatrixWorkspace_sptr inputWS,
-                                         int &nFails);
+  API::MatrixWorkspace_sptr
+  doDetVanTest(const API::MatrixWorkspace_sptr &inputWS, int &nFails);
 
 protected:
   /// Get the total counts for each spectra
   API::MatrixWorkspace_sptr
-  integrateSpectra(API::MatrixWorkspace_sptr inputWS, const int indexMin,
+  integrateSpectra(const API::MatrixWorkspace_sptr &inputWS, const int indexMin,
                    const int indexMax, const double lower, const double upper,
                    const bool outputWorkspace2D = false);
 
   DataObjects::MaskWorkspace_sptr
-  generateEmptyMask(API::MatrixWorkspace_const_sptr inputWS);
+  generateEmptyMask(const API::MatrixWorkspace_const_sptr &inputWS);
 
   /// Calculate the median of the given workspace. This assumes that the input
   /// workspace contains
   /// integrated counts
   std::vector<double>
-  calculateMedian(API::MatrixWorkspace_sptr input, bool excludeZeroes,
+  calculateMedian(API::MatrixWorkspace_sptr &input, bool excludeZeroes,
                   std::vector<std::vector<size_t>> indexmap);
   /// Convert to a distribution
   API::MatrixWorkspace_sptr convertToRate(API::MatrixWorkspace_sptr workspace);
   /// method to check which spectra should be grouped when calculating the
   /// median
-  std::vector<std::vector<size_t>> makeMap(API::MatrixWorkspace_sptr countsWS);
+  std::vector<std::vector<size_t>>
+  makeMap(const API::MatrixWorkspace_sptr &countsWS);
   /// method to create the map with all spectra
   std::vector<std::vector<size_t>>
-  makeInstrumentMap(API::MatrixWorkspace_sptr countsWS);
+  makeInstrumentMap(const API::MatrixWorkspace_sptr &countsWS);
 
   /** @name Progress reporting */
   //@{

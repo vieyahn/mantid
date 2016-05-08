@@ -92,7 +92,7 @@ public:
                     bool explicitlySet = true) override;
 
   /// Check whether a parameter is a profile parameter
-  virtual bool hasProfileParameter(std::string paramname);
+  virtual bool hasProfileParameter(const std::string &paramname);
 
   // void functionLocal(double* out, const double* xValues, const size_t
   // nData)const;

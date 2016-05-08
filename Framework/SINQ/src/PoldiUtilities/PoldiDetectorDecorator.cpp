@@ -12,7 +12,7 @@ PoldiDetectorDecorator::PoldiDetectorDecorator(
 }
 
 void PoldiDetectorDecorator::setDecoratedDetector(
-    boost::shared_ptr<PoldiAbstractDetector> detector) {
+    const boost::shared_ptr<PoldiAbstractDetector> &detector) {
   m_decoratedDetector = detector;
 
   detectorSetHook();

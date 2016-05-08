@@ -59,11 +59,12 @@ private:
   void buildChildren(std::ostringstream &os,
                      std::vector<HistoryItem>::const_iterator &iter,
                      int depth = 1);
-  const std::string buildCommentString(AlgorithmHistory_const_sptr algHistory);
   const std::string
-  buildAlgorithmString(AlgorithmHistory_const_sptr algHistory);
+  buildCommentString(const AlgorithmHistory_const_sptr &algHistory);
   const std::string
-  buildPropertyString(Mantid::Kernel::PropertyHistory_const_sptr propHistory);
+  buildAlgorithmString(const AlgorithmHistory_const_sptr &algHistory);
+  const std::string buildPropertyString(
+      const Mantid::Kernel::PropertyHistory_const_sptr &propHistory);
 
   const std::vector<HistoryItem> m_historyItems;
   std::string m_output;

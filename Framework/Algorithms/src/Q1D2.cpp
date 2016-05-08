@@ -370,13 +370,12 @@ Q1D2::setUpOutputWorkspace(const std::vector<double> &binParams) const {
 *  @param normETo2 [out] this pointer must point to the end of the norm array,
 * it will be filled with the total of the error on the normalization
 */
-void Q1D2::calculateNormalization(const size_t wavStart, const size_t wsIndex,
-                                  API::MatrixWorkspace_const_sptr pixelAdj,
-                                  API::MatrixWorkspace_const_sptr wavePixelAdj,
-                                  double const *const binNorms,
-                                  double const *const binNormEs,
-                                  const MantidVec::iterator norm,
-                                  const MantidVec::iterator normETo2) const {
+void Q1D2::calculateNormalization(
+    const size_t wavStart, const size_t wsIndex,
+    const API::MatrixWorkspace_const_sptr &pixelAdj,
+    const API::MatrixWorkspace_const_sptr &wavePixelAdj,
+    double const *const binNorms, double const *const binNormEs,
+    const MantidVec::iterator norm, const MantidVec::iterator normETo2) const {
   double detectorAdj, detAdjErr;
   pixelWeight(pixelAdj, wsIndex, detectorAdj, detAdjErr);
   // use that the normalization array ends at the start of the error array
@@ -408,7 +407,7 @@ void Q1D2::calculateNormalization(const size_t wavStart, const size_t wsIndex,
 *  @param[out] error the error on the weight, only non-zero if pixelAdj
 *  @throw LogicError if the solid angle is tiny or negative
 */
-void Q1D2::pixelWeight(API::MatrixWorkspace_const_sptr pixelAdj,
+void Q1D2::pixelWeight(const API::MatrixWorkspace_const_sptr &pixelAdj,
                        const size_t wsIndex, double &weight,
                        double &error) const {
   const V3D samplePos = m_dataWS->getInstrument()->getSample()->getPos();

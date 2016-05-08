@@ -72,7 +72,7 @@ const Kernel::DblMatrix &Goniometer::getR() const { return R; }
 /// Set the new rotation matrix
 /// @param rot :: DblMatrix matrix that is going to be the internal rotation
 /// matrix of the goniometer.
-void Goniometer::setR(Kernel::DblMatrix rot) { R = rot; }
+void Goniometer::setR(const Kernel::DblMatrix &rot) { R = rot; }
 
 /// Function reports if the goniometer is defined
 bool Goniometer::isDefined() const { return initFromR || (!motors.empty()); }
@@ -116,7 +116,7 @@ std::string Goniometer::axesInfo() {
   @param sense :: rotation sense (CW or CCW), CCW by default
   @param angUnit :: units for angle of type#AngleUnit, angDegrees by default
 */
-void Goniometer::pushAxis(std::string name, double axisx, double axisy,
+void Goniometer::pushAxis(const std::string &name, double axisx, double axisy,
                           double axisz, double angle, int sense, int angUnit) {
   if (initFromR) {
     throw std::runtime_error(
@@ -138,7 +138,7 @@ void Goniometer::pushAxis(std::string name, double axisx, double axisy,
   @param name :: GoniometerAxis name
   @param value :: value in the units that the axis is set
 */
-void Goniometer::setRotationAngle(std::string name, double value) {
+void Goniometer::setRotationAngle(const std::string &name, double value) {
   bool changed = false;
   std::vector<GoniometerAxis>::iterator it;
   for (it = motors.begin(); it < motors.end(); ++it) {
@@ -175,7 +175,7 @@ const GoniometerAxis &Goniometer::getAxis(size_t axisnumber) const {
 
 /// Get GoniometerAxis object using motor name
 /// @param axisname :: axis name
-const GoniometerAxis &Goniometer::getAxis(std::string axisname) const {
+const GoniometerAxis &Goniometer::getAxis(const std::string &axisname) const {
   for (auto it = motors.begin(); it < motors.end(); ++it) {
     if (axisname.compare((*it).name) == 0) {
       return (*it);
@@ -208,7 +208,7 @@ void Goniometer::makeUniversalGoniometer() {
 * @param convention :: the convention used to calculate Euler Angles. The
 * UniversalGoniometer is YZY, a triple axis goniometer at HFIR is YZX
 */
-std::vector<double> Goniometer::getEulerAngles(std::string convention) {
+std::vector<double> Goniometer::getEulerAngles(const std::string &convention) {
   return Quat(getR()).getEulerAngles(convention);
 }
 

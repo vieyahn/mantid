@@ -200,7 +200,7 @@ void ConvertUnitsUsingDetectorTable::exec() {
  *  @param inputWS The input workspace
  */
 void ConvertUnitsUsingDetectorTable::setupMemberVariables(
-    const API::MatrixWorkspace_const_sptr inputWS) {
+    const API::MatrixWorkspace_const_sptr &inputWS) {
   m_numberOfSpectra = inputWS->getNumberHistograms();
   // In the context of this algorithm, we treat things as a distribution if the
   // flag is set
@@ -220,7 +220,7 @@ void ConvertUnitsUsingDetectorTable::setupMemberVariables(
  *  @param inputWS The input workspace
  */
 API::MatrixWorkspace_sptr ConvertUnitsUsingDetectorTable::setupOutputWorkspace(
-    const API::MatrixWorkspace_const_sptr inputWS) {
+    const API::MatrixWorkspace_const_sptr &inputWS) {
   MatrixWorkspace_sptr outputWS = getProperty("OutputWorkspace");
 
   // If input and output workspaces are NOT the same, create a new workspace for
@@ -263,7 +263,8 @@ API::MatrixWorkspace_sptr ConvertUnitsUsingDetectorTable::setupOutputWorkspace(
  * @param outputWS :: The output workspace
  */
 void ConvertUnitsUsingDetectorTable::convertViaTOF(
-    Kernel::Unit_const_sptr fromUnit, API::MatrixWorkspace_sptr outputWS) {
+    const Kernel::Unit_const_sptr &fromUnit,
+    const API::MatrixWorkspace_sptr &outputWS) {
   using namespace Geometry;
 
   // Let's see if we are using a TableWorkspace to override parameters
@@ -419,7 +420,7 @@ void ConvertUnitsUsingDetectorTable::convertViaTOF(
  *  @param power :: the Power b to apply to the conversion
  */
 void ConvertUnitsUsingDetectorTable::convertQuickly(
-    API::MatrixWorkspace_sptr outputWS, const double &factor,
+    const API::MatrixWorkspace_sptr &outputWS, const double &factor,
     const double &power) {
   Progress prog(this, 0.2, 1.0, m_numberOfSpectra);
   int64_t numberOfSpectra_i =
@@ -487,8 +488,8 @@ void ConvertUnitsUsingDetectorTable::convertQuickly(
 }
 
 /// Calls Rebin as a Child Algorithm to align the bins
-API::MatrixWorkspace_sptr
-ConvertUnitsUsingDetectorTable::alignBins(API::MatrixWorkspace_sptr workspace) {
+API::MatrixWorkspace_sptr ConvertUnitsUsingDetectorTable::alignBins(
+    const API::MatrixWorkspace_sptr &workspace) {
   // Create a Rebin child algorithm
   IAlgorithm_sptr childAlg = createChildAlgorithm("Rebin");
   childAlg->setProperty<MatrixWorkspace_sptr>("InputWorkspace", workspace);
@@ -504,7 +505,7 @@ ConvertUnitsUsingDetectorTable::alignBins(API::MatrixWorkspace_sptr workspace) {
 /// The Rebin parameters should cover the full range of the converted unit, with
 /// the same number of bins
 const std::vector<double> ConvertUnitsUsingDetectorTable::calculateRebinParams(
-    const API::MatrixWorkspace_const_sptr workspace) const {
+    const API::MatrixWorkspace_const_sptr &workspace) const {
   // Need to loop round and find the full range
   double XMin = DBL_MAX, XMax = DBL_MIN;
   const size_t numSpec = workspace->getNumberHistograms();
@@ -534,7 +535,8 @@ const std::vector<double> ConvertUnitsUsingDetectorTable::calculateRebinParams(
 /** Reverses the workspace if X values are in descending order
  *  @param WS The workspace to operate on
  */
-void ConvertUnitsUsingDetectorTable::reverse(API::MatrixWorkspace_sptr WS) {
+void ConvertUnitsUsingDetectorTable::reverse(
+    const API::MatrixWorkspace_sptr &WS) {
   if (WorkspaceHelpers::commonBoundaries(WS) && !m_inputEvents) {
     std::reverse(WS->dataX(0).begin(), WS->dataX(0).end());
     std::reverse(WS->dataY(0).begin(), WS->dataY(0).end());
@@ -588,7 +590,7 @@ void ConvertUnitsUsingDetectorTable::reverse(API::MatrixWorkspace_sptr WS) {
  *  @return The workspace after bins have been removed
  */
 API::MatrixWorkspace_sptr ConvertUnitsUsingDetectorTable::removeUnphysicalBins(
-    const Mantid::API::MatrixWorkspace_const_sptr workspace) {
+    const Mantid::API::MatrixWorkspace_const_sptr &workspace) {
   MatrixWorkspace_sptr result;
 
   const size_t numSpec = workspace->getNumberHistograms();
@@ -685,7 +687,7 @@ API::MatrixWorkspace_sptr ConvertUnitsUsingDetectorTable::removeUnphysicalBins(
  *  @param outputWS The workspace to operate on
  */
 void ConvertUnitsUsingDetectorTable::putBackBinWidth(
-    const API::MatrixWorkspace_sptr outputWS) {
+    const API::MatrixWorkspace_sptr &outputWS) {
   const size_t outSize = outputWS->blocksize();
 
   for (size_t i = 0; i < m_numberOfSpectra; ++i) {

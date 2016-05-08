@@ -21,7 +21,7 @@ public:
   virtual MatrixWorkspace_sptr execute(MatrixWorkspace_sptr input) const = 0;
 
   virtual MatrixWorkspace_sptr
-  executeAndAppend(MatrixWorkspace_sptr inputWS,
+  executeAndAppend(const MatrixWorkspace_sptr &inputWS,
                    MatrixWorkspace_sptr toAppend) const {
     if (!this->isValid()) {
       return toAppend;

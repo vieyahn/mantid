@@ -48,8 +48,8 @@ public:
                  boost::shared_ptr<PoldiAbstractChopper>(),
              double deltaT = 0.0, std::pair<double, double> wavelengthRange =
                                       std::pair<double, double>());
-  void setDetector(boost::shared_ptr<PoldiAbstractDetector> newDetector);
-  void setChopper(boost::shared_ptr<PoldiAbstractChopper> newChopper);
+  void setDetector(const boost::shared_ptr<PoldiAbstractDetector> &newDetector);
+  void setChopper(const boost::shared_ptr<PoldiAbstractChopper> &newChopper);
   void setDeltaT(double newDeltaT);
   void setWavelengthRange(std::pair<double, double> wavelengthRange);
 

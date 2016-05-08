@@ -433,15 +433,17 @@ ConvertEmptyToTof::findAverageEppAndEpTof(const std::map<int, int> &eppMap) {
   return std::make_pair(averageEpp, averageEpTof);
 }
 
-double ConvertEmptyToTof::getL1(API::MatrixWorkspace_const_sptr workspace) {
+double
+ConvertEmptyToTof::getL1(const API::MatrixWorkspace_const_sptr &workspace) {
   Geometry::Instrument_const_sptr instrument = workspace->getInstrument();
   Geometry::IComponent_const_sptr sample = instrument->getSample();
   double l1 = instrument->getSource()->getDistance(*sample);
   return l1;
 }
 
-double ConvertEmptyToTof::getL2(API::MatrixWorkspace_const_sptr workspace,
-                                int detId) {
+double
+ConvertEmptyToTof::getL2(const API::MatrixWorkspace_const_sptr &workspace,
+                         int detId) {
   // Get a pointer to the instrument contained in the workspace
   Geometry::Instrument_const_sptr instrument = workspace->getInstrument();
   // Get the distance between the source and the sample (assume in metres)
@@ -471,8 +473,9 @@ bool ConvertEmptyToTof::areEqual(double a, double b, double epsilon) {
 }
 
 template <typename T>
-T ConvertEmptyToTof::getPropertyFromRun(API::MatrixWorkspace_const_sptr inputWS,
-                                        const std::string &propertyName) {
+T ConvertEmptyToTof::getPropertyFromRun(
+    const API::MatrixWorkspace_const_sptr &inputWS,
+    const std::string &propertyName) {
   if (inputWS->run().hasProperty(propertyName)) {
     Kernel::Property *prop = inputWS->run().getProperty(propertyName);
     return boost::lexical_cast<T>(prop->value());
@@ -509,7 +512,7 @@ std::vector<double> ConvertEmptyToTof::makeTofAxis(int epp, double epTof,
 }
 
 void ConvertEmptyToTof::setTofInWS(const std::vector<double> &tofAxis,
-                                   API::MatrixWorkspace_sptr outputWS) {
+                                   const API::MatrixWorkspace_sptr &outputWS) {
 
   const size_t numberOfSpectra = m_inputWS->getNumberHistograms();
   int64_t numberOfSpectraInt64 =

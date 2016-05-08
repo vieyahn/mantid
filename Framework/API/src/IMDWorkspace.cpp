@@ -43,7 +43,7 @@ std::string IMDWorkspace::getConvention() const { return m_convention; }
 //---------------------------------------------------------------------------------------------
 /** @return the convention
  */
-void IMDWorkspace::setConvention(std::string convention) {
+void IMDWorkspace::setConvention(const std::string &convention) {
   m_convention = convention;
 }
 

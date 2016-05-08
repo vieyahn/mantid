@@ -287,7 +287,7 @@ void CreateSampleWorkspace::addChopperParameters(
  */
 MatrixWorkspace_sptr CreateSampleWorkspace::createHistogramWorkspace(
     int numPixels, int numBins, double x0, double binDelta,
-    int start_at_pixelID, Geometry::Instrument_sptr inst,
+    int start_at_pixelID, const Geometry::Instrument_sptr &inst,
     const std::string &functionString, bool isRandom) {
   MantidVecPtr x, y, e;
   x.access().resize(numBins + 1);
@@ -324,7 +324,7 @@ MatrixWorkspace_sptr CreateSampleWorkspace::createHistogramWorkspace(
  */
 EventWorkspace_sptr CreateSampleWorkspace::createEventWorkspace(
     int numPixels, int numBins, int numEvents, double x0, double binDelta,
-    int start_at_pixelID, Geometry::Instrument_sptr inst,
+    int start_at_pixelID, const Geometry::Instrument_sptr &inst,
     const std::string &functionString, bool isRandom) {
   DateAndTime run_start("2010-01-01T00:00:00");
 

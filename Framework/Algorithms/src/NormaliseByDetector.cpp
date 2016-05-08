@@ -71,7 +71,8 @@ void NormaliseByDetector::init() {
 }
 
 const Geometry::FitParameter NormaliseByDetector::tryParseFunctionParameter(
-    Geometry::Parameter_sptr parameter, Geometry::IDetector_const_sptr det) {
+    const Geometry::Parameter_sptr &parameter,
+    const Geometry::IDetector_const_sptr &det) {
   if (parameter == nullptr) {
     std::stringstream stream;
     stream << det->getName() << " and all of it's parent components, have no "
@@ -96,10 +97,9 @@ normalisation routine.
 use.
 @param prog: progress reporting object.
 */
-void NormaliseByDetector::processHistogram(size_t wsIndex,
-                                           MatrixWorkspace_sptr denominatorWS,
-                                           MatrixWorkspace_const_sptr inWS,
-                                           Progress &prog) {
+void NormaliseByDetector::processHistogram(
+    size_t wsIndex, const MatrixWorkspace_sptr &denominatorWS,
+    const MatrixWorkspace_const_sptr &inWS, Progress &prog) {
   const Geometry::ParameterMap &paramMap = inWS->instrumentParameters();
   Geometry::IDetector_const_sptr det = inWS->getDetector(wsIndex);
   const std::string type = "fitting";
@@ -109,7 +109,7 @@ void NormaliseByDetector::processHistogram(size_t wsIndex,
   const Geometry::FitParameter &foundFittingParam =
       tryParseFunctionParameter(foundParam, det);
 
-  std::string fitFunctionName = foundFittingParam.getFunction();
+  const std::string &fitFunctionName = foundFittingParam.getFunction();
   IFunction_sptr function =
       FunctionFactory::Instance().createFunction(fitFunctionName);
   typedef std::vector<std::string> ParamNames;
@@ -126,7 +126,7 @@ void NormaliseByDetector::processHistogram(size_t wsIndex,
       throw std::runtime_error(
           "A Forumla has not been provided for a fit function");
     } else {
-      std::string resultUnitStr = fitParam.getResultUnit();
+      const std::string &resultUnitStr = fitParam.getResultUnit();
       if (!resultUnitStr.empty() && resultUnitStr.compare("Wavelength") != 0) {
         throw std::runtime_error(
             "Units for function parameters must be in Wavelength");
@@ -165,7 +165,7 @@ sequentially.
 use.
 */
 MatrixWorkspace_sptr
-NormaliseByDetector::processHistograms(MatrixWorkspace_sptr inWS) {
+NormaliseByDetector::processHistograms(const MatrixWorkspace_sptr &inWS) {
   const size_t nHistograms = inWS->getNumberHistograms();
   const size_t progress_items = static_cast<size_t>(double(nHistograms) * 1.2);
   Progress prog(this, 0.0, 1.0, progress_items);

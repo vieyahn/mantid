@@ -21,7 +21,7 @@ NotebookWriter::NotebookWriter() : m_cell_buffer(Json::arrayValue) {
 * @param array_code :: Json array of strings containing python code
  * for the code cell
 */
-void NotebookWriter::codeCell(Json::Value array_code) {
+void NotebookWriter::codeCell(const Json::Value &array_code) {
 
   Json::Value cell_data;
   const Json::Value empty = Json::Value(Json::ValueType::objectValue);
@@ -41,7 +41,7 @@ void NotebookWriter::codeCell(Json::Value array_code) {
 *
 * @param string_code :: string containing the python for the code cell
 */
-std::string NotebookWriter::codeCell(std::string string_code) {
+std::string NotebookWriter::codeCell(const std::string &string_code) {
 
   Json::Value cell_data;
   const Json::Value empty = Json::Value(Json::ValueType::objectValue);
@@ -64,7 +64,7 @@ std::string NotebookWriter::codeCell(std::string string_code) {
 * @param string_array :: json array of strings containing the python
  * code for the code cell
 */
-void NotebookWriter::markdownCell(Json::Value string_array) {
+void NotebookWriter::markdownCell(const Json::Value &string_array) {
 
   Json::Value cell_data;
   const Json::Value empty = Json::Value(Json::ValueType::objectValue);
@@ -81,7 +81,7 @@ void NotebookWriter::markdownCell(Json::Value string_array) {
 *
 * @param string_text :: string containing the python code for the code cell
 */
-std::string NotebookWriter::markdownCell(std::string string_text) {
+std::string NotebookWriter::markdownCell(const std::string &string_text) {
 
   Json::Value cell_data;
   const Json::Value empty = Json::Value(Json::ValueType::objectValue);

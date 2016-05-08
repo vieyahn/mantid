@@ -22,8 +22,8 @@ using Mantid::MantidVec;
 namespace {
 
 typedef boost::tuple<double, double> MinMaxTuple;
-MinMaxTuple calculateXIntersection(MatrixWorkspace_sptr lhsWS,
-                                   MatrixWorkspace_sptr rhsWS) {
+MinMaxTuple calculateXIntersection(const MatrixWorkspace_sptr &lhsWS,
+                                   const MatrixWorkspace_sptr &rhsWS) {
   MantidVec lhs_x = lhsWS->readX(0);
   MantidVec rhs_x = rhsWS->readX(0);
   return MinMaxTuple(rhs_x.front(), lhs_x.back());
@@ -98,7 +98,7 @@ MatrixWorkspace_sptr Stitch1D::maskAllBut(int a1, int a2,
  * @param a2 : end position in X
  * @param source : Workspace to mask.
  */
-void Stitch1D::maskInPlace(int a1, int a2, MatrixWorkspace_sptr source) {
+void Stitch1D::maskInPlace(int a1, int a2, const MatrixWorkspace_sptr &source) {
   MatrixWorkspace_sptr product = WorkspaceFactory::Instance().create(source);
   const int histogramCount = static_cast<int>(source->getNumberHistograms());
   PARALLEL_FOR2(source, product)
@@ -465,7 +465,7 @@ Stitch1D::findStartEndIndexes(double startOverlap, double endOverlap,
  @param ws :: The input workspace
  @return True if there are any non-zero errors in the workspace
  */
-bool Stitch1D::hasNonzeroErrors(MatrixWorkspace_sptr ws) {
+bool Stitch1D::hasNonzeroErrors(const MatrixWorkspace_sptr &ws) {
   int64_t ws_size = static_cast<int64_t>(ws->getNumberHistograms());
   bool hasNonZeroErrors = false;
   PARALLEL_FOR1(ws)
@@ -631,7 +631,7 @@ void Stitch1D::exec() {
  * Put special values back.
  * @param ws : MatrixWorkspace to resinsert special values into.
  */
-void Stitch1D::reinsertSpecialValues(MatrixWorkspace_sptr ws) {
+void Stitch1D::reinsertSpecialValues(const MatrixWorkspace_sptr &ws) {
   int histogramCount = static_cast<int>(ws->getNumberHistograms());
   PARALLEL_FOR1(ws)
   for (int i = 0; i < histogramCount; ++i) {

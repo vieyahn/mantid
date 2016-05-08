@@ -57,7 +57,7 @@ protected:
   void setPropManagerPropName(const std::string &propName);
   void mapPropertyName(const std::string &nameInProp,
                        const std::string &nameInPropManager);
-  void copyProperty(API::Algorithm_sptr alg, const std::string &name);
+  void copyProperty(const API::Algorithm_sptr &alg, const std::string &name);
   virtual ITableWorkspace_sptr determineChunk(const std::string &filename);
   virtual MatrixWorkspace_sptr loadChunk(const size_t rowIndex);
   Workspace_sptr load(const std::string &inputData,
@@ -68,7 +68,7 @@ protected:
       const std::string &propertyManager = std::string()) const;
   /// MPI option. If false, we will use one job event if MPI is available
   bool m_useMPI;
-  Workspace_sptr assemble(Workspace_sptr partialWS);
+  Workspace_sptr assemble(const Workspace_sptr &partialWS);
   Workspace_sptr assemble(const std::string &partialWSName,
                           const std::string &outputWSName);
   void saveNexus(const std::string &outputWSName,
@@ -77,31 +77,31 @@ protected:
   int getNThreads();
 
   /// Divide a matrix workspace by another matrix workspace
-  MatrixWorkspace_sptr divide(const MatrixWorkspace_sptr lhs,
-                              const MatrixWorkspace_sptr rhs);
+  MatrixWorkspace_sptr divide(const MatrixWorkspace_sptr &lhs,
+                              const MatrixWorkspace_sptr &rhs);
   /// Divide a matrix workspace by a single value
-  MatrixWorkspace_sptr divide(const MatrixWorkspace_sptr lhs,
+  MatrixWorkspace_sptr divide(const MatrixWorkspace_sptr &lhs,
                               const double &rhsValue);
 
   /// Multiply a matrix workspace by another matrix workspace
-  MatrixWorkspace_sptr multiply(const MatrixWorkspace_sptr lhs,
-                                const MatrixWorkspace_sptr rhs);
+  MatrixWorkspace_sptr multiply(const MatrixWorkspace_sptr &lhs,
+                                const MatrixWorkspace_sptr &rhs);
   /// Multiply a matrix workspace by a single value
-  MatrixWorkspace_sptr multiply(const MatrixWorkspace_sptr lhs,
+  MatrixWorkspace_sptr multiply(const MatrixWorkspace_sptr &lhs,
                                 const double &rhsValue);
 
   /// Add a matrix workspace to another matrix workspace
-  MatrixWorkspace_sptr plus(const MatrixWorkspace_sptr lhs,
-                            const MatrixWorkspace_sptr rhs);
+  MatrixWorkspace_sptr plus(const MatrixWorkspace_sptr &lhs,
+                            const MatrixWorkspace_sptr &rhs);
   /// Add a single value to a matrix workspace
-  MatrixWorkspace_sptr plus(const MatrixWorkspace_sptr lhs,
+  MatrixWorkspace_sptr plus(const MatrixWorkspace_sptr &lhs,
                             const double &rhsValue);
 
   /// Subract a matrix workspace by another matrix workspace
-  MatrixWorkspace_sptr minus(const MatrixWorkspace_sptr lhs,
-                             const MatrixWorkspace_sptr rhs);
+  MatrixWorkspace_sptr minus(const MatrixWorkspace_sptr &lhs,
+                             const MatrixWorkspace_sptr &rhs);
   /// Subract a single value from a matrix workspace
-  MatrixWorkspace_sptr minus(const MatrixWorkspace_sptr lhs,
+  MatrixWorkspace_sptr minus(const MatrixWorkspace_sptr &lhs,
                              const double &rhsValue);
 
 private:

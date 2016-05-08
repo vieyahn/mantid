@@ -55,9 +55,9 @@ public:
   size_t nParams() const override;
 
   /// Set fitting function.
-  virtual void setFittingFunction(API::IFunction_sptr function,
-                                  API::FunctionDomain_sptr domain,
-                                  API::FunctionValues_sptr values);
+  virtual void setFittingFunction(const API::IFunction_sptr &function,
+                                  const API::FunctionDomain_sptr &domain,
+                                  const API::FunctionValues_sptr &values);
 
   /// Get fitting function.
   virtual API::IFunction_sptr getFittingFunction() const { return m_function; }

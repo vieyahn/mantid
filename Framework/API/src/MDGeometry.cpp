@@ -131,7 +131,7 @@ MDGeometry::getDimension(size_t index) const {
  * @return the dimension with the specified id string.
  */
 boost::shared_ptr<const Mantid::Geometry::IMDDimension>
-MDGeometry::getDimensionWithId(std::string id) const {
+MDGeometry::getDimensionWithId(const std::string &id) const {
   auto dimension = std::find_if(
       m_dimensions.begin(), m_dimensions.end(),
       [&id](
@@ -204,7 +204,7 @@ size_t MDGeometry::getDimensionIndexById(const std::string &id) const {
 /** Add a dimension
  * @param dim :: shared pointer to the dimension object   */
 void MDGeometry::addDimension(
-    boost::shared_ptr<Mantid::Geometry::IMDDimension> dim) {
+    const boost::shared_ptr<Mantid::Geometry::IMDDimension> &dim) {
   m_dimensions.push_back(dim);
 }
 
@@ -338,7 +338,7 @@ MDGeometry::getOriginalWorkspace(size_t index) const {
  * @param ws :: original workspace shared pointer
  * @param index :: index into the vector of original workspaces.
  */
-void MDGeometry::setOriginalWorkspace(boost::shared_ptr<Workspace> ws,
+void MDGeometry::setOriginalWorkspace(const boost::shared_ptr<Workspace> &ws,
                                       size_t index) {
   if (index >= m_originalWorkspaces.size())
     m_originalWorkspaces.resize(index + 1);

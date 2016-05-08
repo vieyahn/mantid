@@ -90,7 +90,7 @@ PoldiPeakCollection::IntensityType PoldiPeakCollection::intensityType() const {
 }
 
 void PoldiPeakCollection::setProfileFunctionName(
-    std::string newProfileFunction) {
+    const std::string &newProfileFunction) {
   m_profileFunctionName = newProfileFunction;
 }
 
@@ -263,7 +263,7 @@ PoldiPeakCollection::getUnitCellStringFromLog(const LogManager_sptr &tableLog) {
 
 std::string
 PoldiPeakCollection::getStringValueFromLog(const LogManager_sptr &logManager,
-                                           std::string valueName) {
+                                           const std::string &valueName) {
   if (logManager->hasProperty(valueName)) {
     return logManager->getPropertyValueAsType<std::string>(valueName);
   }
@@ -283,8 +283,8 @@ std::string PoldiPeakCollection::intensityTypeToString(
   throw std::runtime_error("Unkown intensity type can not be processed.");
 }
 
-PoldiPeakCollection::IntensityType
-PoldiPeakCollection::intensityTypeFromString(std::string typeString) const {
+PoldiPeakCollection::IntensityType PoldiPeakCollection::intensityTypeFromString(
+    const std::string &typeString) const {
   std::string lowerCaseType(typeString);
   std::transform(lowerCaseType.begin(), lowerCaseType.end(),
                  lowerCaseType.begin(), ::tolower);

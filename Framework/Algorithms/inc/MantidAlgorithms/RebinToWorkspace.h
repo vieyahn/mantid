@@ -72,7 +72,7 @@ private:
 
   /// Create the rebin paraeters
   std::vector<double>
-  createRebinParameters(Mantid::API::MatrixWorkspace_sptr toMatch);
+  createRebinParameters(const Mantid::API::MatrixWorkspace_sptr &toMatch);
 };
 }
 }

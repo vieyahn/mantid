@@ -47,14 +47,14 @@ public:
   double intensity(double wavelength) const;
 
 protected:
-  void
-  setSpectrumFromInstrument(Geometry::Instrument_const_sptr poldiInstrument);
+  void setSpectrumFromInstrument(
+      const Geometry::Instrument_const_sptr &poldiInstrument);
   Geometry::IComponent_const_sptr
-  getSourceComponent(Geometry::Instrument_const_sptr poldiInstrument);
-  Geometry::Parameter_sptr
-  getSpectrumParameter(Geometry::IComponent_const_sptr source,
-                       Geometry::ParameterMap_sptr instrumentParameterMap);
-  void setSpectrum(Geometry::Parameter_sptr spectrumParameter);
+  getSourceComponent(const Geometry::Instrument_const_sptr &poldiInstrument);
+  Geometry::Parameter_sptr getSpectrumParameter(
+      const Geometry::IComponent_const_sptr &source,
+      const Geometry::ParameterMap_sptr &instrumentParameterMap);
+  void setSpectrum(const Geometry::Parameter_sptr &spectrumParameter);
 
   Kernel::Interpolation m_spectrum;
 };

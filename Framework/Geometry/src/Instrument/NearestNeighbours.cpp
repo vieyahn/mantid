@@ -246,7 +246,7 @@ NearestNeighbours::defaultNeighbours(const specnum_t spectrum) const {
  */
 std::map<specnum_t, IDetector_const_sptr>
 NearestNeighbours::getSpectraDetectors(
-    boost::shared_ptr<const Instrument> instrument,
+    const boost::shared_ptr<const Instrument> &instrument,
     const ISpectrumDetectorMapping &spectraMap) {
   std::map<specnum_t, IDetector_const_sptr> spectra;
   if (spectraMap.empty())

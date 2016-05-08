@@ -521,8 +521,9 @@ size_t ExtractSpectra::getXMax(const int wsIndex) {
  *  @param outIndex ::        The workspace index of the spectrum in the output
  * workspace
  */
-void ExtractSpectra::cropRagged(API::MatrixWorkspace_sptr outputWorkspace,
-                                int inIndex, int outIndex) {
+void ExtractSpectra::cropRagged(
+    const API::MatrixWorkspace_sptr &outputWorkspace, int inIndex,
+    int outIndex) {
   MantidVec &Y = outputWorkspace->dataY(outIndex);
   MantidVec &E = outputWorkspace->dataE(outIndex);
   const size_t size = Y.size();

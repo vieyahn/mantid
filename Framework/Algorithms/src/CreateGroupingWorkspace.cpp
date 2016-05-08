@@ -159,10 +159,9 @@ std::map<detid_t, int> readGroupingFile(const std::string &groupingFileName,
  * @param prog Progress reporter
  * @returns :: Map of detector IDs to group number
  */
-std::map<detid_t, int> makeGroupingByNumGroups(const std::string compName,
-                                               int numGroups,
-                                               Instrument_const_sptr inst,
-                                               Progress &prog) {
+std::map<detid_t, int>
+makeGroupingByNumGroups(const std::string &compName, int numGroups,
+                        const Instrument_const_sptr &inst, Progress &prog) {
   std::map<detid_t, int> detIDtoGroup;
 
   // Get detectors for given instument component
@@ -200,7 +199,7 @@ std::map<detid_t, int> makeGroupingByNumGroups(const std::string compName,
  * @return true if first group number is less than second group number
  */
 
-bool groupnumber(std::string groupi, std::string groupj) {
+bool groupnumber(const std::string &groupi, const std::string &groupj) {
   int i = 0;
   std::string groupName = groupi;
   // Take out the "group" part of the group name and convert to an int
@@ -228,7 +227,7 @@ bool groupnumber(std::string groupi, std::string groupj) {
  * @returns:: map of detID to group number
  */
 std::map<detid_t, int> makeGroupingByNames(std::string GroupNames,
-                                           Instrument_const_sptr inst,
+                                           const Instrument_const_sptr &inst,
                                            Progress &prog, bool sortnames) {
   // This will contain the grouping
   std::map<detid_t, int> detIDtoGroup;

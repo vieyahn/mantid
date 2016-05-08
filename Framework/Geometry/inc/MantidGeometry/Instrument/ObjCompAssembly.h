@@ -94,7 +94,7 @@ public:
 
   //! Set the outline of the assembly
   boost::shared_ptr<Object> createOutline();
-  void setOutline(boost::shared_ptr<const Object> obj);
+  void setOutline(const boost::shared_ptr<const Object> &obj);
 
   /** Test the intersection of the ray with the children of the component
    * assembly  */

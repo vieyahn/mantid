@@ -66,8 +66,8 @@ private:
   void init() override;
   void exec() override;
 
-  void checkForOverlap(API::MatrixWorkspace_const_sptr ws1,
-                       API::MatrixWorkspace_const_sptr ws2,
+  void checkForOverlap(const API::MatrixWorkspace_const_sptr &ws1,
+                       const API::MatrixWorkspace_const_sptr &ws2,
                        bool checkSpectra) const;
   void fixSpectrumNumbers(API::MatrixWorkspace_const_sptr ws1,
                           API::MatrixWorkspace_const_sptr ws2,

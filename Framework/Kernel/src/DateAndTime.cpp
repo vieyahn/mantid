@@ -151,7 +151,7 @@ DateAndTime::DateAndTime(const int64_t total_nanoseconds) {
  *@param displayLogs :: if the logs should be dsiplayed during the execution of
  *the constructor
  */
-DateAndTime::DateAndTime(const std::string ISO8601_string, bool displayLogs)
+DateAndTime::DateAndTime(const std::string &ISO8601_string, bool displayLogs)
     : _nanoseconds(0) {
   this->setFromISO8601(ISO8601_string, displayLogs);
 }
@@ -160,7 +160,7 @@ DateAndTime::DateAndTime(const std::string ISO8601_string, bool displayLogs)
 /** Construct time from a boost::posix_time::ptime.
  * @param _ptime :: boost::posix_time::ptime
  */
-DateAndTime::DateAndTime(const boost::posix_time::ptime _ptime)
+DateAndTime::DateAndTime(const boost::posix_time::ptime &_ptime)
     : _nanoseconds(0) {
   this->set_from_ptime(_ptime);
 }
@@ -233,7 +233,7 @@ boost::posix_time::ptime DateAndTime::to_ptime() const {
  *
  * @param _ptime :: boost::posix_time::ptime date and time.
  */
-void DateAndTime::set_from_ptime(boost::posix_time::ptime _ptime) {
+void DateAndTime::set_from_ptime(const boost::posix_time::ptime &_ptime) {
   if (_ptime.is_special()) {
     // --- SPECIAL VALUES! ----
     if (_ptime.is_infinity() || _ptime.is_pos_infinity())
@@ -368,7 +368,7 @@ const DateAndTime DateAndTime::defaultTime() {
  * @param str :: ISO8601 format string: "yyyy-mm-ddThh:mm:ss[Z+-]tz:tz"
  * @param displayLogs :: flag to indiciate if the logs should be displayed
  */
-void DateAndTime::setFromISO8601(const std::string str, bool displayLogs) {
+void DateAndTime::setFromISO8601(const std::string &str, bool displayLogs) {
   // Make a copy
   std::string time = str;
 
@@ -495,7 +495,7 @@ std::string DateAndTime::toSimpleString() const {
  * @param format : format for strftime(). Default "%Y-%b-%d %H:%M:%S"
  * @return date as string, formatted as requested
  */
-std::string DateAndTime::toFormattedString(const std::string format) const {
+std::string DateAndTime::toFormattedString(const std::string &format) const {
   char buffer[25];
   std::tm date_as_tm = this->to_tm();
   strftime(buffer, 25, format.c_str(), &date_as_tm);
@@ -755,7 +755,7 @@ DateAndTime DateAndTime::getCurrentTime() {
  * Return the number of seconds in a time_duration, as a double, including
  * fractional seconds.
  */
-double DateAndTime::secondsFromDuration(time_duration duration) {
+double DateAndTime::secondsFromDuration(const time_duration &duration) {
 #ifdef BOOST_DATE_TIME_HAS_NANOSECONDS
   // Nanosecond resolution
   return static_cast<double>(duration.total_nanoseconds()) / 1e9;

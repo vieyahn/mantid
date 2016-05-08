@@ -16,7 +16,7 @@ InvalidParameterParser::createParameter(Poco::XML::Element *parameterElement) {
 }
 
 InvalidParameter *
-InvalidParameterParser::parseInvalidParameter(std::string value) {
+InvalidParameterParser::parseInvalidParameter(const std::string &value) {
   return new InvalidParameter(value);
 }
 

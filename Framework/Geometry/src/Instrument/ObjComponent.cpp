@@ -54,7 +54,7 @@ const Object_const_sptr ObjComponent::shape() const {
 }
 
 /// Set a new shape on the component
-void ObjComponent::setShape(Object_const_sptr newShape) {
+void ObjComponent::setShape(const Object_const_sptr &newShape) {
   if (m_map)
     throw std::runtime_error("ObjComponent::setShape - Cannot change the shape "
                              "of a parameterized object");

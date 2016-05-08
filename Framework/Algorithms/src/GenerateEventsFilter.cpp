@@ -505,7 +505,7 @@ void GenerateEventsFilter::setFilterByTimeOnly() {
 /** Generate filters by log values.
   * @param logname :: name of the log to filter with
   */
-void GenerateEventsFilter::setFilterByLogValue(std::string logname) {
+void GenerateEventsFilter::setFilterByLogValue(const std::string &logname) {
   // Obtain reference of sample log to filter with
   m_dblLog = dynamic_cast<TimeSeriesProperty<double> *>(
       m_dataWS->run().getProperty(logname));
@@ -977,9 +977,9 @@ bool GenerateEventsFilter::identifyLogEntry(
  * @param stopTime :: Stop time.
  */
 void GenerateEventsFilter::makeMultipleFiltersByValues(
-    map<size_t, int> indexwsindexmap, vector<double> logvalueranges,
-    bool centre, bool filterIncrease, bool filterDecrease,
-    DateAndTime startTime, DateAndTime stopTime) {
+    const map<size_t, int> &indexwsindexmap,
+    const vector<double> &logvalueranges, bool centre, bool filterIncrease,
+    bool filterDecrease, DateAndTime startTime, DateAndTime stopTime) {
   g_log.notice("Starting method 'makeMultipleFiltersByValues'. ");
 
   // Return if the log is empty.
@@ -1035,9 +1035,9 @@ void GenerateEventsFilter::makeMultipleFiltersByValues(
  * @param stopTime :: Stop time.
  */
 void GenerateEventsFilter::makeMultipleFiltersByValuesParallel(
-    map<size_t, int> indexwsindexmap, vector<double> logvalueranges,
-    bool centre, bool filterIncrease, bool filterDecrease,
-    DateAndTime startTime, DateAndTime stopTime) {
+    const map<size_t, int> &indexwsindexmap,
+    const vector<double> &logvalueranges, bool centre, bool filterIncrease,
+    bool filterDecrease, DateAndTime startTime, DateAndTime stopTime) {
   // Return if the log is empty.
   int logsize = m_dblLog->size();
   if (logsize == 0) {
@@ -1196,7 +1196,7 @@ void GenerateEventsFilter::makeMultipleFiltersByValuesParallel(
 void GenerateEventsFilter::makeMultipleFiltersByValuesPartialLog(
     int istart, int iend, std::vector<Kernel::DateAndTime> &vecSplitTime,
     std::vector<int> &vecSplitGroup, map<size_t, int> indexwsindexmap,
-    const vector<double> &logvalueranges, time_duration tol,
+    const vector<double> &logvalueranges, const time_duration &tol,
     bool filterIncrease, bool filterDecrease, DateAndTime startTime,
     DateAndTime stopTime) {
   // Check
@@ -1684,7 +1684,7 @@ int GenerateEventsFilter::determineChangingDirection(int startindex) {
   */
 void GenerateEventsFilter::addNewTimeFilterSplitter(
     Kernel::DateAndTime starttime, Kernel::DateAndTime stoptime, int wsindex,
-    string info) {
+    const string &info) {
   if (m_forFastLog) {
     // For MatrixWorkspace splitter
     // Start of splitter

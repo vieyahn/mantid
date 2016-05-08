@@ -93,7 +93,7 @@ private:
    */
   template <class T>
   void correctKiKfEventHelper(std::vector<T> &wevector, double efixed,
-                              const std::string emodeStr);
+                              const std::string &emodeStr);
 };
 
 } // namespace Algorithm

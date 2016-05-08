@@ -37,10 +37,10 @@ public:
   DateAndTime(const double seconds, const double nanoseconds);
   DateAndTime(const int32_t seconds, const int32_t nanoseconds);
   DateAndTime(const int64_t seconds, const int64_t nanoseconds);
-  DateAndTime(const std::string ISO8601_string, bool displayLogs = true);
-  DateAndTime(const boost::posix_time::ptime _ptime);
+  DateAndTime(const std::string &ISO8601_string, bool displayLogs = true);
+  DateAndTime(const boost::posix_time::ptime &_ptime);
 
-  void set_from_ptime(boost::posix_time::ptime _ptime);
+  void set_from_ptime(const boost::posix_time::ptime &_ptime);
   boost::posix_time::ptime to_ptime() const;
 
   void set_from_time_t(std::time_t _timet);
@@ -49,10 +49,10 @@ public:
   std::time_t to_localtime_t() const;
   std::tm to_tm() const;
 
-  void setFromISO8601(const std::string str, bool displayLogs = true);
+  void setFromISO8601(const std::string &str, bool displayLogs = true);
   std::string toSimpleString() const;
   std::string
-  toFormattedString(const std::string format = "%Y-%b-%d %H:%M:%S") const;
+  toFormattedString(const std::string &format = "%Y-%b-%d %H:%M:%S") const;
   std::string toISO8601String() const;
 
   /// Stream output operator
@@ -101,7 +101,7 @@ public:
   static DateAndTime getCurrentTime();
   static DateAndTime maximum();
   static DateAndTime minimum();
-  static double secondsFromDuration(time_duration duration);
+  static double secondsFromDuration(const time_duration &duration);
   static time_duration durationFromSeconds(double duration);
   static int64_t nanosecondsFromDuration(const time_duration &td);
   static int64_t nanosecondsFromSeconds(double sec);

@@ -52,7 +52,8 @@ MultipleExperimentInfos::getExperimentInfo(const uint16_t runIndex) const {
  * @return the runIndex at which it was added
  * @throw std::runtime_error if you reach the limit of 65536 entries.
  */
-uint16_t MultipleExperimentInfos::addExperimentInfo(ExperimentInfo_sptr ei) {
+uint16_t
+MultipleExperimentInfos::addExperimentInfo(const ExperimentInfo_sptr &ei) {
   m_expInfos.push_back(ei);
   if (m_expInfos.size() >=
       static_cast<size_t>(std::numeric_limits<uint16_t>::max()))
@@ -68,7 +69,7 @@ uint16_t MultipleExperimentInfos::addExperimentInfo(ExperimentInfo_sptr ei) {
  * @param ei :: shared ptr to the ExperimentInfo class to add
  */
 void MultipleExperimentInfos::setExperimentInfo(const uint16_t runIndex,
-                                                ExperimentInfo_sptr ei) {
+                                                const ExperimentInfo_sptr &ei) {
   if (size_t(runIndex) >= m_expInfos.size())
     throw std::invalid_argument(
         "MDEventWorkspace::setExperimentInfo(): runIndex is out of range.");

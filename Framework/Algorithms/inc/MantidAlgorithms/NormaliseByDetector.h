@@ -64,16 +64,16 @@ private:
   /// Try to parse a function parameter and extract the correctly typed
   /// parameter.
   const Mantid::Geometry::FitParameter
-  tryParseFunctionParameter(Mantid::Geometry::Parameter_sptr parameter,
-                            Geometry::IDetector_const_sptr det);
+  tryParseFunctionParameter(const Mantid::Geometry::Parameter_sptr &parameter,
+                            const Geometry::IDetector_const_sptr &det);
   /// Block to process histograms.
-  boost::shared_ptr<Mantid::API::MatrixWorkspace>
-  processHistograms(boost::shared_ptr<Mantid::API::MatrixWorkspace> inWS);
+  boost::shared_ptr<Mantid::API::MatrixWorkspace> processHistograms(
+      const boost::shared_ptr<Mantid::API::MatrixWorkspace> &inWS);
   /// Process indivdual histogram.
   void processHistogram(
       size_t wsIndex,
-      boost::shared_ptr<Mantid::API::MatrixWorkspace> denominatorWS,
-      boost::shared_ptr<const Mantid::API::MatrixWorkspace> inWS,
+      const boost::shared_ptr<Mantid::API::MatrixWorkspace> &denominatorWS,
+      const boost::shared_ptr<const Mantid::API::MatrixWorkspace> &inWS,
       Mantid::API::Progress &prog);
 
   void init() override;

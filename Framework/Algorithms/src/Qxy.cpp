@@ -345,8 +345,8 @@ void Qxy::exec() {
  * Qx.
  *  @return A pointer to the newly-created workspace
  */
-API::MatrixWorkspace_sptr
-Qxy::setUpOutputWorkspace(API::MatrixWorkspace_const_sptr inputWorkspace) {
+API::MatrixWorkspace_sptr Qxy::setUpOutputWorkspace(
+    const API::MatrixWorkspace_const_sptr &inputWorkspace) {
   const double max = getProperty("MaxQxy");
   const double delta = getProperty("DeltaQ");
 

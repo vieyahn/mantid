@@ -84,7 +84,7 @@ public:
    *
    * @param exception :: the exception that aborted the run.
    */
-  virtual void abort(std::runtime_error exception) {
+  virtual void abort(const std::runtime_error &exception) {
     // Save the exception for re-throwing
     m_abortException = exception;
     m_aborted = true;

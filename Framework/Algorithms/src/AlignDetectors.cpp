@@ -119,7 +119,7 @@ public:
   }
 
 private:
-  void generateDetidToRow(ITableWorkspace_const_sptr table) {
+  void generateDetidToRow(const ITableWorkspace_const_sptr &table) {
     ConstColumnVector<int> detIDs = table->getVector("detid");
     const size_t numDets = detIDs.size();
     for (size_t i = 0; i < numDets; ++i) {
@@ -242,7 +242,7 @@ std::map<std::string, std::string> AlignDetectors::validateInputs() {
   return result;
 }
 
-void AlignDetectors::loadCalFile(MatrixWorkspace_sptr inputWS,
+void AlignDetectors::loadCalFile(const MatrixWorkspace_sptr &inputWS,
                                  const std::string &filename) {
   IAlgorithm_sptr alg = createChildAlgorithm("LoadDiffCal");
   alg->setProperty("InputWorkspace", inputWS);
@@ -256,7 +256,7 @@ void AlignDetectors::loadCalFile(MatrixWorkspace_sptr inputWS,
   m_calibrationWS = alg->getProperty("OutputCalWorkspace");
 }
 
-void AlignDetectors::getCalibrationWS(MatrixWorkspace_sptr inputWS) {
+void AlignDetectors::getCalibrationWS(const MatrixWorkspace_sptr &inputWS) {
   m_calibrationWS = getProperty("CalibrationWorkspace");
   if (m_calibrationWS)
     return; // nothing more to do
@@ -281,7 +281,7 @@ void AlignDetectors::getCalibrationWS(MatrixWorkspace_sptr inputWS) {
   throw std::runtime_error("Failed to determine calibration information");
 }
 
-void setXAxisUnits(API::MatrixWorkspace_sptr outputWS) {
+void setXAxisUnits(const API::MatrixWorkspace_sptr &outputWS) {
   outputWS->getAxis(0)->unit() = UnitFactory::Instance().create("dSpacing");
 }
 

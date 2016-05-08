@@ -98,7 +98,7 @@ double ParamFunction::getParameter(size_t i) const {
  */
 void ParamFunction::setParameter(const std::string &name, const double &value,
                                  bool explicitlySet) {
-  std::string ucName(name);
+  const std::string &ucName(name);
   std::vector<std::string>::const_iterator it =
       std::find(m_parameterNames.begin(), m_parameterNames.end(), ucName);
   if (it == m_parameterNames.end()) {
@@ -123,7 +123,7 @@ void ParamFunction::setParameter(const std::string &name, const double &value,
  */
 void ParamFunction::setParameterDescription(const std::string &name,
                                             const std::string &description) {
-  std::string ucName(name);
+  const std::string &ucName(name);
   // std::transform(name.begin(), name.end(), ucName.begin(), toupper);
   std::vector<std::string>::const_iterator it =
       std::find(m_parameterNames.begin(), m_parameterNames.end(), ucName);
@@ -146,7 +146,7 @@ void ParamFunction::setParameterDescription(const std::string &name,
  * @return the value of the named parameter
  */
 double ParamFunction::getParameter(const std::string &name) const {
-  std::string ucName(name);
+  const std::string &ucName(name);
   // std::transform(name.begin(), name.end(), ucName.begin(), toupper);
   auto it =
       std::find(m_parameterNames.cbegin(), m_parameterNames.cend(), ucName);
@@ -177,7 +177,7 @@ double ParamFunction::getParameter(const std::string &name) const {
  * @return the index of the named parameter
  */
 size_t ParamFunction::parameterIndex(const std::string &name) const {
-  std::string ucName(name);
+  const std::string &ucName(name);
   // std::transform(name.begin(), name.end(), ucName.begin(), toupper);
   auto it =
       std::find(m_parameterNames.cbegin(), m_parameterNames.cend(), ucName);
@@ -244,7 +244,7 @@ void ParamFunction::setError(size_t i, double err) {
  */
 void ParamFunction::declareParameter(const std::string &name, double initValue,
                                      const std::string &description) {
-  std::string ucName(name);
+  const std::string &ucName(name);
   // std::transform(name.begin(), name.end(), ucName.begin(), toupper);
   std::vector<std::string>::const_iterator it =
       std::find(m_parameterNames.begin(), m_parameterNames.end(), ucName);

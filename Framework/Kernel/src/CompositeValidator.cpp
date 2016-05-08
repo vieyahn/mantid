@@ -60,7 +60,7 @@ Kernel::IValidator_sptr CompositeValidator::clone() const {
 /** Adds a validator to the group of validators to check
  *  @param child :: A pointer to the validator to add
  */
-void CompositeValidator::add(Kernel::IValidator_sptr child) {
+void CompositeValidator::add(const Kernel::IValidator_sptr &child) {
   m_children.push_back(child);
 }
 

@@ -91,9 +91,9 @@ protected:
   void init() override;
   void exec() override;
 
-  void outputYandEValues(API::MatrixWorkspace_const_sptr inputW,
+  void outputYandEValues(const API::MatrixWorkspace_const_sptr &inputW,
                          const MantidVecPtr &XValues_new,
-                         API::MatrixWorkspace_sptr outputW);
+                         const API::MatrixWorkspace_sptr &outputW);
   void cubicInterpolation(const MantidVec &xOld, const MantidVec &yOld,
                           const MantidVec &eOld, const MantidVec &xNew,
                           MantidVec &yNew, MantidVec &eNew) const;

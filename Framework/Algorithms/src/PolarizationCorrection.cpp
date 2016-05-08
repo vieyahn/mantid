@@ -251,7 +251,8 @@ PolarizationCorrection::copyShapeAndFill(MatrixWorkspace_sptr &base,
   return filled;
 }
 
-WorkspaceGroup_sptr PolarizationCorrection::execPA(WorkspaceGroup_sptr inWS) {
+WorkspaceGroup_sptr
+PolarizationCorrection::execPA(const WorkspaceGroup_sptr &inWS) {
 
   if (isPropertyDefault(cAlphaLabel())) {
     throw std::invalid_argument("Must provide as input for PA: " +
@@ -349,7 +350,8 @@ WorkspaceGroup_sptr PolarizationCorrection::execPA(WorkspaceGroup_sptr inWS) {
   return dataOut;
 }
 
-WorkspaceGroup_sptr PolarizationCorrection::execPNR(WorkspaceGroup_sptr inWS) {
+WorkspaceGroup_sptr
+PolarizationCorrection::execPNR(const WorkspaceGroup_sptr &inWS) {
   size_t itemIndex = 0;
   MatrixWorkspace_sptr Ip =
       boost::dynamic_pointer_cast<MatrixWorkspace>(inWS->getItem(itemIndex++));

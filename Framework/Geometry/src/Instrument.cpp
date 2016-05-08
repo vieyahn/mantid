@@ -37,7 +37,7 @@ Instrument::Instrument(const std::string &name)
  *  @param instr :: instrument for parameter inclusion
  *  @param map :: parameter map to include
  */
-Instrument::Instrument(const boost::shared_ptr<const Instrument> instr,
+Instrument::Instrument(const boost::shared_ptr<const Instrument> &instr,
                        boost::shared_ptr<ParameterMap> map)
     : CompAssembly(instr.get(), map.get()), m_sourceCache(instr->m_sourceCache),
       m_chopperPoints(instr->m_chopperPoints),
@@ -165,7 +165,7 @@ Instrument_const_sptr Instrument::getPhysicalInstrument() const {
  *  @param physInst A pointer to the physical instrument object.
  */
 void Instrument::setPhysicalInstrument(
-    boost::shared_ptr<const Instrument> physInst) {
+    const boost::shared_ptr<const Instrument> &physInst) {
   if (!m_map)
     m_physicalInstrument = physInst;
   else
@@ -1103,8 +1103,8 @@ void Instrument::saveNexus(::NeXus::File *file,
 *                 a group must be open that has only one call of this function.
 *  @param detIDs :: the dectector IDs of the detectors belonging to the set
 */
-void Instrument::saveDetectorSetInfoToNexus(::NeXus::File *file,
-                                            std::vector<detid_t> detIDs) const {
+void Instrument::saveDetectorSetInfoToNexus(
+    ::NeXus::File *file, const std::vector<detid_t> &detIDs) const {
 
   size_t nDets = detIDs.size();
   if (nDets == 0)
@@ -1160,7 +1160,8 @@ void Instrument::loadNexus(::NeXus::File *file, const std::string &group) {
 Setter for the reference frame.
 @param frame : reference frame object to use.
 */
-void Instrument::setReferenceFrame(boost::shared_ptr<ReferenceFrame> frame) {
+void Instrument::setReferenceFrame(
+    const boost::shared_ptr<ReferenceFrame> &frame) {
   m_referenceFrame = frame;
 }
 

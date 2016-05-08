@@ -81,7 +81,7 @@ private:
   // Load run, apply dead time corrections and detector grouping
   API::Workspace_sptr doLoad(size_t runNumber);
   // Analyse loaded run
-  void doAnalysis(API::Workspace_sptr loadedWs, size_t index);
+  void doAnalysis(const API::Workspace_sptr &loadedWs, size_t index);
   // Parse run names
   void parseRunNames(std::string &firstFN, std::string &lastFN,
                      std::string &fnBase, std::string &fnExt, int &fnZeros);
@@ -89,18 +89,19 @@ private:
   API::Workspace_sptr loadCorrectionsFromFile(const std::string &deadTimeFile);
   // Apply dead-time corrections
   void applyDeadtimeCorr(API::Workspace_sptr &loadedWs,
-                         API::Workspace_sptr deadTimes);
+                         const API::Workspace_sptr &deadTimes);
   /// Create custom detector grouping
   API::Workspace_sptr createCustomGrouping(const std::vector<int> &fwd,
                                            const std::vector<int> &bwd);
   /// Group detectors
   void groupDetectors(API::Workspace_sptr &loadedWs,
-                      API::Workspace_sptr grouping);
+                      const API::Workspace_sptr &grouping);
   /// Calculate the integral asymmetry for a workspace (single period)
-  void calcIntAsymmetry(API::MatrixWorkspace_sptr ws, double &Y, double &E);
+  void calcIntAsymmetry(const API::MatrixWorkspace_sptr &ws, double &Y,
+                        double &E);
   /// Calculate the integral asymmetry for a workspace (red & green)
-  void calcIntAsymmetry(API::MatrixWorkspace_sptr ws_red,
-                        API::MatrixWorkspace_sptr ws_green, double &Y,
+  void calcIntAsymmetry(const API::MatrixWorkspace_sptr &ws_red,
+                        const API::MatrixWorkspace_sptr &ws_green, double &Y,
                         double &E);
   /// Group detectors
   void groupDetectors(API::MatrixWorkspace_sptr &ws,

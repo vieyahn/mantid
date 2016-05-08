@@ -127,7 +127,7 @@ void ExportTimeSeriesLog::exec() {
  * @param numentries :: number of log entries to export
  */
 void ExportTimeSeriesLog::exportLog(const std::string &logname,
-                                    const std::string timeunit,
+                                    const std::string &timeunit,
                                     const double &starttime,
                                     const double &stoptime,
                                     const bool exportepoch, bool outputeventws,

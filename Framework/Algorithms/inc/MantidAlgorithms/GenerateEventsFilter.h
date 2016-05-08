@@ -90,7 +90,7 @@ private:
 
   void processInputTime();
   void setFilterByTimeOnly();
-  void setFilterByLogValue(std::string logname);
+  void setFilterByLogValue(const std::string &logname);
 
   void processSingleValueFilter(double minvalue, double maxvalue,
                                 bool filterincrease, bool filterdecrease);
@@ -106,8 +106,8 @@ private:
                                Kernel::DateAndTime stopTime, int wsindex);
 
   /// Make multiple-log-value filters in serial
-  void makeMultipleFiltersByValues(std::map<size_t, int> indexwsindexmap,
-                                   std::vector<double> logvalueranges,
+  void makeMultipleFiltersByValues(const std::map<size_t, int> &indexwsindexmap,
+                                   const std::vector<double> &logvalueranges,
                                    bool centre, bool filterIncrease,
                                    bool filterDecrease,
                                    Kernel::DateAndTime startTime,
@@ -115,16 +115,18 @@ private:
 
   /// Make multiple-log-value filters in serial in parallel
   void makeMultipleFiltersByValuesParallel(
-      std::map<size_t, int> indexwsindexmap, std::vector<double> logvalueranges,
-      bool centre, bool filterIncrease, bool filterDecrease,
-      Kernel::DateAndTime startTime, Kernel::DateAndTime stopTime);
+      const std::map<size_t, int> &indexwsindexmap,
+      const std::vector<double> &logvalueranges, bool centre,
+      bool filterIncrease, bool filterDecrease, Kernel::DateAndTime startTime,
+      Kernel::DateAndTime stopTime);
 
   /// Generate event splitters for partial sample log (serial)
   void makeMultipleFiltersByValuesPartialLog(
       int istart, int iend, std::vector<Kernel::DateAndTime> &vecSplitTime,
       std::vector<int> &vecSplitGroup, std::map<size_t, int> indexwsindexmap,
-      const std::vector<double> &logvalueranges, Kernel::time_duration tol,
-      bool filterIncrease, bool filterDecrease, Kernel::DateAndTime startTime,
+      const std::vector<double> &logvalueranges,
+      const Kernel::time_duration &tol, bool filterIncrease,
+      bool filterDecrease, Kernel::DateAndTime startTime,
       Kernel::DateAndTime stopTime);
 
   /// Generate event filters for integer sample log
@@ -138,7 +140,7 @@ private:
   /// Add a splitter
   void addNewTimeFilterSplitter(Kernel::DateAndTime starttime,
                                 Kernel::DateAndTime stoptime, int wsindex,
-                                std::string info);
+                                const std::string &info);
 
   /// Create a splitter and add to the vector of time splitters
   Kernel::DateAndTime

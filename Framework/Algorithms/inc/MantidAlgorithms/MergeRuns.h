@@ -94,9 +94,9 @@ private:
   // Overriden MultiPeriodGroupAlgorithm method.
   std::string fetchInputPropertyName() const override;
   /// test the compatibility of the given workspace with others
-  void testCompatibility(API::MatrixWorkspace_const_sptr ws,
+  void testCompatibility(const API::MatrixWorkspace_const_sptr &ws,
                          const std::string &xUnitID, const std::string &YUnit,
-                         const bool dist, const std::string instrument) const;
+                         const bool dist, const std::string &instrument) const;
   /// An addition table is a list of pairs: First int = workspace index in the
   /// EW being added, Second int = workspace index to which it will be added in
   /// the OUTPUT EW. -1 if it should add a new entry at the end.

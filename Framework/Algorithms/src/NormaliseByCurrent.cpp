@@ -42,7 +42,7 @@ void NormaliseByCurrent::init() {
  * workspace logs or if the values are invalid (0)
  */
 double NormaliseByCurrent::extractCharge(
-    boost::shared_ptr<Mantid::API::MatrixWorkspace> inputWS) const {
+    const boost::shared_ptr<Mantid::API::MatrixWorkspace> &inputWS) const {
   // Get the good proton charge and check it's valid
   double charge(-1.0);
   const Run &run = inputWS->run();

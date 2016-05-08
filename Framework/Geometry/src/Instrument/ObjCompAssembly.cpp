@@ -600,7 +600,7 @@ boost::shared_ptr<Object> ObjCompAssembly::createOutline() {
  * Sets the outline shape for this assembly
  * @param obj :: The outline shape created previously fith createOutline()
  */
-void ObjCompAssembly::setOutline(boost::shared_ptr<const Object> obj) {
+void ObjCompAssembly::setOutline(const boost::shared_ptr<const Object> &obj) {
   m_shape = obj;
 }
 

@@ -141,7 +141,7 @@ void AlgorithmHistory::addProperty(const std::string &name,
 /** Add a child algorithm history to history
  *  @param childHist :: The child history
  */
-void AlgorithmHistory::addChildHistory(AlgorithmHistory_sptr childHist) {
+void AlgorithmHistory::addChildHistory(const AlgorithmHistory_sptr &childHist) {
   // Don't copy one's own history onto oneself
   if (this == &(*childHist)) {
     return;

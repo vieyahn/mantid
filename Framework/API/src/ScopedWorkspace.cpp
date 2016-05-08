@@ -71,7 +71,7 @@ void ScopedWorkspace::remove() {
 /**
  * Make ADS entry to point to the given workspace.
  */
-void ScopedWorkspace::set(Workspace_sptr newWS) {
+void ScopedWorkspace::set(const Workspace_sptr &newWS) {
   AnalysisDataServiceImpl &ads = AnalysisDataService::Instance();
 
   if (!newWS->name().empty() && ads.doesExist(newWS->name()))

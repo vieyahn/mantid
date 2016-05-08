@@ -154,7 +154,7 @@ MatrixWorkspace_sptr CreateTransmissionWorkspace::makeTransmissionCorrection(
     const std::string &processingCommands, const MinMax &wavelengthInterval,
     const MinMax &wavelengthMonitorBackgroundInterval,
     const MinMax &wavelengthMonitorIntegrationInterval,
-    const int &i0MonitorIndex, MatrixWorkspace_sptr firstTransmissionRun,
+    const int &i0MonitorIndex, const MatrixWorkspace_sptr &firstTransmissionRun,
     OptionalMatrixWorkspace_sptr secondTransmissionRun,
     const OptionalDouble &stitchingStart, const OptionalDouble &stitchingDelta,
     const OptionalDouble &stitchingEnd,

@@ -146,7 +146,7 @@ void CorrectFlightPaths::exec() {
  * @s - input property name
  *
  */
-double CorrectFlightPaths::getRunProperty(std::string s) {
+double CorrectFlightPaths::getRunProperty(const std::string &s) {
   Mantid::Kernel::Property *prop = m_inputWS->run().getProperty(s);
   double val;
   if (!prop || !Strings::convert(prop->value(), val)) {
@@ -161,7 +161,7 @@ double CorrectFlightPaths::getRunProperty(std::string s) {
  * @s - input property name
  *
  */
-double CorrectFlightPaths::getInstrumentProperty(std::string s) {
+double CorrectFlightPaths::getInstrumentProperty(const std::string &s) {
   std::vector<std::string> prop = m_instrument->getStringParameter(s);
   if (prop.empty()) {
     std::string mesg = "Property <" + s + "> doesn't exist!";

@@ -331,9 +331,9 @@ public:
     UNUSED_ARG(ws);
   }
   /// Set matrix workspace
-  virtual void
-  setMatrixWorkspace(boost::shared_ptr<const API::MatrixWorkspace> workspace,
-                     size_t wi, double startX, double endX);
+  virtual void setMatrixWorkspace(
+      const boost::shared_ptr<const API::MatrixWorkspace> &workspace, size_t wi,
+      double startX, double endX);
   /// Iinialize the function
   virtual void initialize() { this->init(); }
   /// Returns an estimate of the number of progress reports a single evaluation
@@ -509,7 +509,8 @@ public:
   /// Calculate numerical derivatives
   void calNumericalDeriv(const FunctionDomain &domain, Jacobian &jacobian);
   /// Set the covariance matrix
-  void setCovarianceMatrix(boost::shared_ptr<Kernel::Matrix<double>> covar);
+  void
+  setCovarianceMatrix(const boost::shared_ptr<Kernel::Matrix<double>> &covar);
   /// Get the covariance matrix
   boost::shared_ptr<const Kernel::Matrix<double>> getCovarianceMatrix() const {
     return m_covar;
@@ -538,11 +539,11 @@ protected:
 
   /// Convert a value from one unit (inUnit) to unit defined in workspace (ws)
   double convertValue(double value, Kernel::Unit_sptr &outUnit,
-                      boost::shared_ptr<const MatrixWorkspace> ws,
+                      const boost::shared_ptr<const MatrixWorkspace> &ws,
                       size_t wsIndex) const;
 
   void convertValue(std::vector<double> &values, Kernel::Unit_sptr &outUnit,
-                    boost::shared_ptr<const MatrixWorkspace> ws,
+                    const boost::shared_ptr<const MatrixWorkspace> &ws,
                     size_t wsIndex) const;
 
   /// Override to declare function attributes

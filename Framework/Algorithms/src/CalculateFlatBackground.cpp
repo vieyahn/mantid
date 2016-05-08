@@ -241,7 +241,7 @@ void CalculateFlatBackground::exec() {
 *  @param workspace the workspace to check and possibly convert
 */
 void CalculateFlatBackground::convertToDistribution(
-    API::MatrixWorkspace_sptr workspace) {
+    const API::MatrixWorkspace_sptr &workspace) {
   if (workspace->isDistribution()) {
     return;
   }
@@ -280,7 +280,7 @@ void CalculateFlatBackground::convertToDistribution(
 *  @param workspace the workspace to, possibly, convert
 */
 void CalculateFlatBackground::restoreDistributionState(
-    API::MatrixWorkspace_sptr workspace) {
+    const API::MatrixWorkspace_sptr &workspace) {
   if (m_convertedFromRawCounts) {
     WorkspaceHelpers::makeDistribution(workspace, false);
     m_convertedFromRawCounts = false;
@@ -338,7 +338,7 @@ void CalculateFlatBackground::getWsInds(std::vector<int> &output,
 *  @throw invalid_argument if endX has the value of first X-value one of the
 * spectra
 */
-double CalculateFlatBackground::Mean(const API::MatrixWorkspace_const_sptr WS,
+double CalculateFlatBackground::Mean(const API::MatrixWorkspace_const_sptr &WS,
                                      const int wsInd, const double startX,
                                      const double endX,
                                      double &variance) const {
@@ -403,7 +403,7 @@ double CalculateFlatBackground::Mean(const API::MatrixWorkspace_const_sptr WS,
 *
 * @return The value of the flat background
 */
-double CalculateFlatBackground::LinearFit(API::MatrixWorkspace_sptr WS,
+double CalculateFlatBackground::LinearFit(const API::MatrixWorkspace_sptr &WS,
                                           int spectrum, double startX,
                                           double endX) {
   IAlgorithm_sptr childAlg = createChildAlgorithm("Fit");

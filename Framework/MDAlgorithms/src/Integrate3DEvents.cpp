@@ -107,7 +107,7 @@ void Integrate3DEvents::addEvents(
  */
 Mantid::Geometry::PeakShape_const_sptr
 Integrate3DEvents::ellipseIntegrateEvents(
-    std::vector<Kernel::V3D> E1Vec, V3D const &peak_q, bool specify_size,
+    const std::vector<Kernel::V3D> &E1Vec, V3D const &peak_q, bool specify_size,
     double peak_radius, double back_inner_radius, double back_outer_radius,
     std::vector<double> &axes_radii, double &inti, double &sigi) {
   inti = 0.0; // default values, in case something
@@ -476,7 +476,7 @@ void Integrate3DEvents::addEvent(std::pair<double, V3D> event_Q,
  *
  */
 PeakShapeEllipsoid_const_sptr Integrate3DEvents::ellipseIntegrateEvents(
-    std::vector<Kernel::V3D> E1Vec, V3D const &peak_q,
+    const std::vector<Kernel::V3D> &E1Vec, V3D const &peak_q,
     std::vector<std::pair<double, Mantid::Kernel::V3D>> const &ev_list,
     std::vector<Mantid::Kernel::V3D> const &directions,
     std::vector<double> const &sigmas, bool specify_size, double peak_radius,

@@ -76,7 +76,7 @@ private:
   std::vector<API::ITableWorkspace_sptr>
   checkTables(const std::vector<std::string> &workspaces);
   /// write savu tomo config file
-  void saveFile(const std::string fname,
+  void saveFile(const std::string &fname,
                 const std::vector<API::ITableWorkspace_sptr> &wss);
 
   // Number of info entries to read from the input table workspaces

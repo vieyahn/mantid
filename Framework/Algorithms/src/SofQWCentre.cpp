@@ -266,7 +266,7 @@ void SofQWCentre::exec() {
  *  @return A pointer to the newly-created workspace
  */
 API::MatrixWorkspace_sptr SofQWCentre::setUpOutputWorkspace(
-    API::MatrixWorkspace_const_sptr inputWorkspace,
+    const API::MatrixWorkspace_const_sptr &inputWorkspace,
     const std::vector<double> &binParams, std::vector<double> &newAxis) {
   // Create vector to hold the new X axis values
   MantidVecPtr xAxis;
@@ -306,8 +306,8 @@ API::MatrixWorkspace_sptr SofQWCentre::setUpOutputWorkspace(
  *  @param outputWS :: The output workspace
  *  @param qAxis ::    A vector of the q bin boundaries
  */
-void SofQWCentre::makeDistribution(API::MatrixWorkspace_sptr outputWS,
-                                   const std::vector<double> qAxis) {
+void SofQWCentre::makeDistribution(const API::MatrixWorkspace_sptr &outputWS,
+                                   const std::vector<double> &qAxis) {
   std::vector<double> widths(qAxis.size());
   std::adjacent_difference(qAxis.begin(), qAxis.end(), widths.begin());
 

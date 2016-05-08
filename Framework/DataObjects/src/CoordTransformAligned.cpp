@@ -70,8 +70,8 @@ CoordTransformAligned::CoordTransformAligned(const size_t inD,
  */
 CoordTransformAligned::CoordTransformAligned(
     const size_t inD, const size_t outD,
-    const std::vector<size_t> dimensionToBinFrom,
-    const std::vector<coord_t> origin, const std::vector<coord_t> scaling)
+    const std::vector<size_t> &dimensionToBinFrom,
+    const std::vector<coord_t> &origin, const std::vector<coord_t> &scaling)
     : CoordTransform(inD, outD) {
   if (dimensionToBinFrom.size() != outD || origin.size() != outD ||
       scaling.size() != outD)

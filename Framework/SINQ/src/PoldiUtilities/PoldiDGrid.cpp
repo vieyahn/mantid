@@ -12,12 +12,12 @@ PoldiDGrid::PoldiDGrid(boost::shared_ptr<PoldiAbstractDetector> detector,
       m_dgrid(), m_hasCachedCalculation(false) {}
 
 void PoldiDGrid::setDetector(
-    boost::shared_ptr<PoldiAbstractDetector> newDetector) {
+    const boost::shared_ptr<PoldiAbstractDetector> &newDetector) {
   m_detector = newDetector;
 }
 
 void PoldiDGrid::setChopper(
-    boost::shared_ptr<PoldiAbstractChopper> newChopper) {
+    const boost::shared_ptr<PoldiAbstractChopper> &newChopper) {
   m_chopper = newChopper;
 }
 

@@ -376,7 +376,7 @@ void SofQWNormalisedPolygon::initAngularCachesPSD(
  *  @return A pointer to the newly-created workspace
  */
 RebinnedOutput_sptr SofQWNormalisedPolygon::setUpOutputWorkspace(
-    API::MatrixWorkspace_const_sptr inputWorkspace,
+    const API::MatrixWorkspace_const_sptr &inputWorkspace,
     const std::vector<double> &binParams, std::vector<double> &newAxis) {
   // Create vector to hold the new X axis values
   MantidVecPtr xAxis;

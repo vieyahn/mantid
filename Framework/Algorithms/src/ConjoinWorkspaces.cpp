@@ -111,9 +111,9 @@ void ConjoinWorkspaces::exec() {
  * (non-sensical for event workspaces)
  *  @throw std::invalid_argument If there is some overlap
  */
-void ConjoinWorkspaces::checkForOverlap(API::MatrixWorkspace_const_sptr ws1,
-                                        API::MatrixWorkspace_const_sptr ws2,
-                                        bool checkSpectra) const {
+void ConjoinWorkspaces::checkForOverlap(
+    const API::MatrixWorkspace_const_sptr &ws1,
+    const API::MatrixWorkspace_const_sptr &ws2, bool checkSpectra) const {
   // Loop through the first workspace adding all the spectrum numbers & UDETS to
   // a set
   std::set<specnum_t> spectra;

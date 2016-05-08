@@ -15,7 +15,7 @@ MDHistoDimensionBuilder::MDHistoDimensionBuilder()
 Setter for the dimension name
 @param name : friendly name of dimension
 */
-void MDHistoDimensionBuilder::setName(std::string name) {
+void MDHistoDimensionBuilder::setName(const std::string &name) {
   // String any spaces
   m_name = Kernel::Strings::strip(name);
 }
@@ -24,7 +24,7 @@ void MDHistoDimensionBuilder::setName(std::string name) {
 Setter for the dimension id
 @param id : id of the dimension
 */
-void MDHistoDimensionBuilder::setId(std::string id) { m_id = id; }
+void MDHistoDimensionBuilder::setId(const std::string &id) { m_id = id; }
 
 /*
 Setter for the dimension units
@@ -62,7 +62,7 @@ void MDHistoDimensionBuilder::setNumBins(size_t nbins) { m_nbins = nbins; }
  * Setter for the frame name
  * @param frameName: the frame name
  */
-void MDHistoDimensionBuilder::setFrameName(std::string frameName) {
+void MDHistoDimensionBuilder::setFrameName(const std::string &frameName) {
   m_frameName = frameName;
 }
 

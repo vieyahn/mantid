@@ -83,7 +83,8 @@ void SetUncertainties::init() {
 }
 
 namespace {
-inline bool isMasked(MatrixWorkspace_const_sptr wksp, const size_t index) {
+inline bool isMasked(const MatrixWorkspace_const_sptr &wksp,
+                     const size_t index) {
   if (!bool(wksp->getInstrument()))
     return false;
 

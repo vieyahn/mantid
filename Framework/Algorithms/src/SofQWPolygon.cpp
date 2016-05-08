@@ -179,7 +179,8 @@ double SofQWPolygon::calculateIndirectQ(const double efixed,
  * Init variables caches
  * @param workspace :: Workspace pointer
  */
-void SofQWPolygon::initCachedValues(API::MatrixWorkspace_const_sptr workspace) {
+void SofQWPolygon::initCachedValues(
+    const API::MatrixWorkspace_const_sptr &workspace) {
   m_EmodeProperties.initCachedValues(*workspace, this);
   // Index theta cache
   initThetaCache(*workspace);

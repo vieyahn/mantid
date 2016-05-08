@@ -143,7 +143,8 @@ private:
 
   Kernel::TimeSplitterType generateSplitters(int wsindex);
 
-  void splitLog(DataObjects::EventWorkspace_sptr eventws, std::string logname,
+  void splitLog(const DataObjects::EventWorkspace_sptr &eventws,
+                const std::string &logname,
                 Kernel::TimeSplitterType &splitters);
 
   /// Base of output workspace's name

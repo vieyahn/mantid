@@ -389,7 +389,7 @@ void CompositeFunction::clear() {
  * @param f :: A pointer to the added function
  * @return The function index
  */
-size_t CompositeFunction::addFunction(IFunction_sptr f) {
+size_t CompositeFunction::addFunction(const IFunction_sptr &f) {
   m_IFunction.insert(m_IFunction.end(), f->nParams(), m_functions.size());
   m_functions.push_back(f);
   //?f->init();
@@ -453,8 +453,8 @@ void CompositeFunction::removeFunction(size_t i) {
  *  a member of this composite function nothing happens
  * @param f_new :: A pointer to the new function
  */
-void CompositeFunction::replaceFunctionPtr(const IFunction_sptr f_old,
-                                           IFunction_sptr f_new) {
+void CompositeFunction::replaceFunctionPtr(const IFunction_sptr &f_old,
+                                           const IFunction_sptr &f_new) {
   std::vector<IFunction_sptr>::const_iterator it =
       std::find(m_functions.begin(), m_functions.end(), f_old);
   if (it == m_functions.end())
@@ -467,7 +467,7 @@ void CompositeFunction::replaceFunctionPtr(const IFunction_sptr f_old,
  * @param i :: The index of the function to replace
  * @param f :: A pointer to the new function
  */
-void CompositeFunction::replaceFunction(size_t i, IFunction_sptr f) {
+void CompositeFunction::replaceFunction(size_t i, const IFunction_sptr &f) {
   if (i >= nFunctions())
     throw std::out_of_range("Function index out of range.");
 

@@ -78,20 +78,21 @@ public:
 
 private:
   /// Handle logic for RebinnedOutput workspaces
-  void doRebinnedOutput(API::MatrixWorkspace_sptr outputWorkspace,
+  void doRebinnedOutput(const API::MatrixWorkspace_sptr &outputWorkspace,
                         API::Progress &progress, size_t &numSpectra,
                         size_t &numMasked, size_t &numZeros);
   /// Handle logic for Workspace2D workspaces
-  void doWorkspace2D(API::MatrixWorkspace_const_sptr localworkspace,
+  void doWorkspace2D(const API::MatrixWorkspace_const_sptr &localworkspace,
                      API::ISpectrum *outSpec, API::Progress &progress,
                      size_t &numSpectra, size_t &numMasked, size_t &numZeros);
 
   // Overridden Algorithm methods
   void init() override;
   void exec() override;
-  void execEvent(DataObjects::EventWorkspace_const_sptr localworkspace,
+  void execEvent(const DataObjects::EventWorkspace_const_sptr &localworkspace,
                  std::set<int> &indices);
-  specnum_t getOutputSpecNo(API::MatrixWorkspace_const_sptr localworkspace);
+  specnum_t
+  getOutputSpecNo(const API::MatrixWorkspace_const_sptr &localworkspace);
 
   /// The output spectrum number
   specnum_t m_outSpecNum;

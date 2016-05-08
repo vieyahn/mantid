@@ -107,7 +107,7 @@ public:
   /// Calculate function values
   std::vector<double> calcP(const std::vector<double> &a) const;
   /// Calculate function values at chebfun x-points
-  std::vector<double> fit(ChebfunFunctionType f) const;
+  std::vector<double> fit(const ChebfunFunctionType &f) const;
   /// Calculate function values at chebfun x-points
   std::vector<double> fit(const API::IFunction &f) const;
 
@@ -130,9 +130,9 @@ public:
 
   /// Fit a function until full convergence
   static boost::shared_ptr<ChebfunBase>
-  bestFit(double start, double end, ChebfunFunctionType, std::vector<double> &p,
-          std::vector<double> &a, double maxA = 0.0, double tolerance = 0.0,
-          size_t maxSize = 0);
+  bestFit(double start, double end, const ChebfunFunctionType &,
+          std::vector<double> &p, std::vector<double> &a, double maxA = 0.0,
+          double tolerance = 0.0, size_t maxSize = 0);
   /// Fit a function until full convergence
   static boost::shared_ptr<ChebfunBase>
   bestFit(double start, double end, const API::IFunction &,
@@ -165,7 +165,7 @@ private:
   void calcIntegrationWeights() const;
 
   /// Calculate function values at odd-valued indices of the base x-points
-  std::vector<double> fitOdd(ChebfunFunctionType f,
+  std::vector<double> fitOdd(const ChebfunFunctionType &f,
                              std::vector<double> &p) const;
   /// Calculate function values at odd-valued indices of the base x-points
   std::vector<double> fitOdd(const API::IFunction &f,

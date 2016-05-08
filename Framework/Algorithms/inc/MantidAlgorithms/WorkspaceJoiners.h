@@ -50,14 +50,15 @@ public:
   }
 
 protected:
-  API::MatrixWorkspace_sptr execWS2D(API::MatrixWorkspace_const_sptr ws1,
-                                     API::MatrixWorkspace_const_sptr ws2);
+  API::MatrixWorkspace_sptr
+  execWS2D(const API::MatrixWorkspace_const_sptr &ws1,
+           const API::MatrixWorkspace_const_sptr &ws2);
   API::MatrixWorkspace_sptr execEvent();
 
   using Mantid::API::Algorithm::validateInputs;
-  void validateInputs(API::MatrixWorkspace_const_sptr ws1,
-                      API::MatrixWorkspace_const_sptr ws2);
-  void getMinMax(API::MatrixWorkspace_const_sptr ws, specnum_t &min,
+  void validateInputs(const API::MatrixWorkspace_const_sptr &ws1,
+                      const API::MatrixWorkspace_const_sptr &ws2);
+  void getMinMax(const API::MatrixWorkspace_const_sptr &ws, specnum_t &min,
                  specnum_t &max);
 
   /// Abstract method to be implemented in concrete algorithm classes

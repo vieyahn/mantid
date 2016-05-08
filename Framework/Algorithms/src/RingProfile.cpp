@@ -217,7 +217,7 @@ void RingProfile::exec() {
  * @param inputWS: the input workspace
 */
 void RingProfile::checkInputsForSpectraWorkspace(
-    const API::MatrixWorkspace_sptr inputWS) {
+    const API::MatrixWorkspace_sptr &inputWS) {
   try {
     // finding the limits of the instrument
     double first_x, first_y, first_z;
@@ -325,7 +325,7 @@ void RingProfile::checkInputsForSpectraWorkspace(
  * @param inputWS: pointer to the input workspace
 */
 void RingProfile::checkInputsForNumericWorkspace(
-    const API::MatrixWorkspace_sptr inputWS) {
+    const API::MatrixWorkspace_sptr &inputWS) {
   g_log.notice() << "CheckingInputs For Numeric Workspace" << std::endl;
 
   // The Axis0 is defined by the values of readX inside the spectra of the
@@ -396,7 +396,8 @@ void RingProfile::checkInputsForNumericWorkspace(
  *integration values
  */
 void RingProfile::processInstrumentRingProfile(
-    const API::MatrixWorkspace_sptr inputWS, std::vector<double> &output_bins) {
+    const API::MatrixWorkspace_sptr &inputWS,
+    std::vector<double> &output_bins) {
 
   for (int i = 0; i < static_cast<int>(inputWS->getNumberHistograms()); i++) {
     m_progress->report("Computing ring bins positions for detectors");
@@ -455,7 +456,8 @@ void RingProfile::processInstrumentRingProfile(
  * @param det: pointer to the detector from which the positions will be taken
  * @return bin position
  */
-int RingProfile::getBinForPixel(Mantid::Geometry::IDetector_const_sptr det) {
+int RingProfile::getBinForPixel(
+    const Mantid::Geometry::IDetector_const_sptr &det) {
 
   using Mantid::Kernel::V3D;
   V3D origin(centre_x, centre_y, centre_z);
@@ -493,7 +495,8 @@ int RingProfile::getBinForPixel(Mantid::Geometry::IDetector_const_sptr det) {
  *integration values
  */
 void RingProfile::processNumericImageRingProfile(
-    const API::MatrixWorkspace_sptr inputWS, std::vector<double> &output_bins) {
+    const API::MatrixWorkspace_sptr &inputWS,
+    std::vector<double> &output_bins) {
   // allocate the bin positions vector
   std::vector<int> bin_n(inputWS->dataY(0).size(), -1);
 
@@ -546,7 +549,7 @@ void RingProfile::processNumericImageRingProfile(
  * @param bins_pos: bin positions (for each column inside the spectrum, the
  *correspondent bin_pos)
  */
-void RingProfile::getBinForPixel(const API::MatrixWorkspace_sptr ws,
+void RingProfile::getBinForPixel(const API::MatrixWorkspace_sptr &ws,
                                  int spectrum_index,
                                  std::vector<int> &bins_pos) {
 

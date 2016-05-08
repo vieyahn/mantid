@@ -75,7 +75,7 @@ private:
                                  const double &rel_stop_time, size_t &i_stop,
                                  const double &time_factor);
 
-  void exportLog(const std::string &logname, const std::string timeunit,
+  void exportLog(const std::string &logname, const std::string &timeunit,
                  const double &starttime, const double &stoptime,
                  const bool exportepoch, bool outputeventws, int numentries);
 

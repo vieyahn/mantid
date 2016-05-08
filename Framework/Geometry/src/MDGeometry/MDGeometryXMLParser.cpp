@@ -18,7 +18,7 @@ struct findID
   const std::string m_id;
   explicit findID(const std::string &id) : m_id(id) {}
 
-  bool operator()(const Mantid::Geometry::IMDDimension_sptr obj) const {
+  bool operator()(const Mantid::Geometry::IMDDimension_sptr &obj) const {
     return m_id == obj->getDimensionId();
   }
   findID &operator=(const findID &);
@@ -27,7 +27,7 @@ struct findID
 /// Helper unary comparison type for finding non-integrated dimensions.
 struct findIntegrated
     : public std::unary_function<Mantid::Geometry::IMDDimension_sptr, bool> {
-  bool operator()(const Mantid::Geometry::IMDDimension_sptr obj) const {
+  bool operator()(const Mantid::Geometry::IMDDimension_sptr &obj) const {
     return obj->getIsIntegrated();
   }
   findIntegrated &operator=(const findIntegrated &);
@@ -296,7 +296,7 @@ Setter for the root element.
 @param elementName : name of the element containing xml dimensions. Usually
 "Dimensions" unless xml snippet passed in directly, in which case do not set.
 */
-void MDGeometryXMLParser::SetRootNodeCheck(std::string elementName) {
+void MDGeometryXMLParser::SetRootNodeCheck(const std::string &elementName) {
   m_rootNodeName = elementName;
 }
 
@@ -336,7 +336,7 @@ Determines whether query dimension is the x dimension.
 @return true if matches.
 */
 bool MDGeometryXMLParser::isXDimension(
-    Mantid::Geometry::IMDDimension_sptr candidate) const {
+    const Mantid::Geometry::IMDDimension_sptr &candidate) const {
   validate();
   bool bResult = false;
   if (hasXDimension()) {
@@ -353,7 +353,7 @@ Determines whether query dimension is the y dimension.
 @return true if matches.
 */
 bool MDGeometryXMLParser::isYDimension(
-    Mantid::Geometry::IMDDimension_sptr candidate) const {
+    const Mantid::Geometry::IMDDimension_sptr &candidate) const {
   validate();
   bool bResult = false;
   if (hasYDimension()) {
@@ -370,7 +370,7 @@ Determines whether query dimension is the z dimension.
 @return true if matches.
 */
 bool MDGeometryXMLParser::isZDimension(
-    Mantid::Geometry::IMDDimension_sptr candidate) const {
+    const Mantid::Geometry::IMDDimension_sptr &candidate) const {
   validate();
   bool bResult = false;
   if (hasZDimension()) {
@@ -387,7 +387,7 @@ Determines whether query dimension is the t dimension.
 @return true if matches.
 */
 bool MDGeometryXMLParser::isTDimension(
-    Mantid::Geometry::IMDDimension_sptr candidate) const {
+    const Mantid::Geometry::IMDDimension_sptr &candidate) const {
   validate();
   bool bResult = false;
   if (hasTDimension()) {

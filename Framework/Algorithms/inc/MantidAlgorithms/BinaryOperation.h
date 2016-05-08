@@ -97,27 +97,27 @@ protected:
 
   /// Checks the compatibility of the two workspaces
   virtual bool
-  checkCompatibility(const API::MatrixWorkspace_const_sptr lhs,
-                     const API::MatrixWorkspace_const_sptr rhs) const;
+  checkCompatibility(const API::MatrixWorkspace_const_sptr &lhs,
+                     const API::MatrixWorkspace_const_sptr &rhs) const;
 
   /// Checks the compatibility of event-based processing of the two workspaces
   virtual bool
-  checkEventCompatibility(const API::MatrixWorkspace_const_sptr lhs,
-                          const API::MatrixWorkspace_const_sptr rhs);
+  checkEventCompatibility(const API::MatrixWorkspace_const_sptr &lhs,
+                          const API::MatrixWorkspace_const_sptr &rhs);
 
   /// Checks the overall size compatibility of two workspaces
   virtual std::string
-  checkSizeCompatibility(const API::MatrixWorkspace_const_sptr lhs,
-                         const API::MatrixWorkspace_const_sptr rhs) const;
+  checkSizeCompatibility(const API::MatrixWorkspace_const_sptr &lhs,
+                         const API::MatrixWorkspace_const_sptr &rhs) const;
 
   /// Checks if the spectra at the given index of either input workspace is
   /// masked. If so then the output spectra has zeroed data
   /// and is also masked. The function returns true if further processing is not
   /// required on the spectra.
-  virtual bool propagateSpectraMask(const API::MatrixWorkspace_const_sptr lhs,
-                                    const API::MatrixWorkspace_const_sptr rhs,
+  virtual bool propagateSpectraMask(const API::MatrixWorkspace_const_sptr &lhs,
+                                    const API::MatrixWorkspace_const_sptr &rhs,
                                     const int64_t index,
-                                    API::MatrixWorkspace_sptr out);
+                                    const API::MatrixWorkspace_sptr &out);
 
   /** Carries out the binary operation on a single spectrum, with another
    *spectrum as the right-hand operand.
@@ -202,8 +202,8 @@ protected:
    *  @param rhs :: The second input workspace
    *  @param out :: The output workspace
    */
-  virtual void setOutputUnits(const API::MatrixWorkspace_const_sptr lhs,
-                              const API::MatrixWorkspace_const_sptr rhs,
+  virtual void setOutputUnits(const API::MatrixWorkspace_const_sptr &lhs,
+                              const API::MatrixWorkspace_const_sptr &rhs,
                               API::MatrixWorkspace_sptr out) {
     (void)lhs; // Avoid compiler warning
     (void)rhs;
@@ -225,7 +225,7 @@ protected:
     (void)ans;
   };
 
-  OperandType getOperandType(const API::MatrixWorkspace_const_sptr ws);
+  OperandType getOperandType(const API::MatrixWorkspace_const_sptr &ws);
 
   virtual void checkRequirements();
 
@@ -283,10 +283,10 @@ private:
   void doSingleColumn();
   void do2D(bool mismatchedSpectra);
 
-  void propagateBinMasks(const API::MatrixWorkspace_const_sptr rhs,
-                         API::MatrixWorkspace_sptr out);
+  void propagateBinMasks(const API::MatrixWorkspace_const_sptr &rhs,
+                         const API::MatrixWorkspace_sptr &out);
   /// Apply masking requested by propagateSpectraMasks.
-  void applyMaskingToOutput(API::MatrixWorkspace_sptr out);
+  void applyMaskingToOutput(const API::MatrixWorkspace_sptr &out);
 
   /// A store for accumulated spectra that should be masked in the output
   /// workspace

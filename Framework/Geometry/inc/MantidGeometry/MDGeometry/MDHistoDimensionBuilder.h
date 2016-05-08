@@ -45,13 +45,13 @@ public:
   }
 
   MDHistoDimensionBuilder();
-  void setName(std::string name);
-  void setId(std::string id);
+  void setName(const std::string &name);
+  void setId(const std::string &id);
   void setUnits(const Kernel::UnitLabel &units);
   void setMin(double min);
   void setMax(double max);
   void setNumBins(size_t nbins);
-  void setFrameName(std::string frameName);
+  void setFrameName(const std::string &frameName);
 
   size_t getNumBins() const { return m_nbins; }
   MDHistoDimension *createRaw();

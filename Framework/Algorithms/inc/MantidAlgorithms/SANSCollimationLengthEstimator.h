@@ -32,11 +32,12 @@ namespace Mantid {
 namespace Algorithms {
 class DLLExport SANSCollimationLengthEstimator {
 public:
-  double provideCollimationLength(Mantid::API::MatrixWorkspace_sptr workspace);
+  double
+  provideCollimationLength(const Mantid::API::MatrixWorkspace_sptr &workspace);
 
 private:
   double getCollimationLengthWithGuides(
-      Mantid::API::MatrixWorkspace_sptr inOutWS, const double L1,
+      const Mantid::API::MatrixWorkspace_sptr &inOutWS, const double L1,
       const double collimationLengthCorrection) const;
   double getGuideValue(Mantid::Kernel::Property *prop) const;
 };

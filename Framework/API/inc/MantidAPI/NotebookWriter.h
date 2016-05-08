@@ -40,8 +40,8 @@ class MANTID_API_DLL NotebookWriter {
 public:
   NotebookWriter();
   virtual ~NotebookWriter() = default;
-  std::string markdownCell(std::string string_text);
-  std::string codeCell(std::string string_code);
+  std::string markdownCell(const std::string &string_text);
+  std::string codeCell(const std::string &string_code);
   std::string writeNotebook();
 
 private:
@@ -50,8 +50,8 @@ private:
 
   Json::Value buildNotebook();
 
-  void markdownCell(Json::Value string_array);
-  void codeCell(Json::Value array_code);
+  void markdownCell(const Json::Value &string_array);
+  void codeCell(const Json::Value &array_code);
 
   Json::Value m_cell_buffer;
 };

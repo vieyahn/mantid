@@ -74,7 +74,7 @@ private:
   DataObjects::TableWorkspace_sptr generateCorrectionTable();
 
   /// Write correction map to a text file
-  void writeCorrectionToFile(std::string filename);
+  void writeCorrectionToFile(const std::string &filename);
 
   API::MatrixWorkspace_sptr m_dataWS;
   Geometry::Instrument_const_sptr m_instrument;

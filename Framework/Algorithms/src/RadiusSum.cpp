@@ -290,7 +290,7 @@ void RadiusSum::inputValidationSanityCheck() {
  * @return True if it is an instrument related workspace.
  */
 bool RadiusSum::inputWorkspaceHasInstrumentAssociated(
-    API::MatrixWorkspace_sptr inWS) {
+    const API::MatrixWorkspace_sptr &inWS) {
   return inWS->getAxis(1)->isSpectra();
 }
 
@@ -320,7 +320,7 @@ std::vector<double> RadiusSum::getBoundariesOfInputWorkspace() {
  *Xmin, Xmax, Ymin, Ymax
  */
 std::vector<double>
-RadiusSum::getBoundariesOfNumericImage(API::MatrixWorkspace_sptr inWS) {
+RadiusSum::getBoundariesOfNumericImage(const API::MatrixWorkspace_sptr &inWS) {
 
   // horizontal axis
 
@@ -377,7 +377,7 @@ RadiusSum::getBoundariesOfNumericImage(API::MatrixWorkspace_sptr inWS) {
  *Xmin, Xmax, Ymin, Ymax, Zmin, Zmax
  */
 std::vector<double>
-RadiusSum::getBoundariesOfInstrument(API::MatrixWorkspace_sptr inWS) {
+RadiusSum::getBoundariesOfInstrument(const API::MatrixWorkspace_sptr &inWS) {
 
   // This function is implemented based in the following assumption:
   //   - The workspace is composed by spectrum with associated spectrum No which
@@ -536,7 +536,8 @@ void RadiusSum::numBinsIsReasonable() {
                                         min_bin_size) << std::endl;
 }
 
-double RadiusSum::getMinBinSizeForInstrument(API::MatrixWorkspace_sptr inWS) {
+double
+RadiusSum::getMinBinSizeForInstrument(const API::MatrixWorkspace_sptr &inWS) {
   // Assumption made: the detectors are placed one after the other, so the
   // minimum
   // reasonalbe size for the bin is the width of one detector.
@@ -567,7 +568,8 @@ double RadiusSum::getMinBinSizeForInstrument(API::MatrixWorkspace_sptr inWS) {
   return width;
 }
 
-double RadiusSum::getMinBinSizeForNumericImage(API::MatrixWorkspace_sptr inWS) {
+double
+RadiusSum::getMinBinSizeForNumericImage(const API::MatrixWorkspace_sptr &inWS) {
   // The pixel dimensions:
   //  - width: image width/ number of pixels in one row
   //  - height: image height/ number of pixels in one column

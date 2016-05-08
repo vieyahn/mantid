@@ -134,10 +134,9 @@ void SofQW::exec() {
  * parameters
  *  @return A pointer to the newly-created workspace
  */
-API::MatrixWorkspace_sptr
-SofQW::setUpOutputWorkspace(API::MatrixWorkspace_const_sptr inputWorkspace,
-                            const std::vector<double> &binParams,
-                            std::vector<double> &newAxis) {
+API::MatrixWorkspace_sptr SofQW::setUpOutputWorkspace(
+    const API::MatrixWorkspace_const_sptr &inputWorkspace,
+    const std::vector<double> &binParams, std::vector<double> &newAxis) {
   // Create vector to hold the new X axis values
   MantidVecPtr xAxis;
   xAxis.access() = inputWorkspace->readX(0);

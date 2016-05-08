@@ -343,7 +343,8 @@ PeaksStatistics::getLambdaLimits(const std::vector<Peak> &peaks) const {
 }
 
 /// Sorts the peaks in the workspace by H, K and L.
-void SortHKL::sortOutputPeaksByHKL(IPeaksWorkspace_sptr outputPeaksWorkspace) {
+void SortHKL::sortOutputPeaksByHKL(
+    const IPeaksWorkspace_sptr &outputPeaksWorkspace) {
   // Sort by HKL
   std::vector<std::pair<std::string, bool>> criteria{
       {"H", true}, {"K", true}, {"L", true}};

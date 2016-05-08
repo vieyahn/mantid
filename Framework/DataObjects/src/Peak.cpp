@@ -713,7 +713,7 @@ void Peak::setL(double m_L) { this->m_L = m_L; }
 
 /** Set the BankName of this peak
  * @param m_bankName :: index to set   */
-void Peak::setBankName(std::string m_bankName) {
+void Peak::setBankName(const std::string &m_bankName) {
   this->m_bankName = m_bankName;
 }
 
@@ -918,7 +918,7 @@ void Peak::setPeakShape(Mantid::Geometry::PeakShape *shape) {
  * @brief Set the peak shape
  * @param shape : Desired shape
  */
-void Peak::setPeakShape(Mantid::Geometry::PeakShape_const_sptr shape) {
+void Peak::setPeakShape(const Mantid::Geometry::PeakShape_const_sptr &shape) {
   this->m_peakShape = shape;
 }
 

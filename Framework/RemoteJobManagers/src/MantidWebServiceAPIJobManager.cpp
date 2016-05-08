@@ -371,7 +371,7 @@ std::string MantidWebServiceAPIJobManager::startRemoteTransaction() {
  */
 void MantidWebServiceAPIJobManager::stopRemoteTransaction(
     const std::string &transactionID) {
-  std::string transId = transactionID;
+  const std::string &transId = transactionID;
   std::istream &respStream =
       httpGet("/transaction", std::string("Action=Stop&TransID=") + transId);
 
@@ -422,7 +422,7 @@ std::string MantidWebServiceAPIJobManager::submitRemoteJob(
   postData[runnable] = param;
 
   // Job name is optional
-  std::string jobName = taskName;
+  const std::string &jobName = taskName;
   if (jobName.length() > 0) {
     postData["JobName"] = jobName;
   }

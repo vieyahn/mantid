@@ -86,7 +86,7 @@ private:
   double calculateIndirectQ(const double efixed, const double deltaE,
                             const double twoTheta, const double psi) const;
   /// Init variables cache base on the given workspace
-  void initCachedValues(API::MatrixWorkspace_const_sptr workspace);
+  void initCachedValues(const API::MatrixWorkspace_const_sptr &workspace);
   /// Init the theta index
   void initThetaCache(const API::MatrixWorkspace &workspace);
 

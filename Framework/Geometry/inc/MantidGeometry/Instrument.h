@@ -66,7 +66,7 @@ public:
   /// String description of the type of component
   std::string type() const override { return "Instrument"; }
 
-  Instrument(const boost::shared_ptr<const Instrument> instr,
+  Instrument(const boost::shared_ptr<const Instrument> &instr,
              boost::shared_ptr<ParameterMap> map);
   Instrument();
   Instrument(const std::string &name);
@@ -213,7 +213,7 @@ public:
   // Methods for use with indirect geometry instruments,
   // where the physical instrument differs from the 'neutronic' one
   boost::shared_ptr<const Instrument> getPhysicalInstrument() const;
-  void setPhysicalInstrument(boost::shared_ptr<const Instrument>);
+  void setPhysicalInstrument(const boost::shared_ptr<const Instrument> &);
 
   // ----- Useful static functions ------
   static double calcConversion(const double l1, const Kernel::V3D &beamline,
@@ -242,7 +242,7 @@ public:
   const std::string &getXmlText() const;
 
   /// Set reference Frame
-  void setReferenceFrame(boost::shared_ptr<ReferenceFrame> frame);
+  void setReferenceFrame(const boost::shared_ptr<ReferenceFrame> &frame);
   /// Get refernce Frame
   boost::shared_ptr<const ReferenceFrame> getReferenceFrame() const;
 
@@ -256,7 +256,7 @@ public:
 private:
   /// Save information about a set of detectors to Nexus
   void saveDetectorSetInfoToNexus(::NeXus::File *file,
-                                  std::vector<detid_t> detIDs) const;
+                                  const std::vector<detid_t> &detIDs) const;
 
   /// Private copy assignment operator
   Instrument &operator=(const Instrument &);

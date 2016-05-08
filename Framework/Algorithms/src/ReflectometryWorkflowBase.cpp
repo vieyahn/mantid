@@ -457,7 +457,7 @@ ReflectometryWorkflowBase::toLamDetector(const std::string &processingCommands,
  * @return Tuple of detector and monitor workspaces
  */
 ReflectometryWorkflowBase::DetectorMonitorWorkspacePair
-ReflectometryWorkflowBase::toLam(MatrixWorkspace_sptr toConvert,
+ReflectometryWorkflowBase::toLam(const MatrixWorkspace_sptr &toConvert,
                                  const std::string &processingCommands,
                                  const int monitorIndex,
                                  const MinMax &wavelengthMinMax,

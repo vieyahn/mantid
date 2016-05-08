@@ -40,7 +40,7 @@ public:
   NexusTestHelper(bool deleteFile = true);
   virtual ~NexusTestHelper();
 
-  void createFile(std::string barefilename);
+  void createFile(const const const std::string &&&barefilename);
   void reopenFile();
 
   /// Nexus file handle

@@ -32,8 +32,8 @@ const std::string WorkspaceJoiners::category() const {
  *  @returns The result workspace
  */
 MatrixWorkspace_sptr
-WorkspaceJoiners::execWS2D(API::MatrixWorkspace_const_sptr ws1,
-                           API::MatrixWorkspace_const_sptr ws2) {
+WorkspaceJoiners::execWS2D(const API::MatrixWorkspace_const_sptr &ws1,
+                           const API::MatrixWorkspace_const_sptr &ws2) {
   // Create the output workspace
   const size_t totalHists =
       ws1->getNumberHistograms() + ws2->getNumberHistograms();
@@ -202,8 +202,9 @@ MatrixWorkspace_sptr WorkspaceJoiners::execEvent() {
  *  @param ws2 :: The second input workspace
  *  @throw std::invalid_argument If the workspaces are not compatible
  */
-void WorkspaceJoiners::validateInputs(API::MatrixWorkspace_const_sptr ws1,
-                                      API::MatrixWorkspace_const_sptr ws2) {
+void WorkspaceJoiners::validateInputs(
+    const API::MatrixWorkspace_const_sptr &ws1,
+    const API::MatrixWorkspace_const_sptr &ws2) {
   // This is the full check for common binning
   if (!WorkspaceHelpers::commonBoundaries(ws1) ||
       !WorkspaceHelpers::commonBoundaries(ws2)) {
@@ -254,8 +255,8 @@ void WorkspaceJoiners::validateInputs(API::MatrixWorkspace_const_sptr ws1,
  * @param min The minimum id (output).
  * @param max The maximum id (output).
  */
-void WorkspaceJoiners::getMinMax(MatrixWorkspace_const_sptr ws, specnum_t &min,
-                                 specnum_t &max) {
+void WorkspaceJoiners::getMinMax(const MatrixWorkspace_const_sptr &ws,
+                                 specnum_t &min, specnum_t &max) {
   specnum_t temp;
   size_t length = ws->getNumberHistograms();
   // initial values

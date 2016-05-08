@@ -76,7 +76,7 @@ private:
   void exec() override;
 
   API::MatrixWorkspace_sptr
-  setUpOutputWorkspace(API::MatrixWorkspace_const_sptr inputWorkspace);
+  setUpOutputWorkspace(const API::MatrixWorkspace_const_sptr &inputWorkspace);
 };
 
 } // namespace Algorithms

@@ -101,7 +101,8 @@ public:
     std::vector<boost::shared_ptr<PhysicalConstants::Atom>> atoms;
     std::vector<float> numberAtoms; ///< Number of each atom
   };
-  static ChemicalFormula parseChemicalFormula(const std::string chemicalSymbol);
+  static ChemicalFormula
+  parseChemicalFormula(const std::string &chemicalSymbol);
 
 private:
   /// Material name

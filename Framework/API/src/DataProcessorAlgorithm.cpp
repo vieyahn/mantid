@@ -124,7 +124,7 @@ void DataProcessorAlgorithm::mapPropertyName(
  *
  * @throws std::runtime_error If you ask to copy a non-existent property
  */
-void DataProcessorAlgorithm::copyProperty(API::Algorithm_sptr alg,
+void DataProcessorAlgorithm::copyProperty(const API::Algorithm_sptr &alg,
                                           const std::string &name) {
   if (!alg->existsProperty(name)) {
     std::stringstream msg;
@@ -213,7 +213,8 @@ MatrixWorkspace_sptr DataProcessorAlgorithm::loadChunk(const size_t rowIndex) {
  * @param partialWS :: workspace to assemble
  * thread only)
  */
-Workspace_sptr DataProcessorAlgorithm::assemble(Workspace_sptr partialWS) {
+Workspace_sptr
+DataProcessorAlgorithm::assemble(const Workspace_sptr &partialWS) {
   Workspace_sptr outputWS = partialWS;
 #ifdef MPI_BUILD
   IAlgorithm_sptr gatherAlg = createChildAlgorithm("GatherWorkspaces");
@@ -241,7 +242,7 @@ Workspace_sptr DataProcessorAlgorithm::assemble(Workspace_sptr partialWS) {
 Workspace_sptr
 DataProcessorAlgorithm::assemble(const std::string &partialWSName,
                                  const std::string &outputWSName) {
-  std::string threadOutput = partialWSName;
+  const std::string &threadOutput = partialWSName;
 #ifdef MPI_BUILD
   Workspace_sptr partialWS =
       AnalysisDataService::Instance().retrieve(partialWSName);
@@ -422,8 +423,8 @@ void DataProcessorAlgorithm::forwardProperties() {
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr lhs,
-                               const MatrixWorkspace_sptr rhs) {
+DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr &lhs,
+                               const MatrixWorkspace_sptr &rhs) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
       "Divide", lhs, rhs);
@@ -436,7 +437,7 @@ DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr lhs,
+DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr &lhs,
                                const double &rhsValue) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
@@ -452,8 +453,8 @@ DataProcessorAlgorithm::divide(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr lhs,
-                                 const MatrixWorkspace_sptr rhs) {
+DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr &lhs,
+                                 const MatrixWorkspace_sptr &rhs) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
       "Divide", lhs, rhs);
@@ -468,7 +469,7 @@ DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr lhs,
+DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr &lhs,
                                  const double &rhsValue) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
@@ -482,8 +483,8 @@ DataProcessorAlgorithm::multiply(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr lhs,
-                             const MatrixWorkspace_sptr rhs) {
+DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr &lhs,
+                             const MatrixWorkspace_sptr &rhs) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
       "Plus", lhs, rhs);
@@ -496,7 +497,7 @@ DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr lhs,
+DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr &lhs,
                              const double &rhsValue) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
@@ -510,8 +511,8 @@ DataProcessorAlgorithm::plus(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::minus(const MatrixWorkspace_sptr lhs,
-                              const MatrixWorkspace_sptr rhs) {
+DataProcessorAlgorithm::minus(const MatrixWorkspace_sptr &lhs,
+                              const MatrixWorkspace_sptr &rhs) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(
       "Minus", lhs, rhs);
@@ -525,7 +526,7 @@ DataProcessorAlgorithm::minus(const MatrixWorkspace_sptr lhs,
  * @return matrix workspace resulting from the operation
  */
 MatrixWorkspace_sptr
-DataProcessorAlgorithm::minus(const MatrixWorkspace_sptr lhs,
+DataProcessorAlgorithm::minus(const MatrixWorkspace_sptr &lhs,
                               const double &rhsValue) {
   return this->executeBinaryAlgorithm<
       MatrixWorkspace_sptr, MatrixWorkspace_sptr, MatrixWorkspace_sptr>(

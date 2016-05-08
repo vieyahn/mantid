@@ -158,12 +158,14 @@ public:
   // Get Geometry Handler
   boost::shared_ptr<GeometryHandler> getGeometryHandler();
   /// Set Geometry Handler
-  void setGeometryHandler(boost::shared_ptr<GeometryHandler> h);
+  void setGeometryHandler(const boost::shared_ptr<GeometryHandler> &h);
 
   /// set vtkGeometryCache writer
-  void setVtkGeometryCacheWriter(boost::shared_ptr<vtkGeometryCacheWriter>);
+  void
+  setVtkGeometryCacheWriter(const boost::shared_ptr<vtkGeometryCacheWriter> &);
   /// set vtkGeometryCache reader
-  void setVtkGeometryCacheReader(boost::shared_ptr<vtkGeometryCacheReader>);
+  void
+  setVtkGeometryCacheReader(const boost::shared_ptr<vtkGeometryCacheReader> &);
   void GetObjectGeom(int &type, std::vector<Kernel::V3D> &vectors,
                      double &myradius, double &myheight) const;
   /// Getter for the shape xml
@@ -204,9 +206,9 @@ private:
                                const Kernel::V3D &c,
                                const Kernel::V3D &observer) const;
   double CuboidSolidAngle(const Kernel::V3D observer,
-                          const std::vector<Kernel::V3D> vectors) const;
+                          const std::vector<Kernel::V3D> &vectors) const;
   double SphereSolidAngle(const Kernel::V3D observer,
-                          const std::vector<Kernel::V3D> vectors,
+                          const std::vector<Kernel::V3D> &vectors,
                           const double radius) const;
   double CylinderSolidAngle(const Kernel::V3D &observer,
                             const Mantid::Kernel::V3D &centre,

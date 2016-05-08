@@ -485,7 +485,7 @@ void ReflectometryReductionOneAuto::exec() {
 
 template <typename T>
 boost::optional<T>
-ReflectometryReductionOneAuto::isSet(std::string propName) const {
+ReflectometryReductionOneAuto::isSet(const std::string &propName) const {
   auto algProperty = this->getPointerToProperty(propName);
   if (algProperty->isDefault()) {
     return boost::optional<T>();
@@ -496,8 +496,9 @@ ReflectometryReductionOneAuto::isSet(std::string propName) const {
 }
 
 double ReflectometryReductionOneAuto::checkForDefault(
-    std::string propName, Mantid::Geometry::Instrument_const_sptr instrument,
-    std::string idf_name) const {
+    const std::string &propName,
+    const Mantid::Geometry::Instrument_const_sptr &instrument,
+    const std::string &idf_name) const {
   auto algProperty = this->getPointerToProperty(propName);
   if (algProperty->isDefault()) {
     auto defaults = instrument->getNumberParameter(idf_name);

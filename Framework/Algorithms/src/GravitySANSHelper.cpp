@@ -99,10 +99,11 @@ double GravitySANSHelper::calcSinTheta() const {
 *  @param extraLength :: additional length
 *  @return the deviation in meters
 */
-double GravitySANSHelper::gravitationalDrop(API::MatrixWorkspace_const_sptr ws,
-                                            Geometry::IDetector_const_sptr det,
-                                            const double waveLength,
-                                            const double extraLength) const {
+double
+GravitySANSHelper::gravitationalDrop(const API::MatrixWorkspace_const_sptr &ws,
+                                     const Geometry::IDetector_const_sptr &det,
+                                     const double waveLength,
+                                     const double extraLength) const {
   using namespace PhysicalConstants;
   /// Pre-factor in gravity calculation: gm^2/2h^2
   static const double gm2_OVER_2h2 =

@@ -87,8 +87,8 @@ InstrumentDefinitionParser::InstrumentDefinitionParser(
  * @param xmlText :: XML contents of IDF
  */
 InstrumentDefinitionParser::InstrumentDefinitionParser(
-    const IDFObject_const_sptr xmlFile,
-    const IDFObject_const_sptr expectedCacheFile, const std::string &instName,
+    const IDFObject_const_sptr &xmlFile,
+    const IDFObject_const_sptr &expectedCacheFile, const std::string &instName,
     const std::string &xmlText)
     : m_xmlFile(boost::make_shared<NullIDFObject>()),
       m_cacheFile(boost::make_shared<NullIDFObject>()), m_pDoc(nullptr),
@@ -1761,7 +1761,7 @@ void InstrumentDefinitionParser::populateIdList(Poco::XML::Element *pE,
  *  @throw InstrumentDefinitionError Thrown if type not defined in XML
  *definition
 */
-bool InstrumentDefinitionParser::isAssembly(std::string type) const {
+bool InstrumentDefinitionParser::isAssembly(const std::string &type) const {
   const std::string filename = m_xmlFile->getFileFullPathStr();
   auto it = isTypeAssembly.find(type);
 
@@ -2363,7 +2363,8 @@ void InstrumentDefinitionParser::setComponentLinks(
 Apply the cache.
 @param cacheToApply : Cache file object to use the the geometries.
 */
-void InstrumentDefinitionParser::applyCache(IDFObject_const_sptr cacheToApply) {
+void InstrumentDefinitionParser::applyCache(
+    const IDFObject_const_sptr &cacheToApply) {
   const std::string cacheFullPath = cacheToApply->getFileFullPathStr();
   g_log.information("Loading geometry cache from " + cacheFullPath);
   // create a vtk reader
@@ -2383,7 +2384,8 @@ Write the cache file from the IDF file and apply it.
 */
 InstrumentDefinitionParser::CachingOption
 InstrumentDefinitionParser::writeAndApplyCache(
-    IDFObject_const_sptr firstChoiceCache, IDFObject_const_sptr fallBackCache) {
+    const IDFObject_const_sptr &firstChoiceCache,
+    const IDFObject_const_sptr &fallBackCache) {
   IDFObject_const_sptr usedCache = firstChoiceCache;
   auto cachingOption = WroteGeomCache;
 

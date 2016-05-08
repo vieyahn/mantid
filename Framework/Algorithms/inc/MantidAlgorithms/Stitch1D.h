@@ -49,7 +49,7 @@ public:
     return "Stitches single histogram matrix workspaces together";
   }
   /// Does the x-axis have non-zero errors
-  bool hasNonzeroErrors(Mantid::API::MatrixWorkspace_sptr ws);
+  bool hasNonzeroErrors(const Mantid::API::MatrixWorkspace_sptr &ws);
 
 private:
   /// Helper typedef. For storing indexes of special values per spectra per
@@ -100,9 +100,10 @@ private:
   Mantid::API::MatrixWorkspace_sptr
   maskAllBut(int a1, int a2, Mantid::API::MatrixWorkspace_sptr &source);
   /// Mask out everything but the data in the ranges, but do it inplace.
-  void maskInPlace(int a1, int a2, Mantid::API::MatrixWorkspace_sptr source);
+  void maskInPlace(int a1, int a2,
+                   const Mantid::API::MatrixWorkspace_sptr &source);
   /// Add back in any special values
-  void reinsertSpecialValues(Mantid::API::MatrixWorkspace_sptr ws);
+  void reinsertSpecialValues(const Mantid::API::MatrixWorkspace_sptr &ws);
   /// Range tolerance
   static const double range_tolerance;
   /// Index per workspace spectra of Nans

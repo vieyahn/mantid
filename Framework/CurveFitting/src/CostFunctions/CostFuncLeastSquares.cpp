@@ -72,8 +72,9 @@ double CostFuncLeastSquares::val() const {
  * @param domain :: A domain
  * @param values :: Values
  */
-void CostFuncLeastSquares::addVal(API::FunctionDomain_sptr domain,
-                                  API::FunctionValues_sptr values) const {
+void CostFuncLeastSquares::addVal(
+    const API::FunctionDomain_sptr &domain,
+    const API::FunctionValues_sptr &values) const {
   m_function->function(*domain, *values);
   size_t ny = values->size();
 
@@ -221,11 +222,10 @@ double CostFuncLeastSquares::valDerivHessian(bool evalDeriv,
  * @param evalDeriv :: Flag to evaluate the derivatives
  * @param evalHessian :: Flag to evaluate the Hessian
  */
-void CostFuncLeastSquares::addValDerivHessian(API::IFunction_sptr function,
-                                              API::FunctionDomain_sptr domain,
-                                              API::FunctionValues_sptr values,
-                                              bool evalDeriv,
-                                              bool evalHessian) const {
+void CostFuncLeastSquares::addValDerivHessian(
+    const API::IFunction_sptr &function, const API::FunctionDomain_sptr &domain,
+    const API::FunctionValues_sptr &values, bool evalDeriv,
+    bool evalHessian) const {
   UNUSED_ARG(evalDeriv);
   function->function(*domain, *values);
   size_t np = function->nParams(); // number of parameters
@@ -293,8 +293,8 @@ void CostFuncLeastSquares::addValDerivHessian(API::IFunction_sptr function,
   }
 }
 
-std::vector<double>
-CostFuncLeastSquares::getFitWeights(API::FunctionValues_sptr values) const {
+std::vector<double> CostFuncLeastSquares::getFitWeights(
+    const API::FunctionValues_sptr &values) const {
   std::vector<double> weights(values->size());
   for (size_t i = 0; i < weights.size(); ++i) {
     weights[i] = values->getFitWeight(i);

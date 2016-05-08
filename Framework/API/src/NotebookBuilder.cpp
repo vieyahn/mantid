@@ -33,9 +33,9 @@ NotebookBuilder::NotebookBuilder(boost::shared_ptr<HistoryView> view,
  * @param ws_comment :: workspace comment
  * @return a formatted ipython notebook string of the history
  */
-const std::string NotebookBuilder::build(std::string ws_name,
-                                         std::string ws_title,
-                                         std::string ws_comment) {
+const std::string NotebookBuilder::build(const std::string &ws_name,
+                                         const std::string &ws_title,
+                                         const std::string &ws_comment) {
   // record workspace details in notebook
   std::string workspace_details;
   workspace_details = "Workspace History: " + ws_name + "\n";
@@ -103,8 +103,8 @@ void NotebookBuilder::buildChildren(
  * @param algHistory :: pointer to an algorithm history object
  * @returns std::string to run this algorithm
  */
-const std::string
-NotebookBuilder::buildAlgorithmString(AlgorithmHistory_const_sptr algHistory) {
+const std::string NotebookBuilder::buildAlgorithmString(
+    const AlgorithmHistory_const_sptr &algHistory) {
   std::ostringstream properties;
   const std::string name = algHistory->name();
   std::string prop = "";
@@ -158,8 +158,8 @@ NotebookBuilder::buildAlgorithmString(AlgorithmHistory_const_sptr algHistory) {
  * @param propHistory :: reference to a property history object
  * @returns std::string for this property
  */
-const std::string
-NotebookBuilder::buildPropertyString(PropertyHistory_const_sptr propHistory) {
+const std::string NotebookBuilder::buildPropertyString(
+    const PropertyHistory_const_sptr &propHistory) {
   using Mantid::Kernel::Direction;
 
   // Create a vector of all non workspace property type names

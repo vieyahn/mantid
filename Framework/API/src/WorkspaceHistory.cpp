@@ -66,7 +66,7 @@ void WorkspaceHistory::addHistory(const WorkspaceHistory &otherHistory) {
 }
 
 /// Append an AlgorithmHistory to this WorkspaceHistory
-void WorkspaceHistory::addHistory(AlgorithmHistory_sptr algHistory) {
+void WorkspaceHistory::addHistory(const AlgorithmHistory_sptr &algHistory) {
   m_algorithms.insert(algHistory);
 }
 
@@ -270,7 +270,7 @@ void WorkspaceHistory::loadNexus(::NeXus::File *file) {
  * the workspace history.
  */
 void WorkspaceHistory::loadNestedHistory(::NeXus::File *file,
-                                         AlgorithmHistory_sptr parent) {
+                                         const AlgorithmHistory_sptr &parent) {
   // historyNumbers should be sorted by number
   std::set<int> historyNumbers = findHistoryEntries(file);
   for (auto historyNumber : historyNumbers) {

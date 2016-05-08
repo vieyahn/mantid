@@ -34,7 +34,7 @@ PoldiDeadWireDecorator::PoldiDeadWireDecorator(
   setDeadWires(std::set<int>(deadDetectorIds.begin(), deadDetectorIds.end()));
 }
 
-void PoldiDeadWireDecorator::setDeadWires(std::set<int> deadWires) {
+void PoldiDeadWireDecorator::setDeadWires(const std::set<int> &deadWires) {
   m_deadWireSet = deadWires;
 
   detectorSetHook();
@@ -77,7 +77,7 @@ PoldiDeadWireDecorator::getGoodElements(std::vector<int> rawElements) {
 }
 
 bool PoldiDeadWireDecorator::detectorIsNotMasked(
-    Instrument_const_sptr instrument, detid_t detectorId) {
+    const Instrument_const_sptr &instrument, detid_t detectorId) {
   return !instrument->isDetectorMasked(detectorId);
 }
 

@@ -73,7 +73,7 @@ public:
   void setH(double m_H) override;
   void setK(double m_K) override;
   void setL(double m_L) override;
-  void setBankName(std::string m_bankName);
+  void setBankName(const std::string &m_bankName);
   void setHKL(double H, double K, double L) override;
   void setHKL(Mantid::Kernel::V3D HKL) override;
   void resetHKL();
@@ -133,7 +133,7 @@ public:
   void setPeakShape(Mantid::Geometry::PeakShape *shape);
 
   /// Set the PeakShape
-  void setPeakShape(Mantid::Geometry::PeakShape_const_sptr shape);
+  void setPeakShape(const Mantid::Geometry::PeakShape_const_sptr &shape);
 
   /// Assignment
   Peak &operator=(const Peak &other);

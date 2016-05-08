@@ -35,7 +35,8 @@ namespace {
 *as comma separated string.
 */
 std::string createWorkspaceIndexListFromDetectorWorkspace(
-    MatrixWorkspace_const_sptr originWS, MatrixWorkspace_const_sptr hostWS) {
+    const MatrixWorkspace_const_sptr &originWS,
+    const MatrixWorkspace_const_sptr &hostWS) {
   auto spectrumMap = originWS->getSpectrumToWorkspaceIndexMap();
   auto it = spectrumMap.begin();
   std::stringstream result;
@@ -306,7 +307,7 @@ ReflectometryReductionOne::correctPosition(API::MatrixWorkspace_sptr &toCorrect,
 * @return Theta : the value by which we rotate the source (in Degrees)
 */
 double ReflectometryReductionOne::getAngleForSourceRotation(
-    MatrixWorkspace_sptr toConvert, double thetaOut) {
+    const MatrixWorkspace_sptr &toConvert, double thetaOut) {
   auto instrument = toConvert->getInstrument();
   auto instrumentUpVector = instrument->getReferenceFrame()->vecPointingUp();
   // check to see if calculated theta is the same as theta from instrument setup
@@ -420,7 +421,7 @@ Mantid::API::MatrixWorkspace_sptr ReflectometryReductionOne::toIvsQ(
 */
 Mantid::Geometry::IComponent_const_sptr
 ReflectometryReductionOne::getSurfaceSampleComponent(
-    Mantid::Geometry::Instrument_const_sptr inst) {
+    const Mantid::Geometry::Instrument_const_sptr &inst) {
   std::string sampleComponent = "some-surface-holder";
   if (!isPropertyDefault("SampleComponentName")) {
     sampleComponent = this->getPropertyValue("SampleComponentName");
@@ -445,7 +446,8 @@ ReflectometryReductionOne::getSurfaceSampleComponent(
 */
 boost::shared_ptr<const Mantid::Geometry::IComponent>
 ReflectometryReductionOne::getDetectorComponent(
-    Mantid::Geometry::Instrument_const_sptr inst, const bool isPointDetector) {
+    const Mantid::Geometry::Instrument_const_sptr &inst,
+    const bool isPointDetector) {
   std::string componentToCorrect =
       isPointDetector ? "point-detector" : "line-detector";
   if (!isPropertyDefault("DetectorComponentName")) {
@@ -467,8 +469,10 @@ ReflectometryReductionOne::getDetectorComponent(
 * @param endIndex
 * @return Workspace with spectra summed over the specified range.
 */
-MatrixWorkspace_sptr ReflectometryReductionOne::sumSpectraOverRange(
-    MatrixWorkspace_sptr inWS, const int startIndex, const int endIndex) {
+MatrixWorkspace_sptr
+ReflectometryReductionOne::sumSpectraOverRange(const MatrixWorkspace_sptr &inWS,
+                                               const int startIndex,
+                                               const int endIndex) {
   auto sumSpectra = this->createChildAlgorithm("SumSpectra");
   sumSpectra->initialize();
   sumSpectra->setProperty("InputWorkspace", inWS);
@@ -649,10 +653,10 @@ void ReflectometryReductionOne::exec() {
 * stitched together.
 */
 MatrixWorkspace_sptr ReflectometryReductionOne::transmissonCorrection(
-    MatrixWorkspace_sptr IvsLam, const MinMax &wavelengthInterval,
+    const MatrixWorkspace_sptr &IvsLam, const MinMax &wavelengthInterval,
     const MinMax &wavelengthMonitorBackgroundInterval,
     const MinMax &wavelengthMonitorIntegrationInterval,
-    const int &i0MonitorIndex, MatrixWorkspace_sptr firstTransmissionRun,
+    const int &i0MonitorIndex, const MatrixWorkspace_sptr &firstTransmissionRun,
     OptionalMatrixWorkspace_sptr secondTransmissionRun,
     const OptionalDouble &stitchingStart, const OptionalDouble &stitchingDelta,
     const OptionalDouble &stitchingEnd,
@@ -741,8 +745,8 @@ MatrixWorkspace_sptr ReflectometryReductionOne::transmissonCorrection(
 * transmission corrections.
 * @return Corrected workspace
 */
-MatrixWorkspace_sptr
-ReflectometryReductionOne::algorithmicCorrection(MatrixWorkspace_sptr IvsLam) {
+MatrixWorkspace_sptr ReflectometryReductionOne::algorithmicCorrection(
+    const MatrixWorkspace_sptr &IvsLam) {
 
   const std::string corrAlgName = getProperty("CorrectionAlgorithm");
 
@@ -771,8 +775,8 @@ ReflectometryReductionOne::algorithmicCorrection(MatrixWorkspace_sptr IvsLam) {
 exception. Otherwise a warning is generated.
 */
 void ReflectometryReductionOne::verifySpectrumMaps(
-    MatrixWorkspace_const_sptr ws1, MatrixWorkspace_const_sptr ws2,
-    const bool severe) {
+    const MatrixWorkspace_const_sptr &ws1,
+    const MatrixWorkspace_const_sptr &ws2, const bool severe) {
   auto map1 = ws1->getSpectrumToWorkspaceIndexMap();
   auto map2 = ws2->getSpectrumToWorkspaceIndexMap();
   if (map1 != map2) {

@@ -65,7 +65,7 @@ public:
 
   IntensityType intensityType() const;
 
-  void setProfileFunctionName(std::string newProfileFunction);
+  void setProfileFunctionName(const std::string &newProfileFunction);
   std::string getProfileFunctionName() const;
   bool hasProfileFunctionName() const;
 
@@ -99,10 +99,10 @@ protected:
   std::string getUnitCellStringFromLog(const API::LogManager_sptr &tableLog);
 
   std::string getStringValueFromLog(const API::LogManager_sptr &logManager,
-                                    std::string valueName);
+                                    const std::string &valueName);
 
   std::string intensityTypeToString(IntensityType type) const;
-  IntensityType intensityTypeFromString(std::string typeString) const;
+  IntensityType intensityTypeFromString(const std::string &typeString) const;
 
   std::string
   pointGroupToString(const Geometry::PointGroup_sptr &pointGroup) const;

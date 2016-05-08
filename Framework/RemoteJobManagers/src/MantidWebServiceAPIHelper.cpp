@@ -163,22 +163,21 @@ void MantidWebServiceAPIHelper::clearSessionCookies() { g_cookies.clear(); }
 
 // Wrappers for a lot of the boilerplate code needed to perform an HTTPS GET or
 // POST
-void MantidWebServiceAPIHelper::initGetRequest(Poco::Net::HTTPRequest &req,
-                                               std::string extraPath,
-                                               std::string queryString) const {
+void MantidWebServiceAPIHelper::initGetRequest(
+    Poco::Net::HTTPRequest &req, const std::string &extraPath,
+    const std::string &queryString) const {
   return initHTTPRequest(req, Poco::Net::HTTPRequest::HTTP_GET, extraPath,
                          queryString);
 }
 
-void MantidWebServiceAPIHelper::initPostRequest(Poco::Net::HTTPRequest &req,
-                                                std::string extraPath) const {
+void MantidWebServiceAPIHelper::initPostRequest(
+    Poco::Net::HTTPRequest &req, const std::string &extraPath) const {
   return initHTTPRequest(req, Poco::Net::HTTPRequest::HTTP_POST, extraPath);
 }
 
-void MantidWebServiceAPIHelper::initHTTPRequest(Poco::Net::HTTPRequest &req,
-                                                const std::string &method,
-                                                std::string extraPath,
-                                                std::string queryString) const {
+void MantidWebServiceAPIHelper::initHTTPRequest(
+    Poco::Net::HTTPRequest &req, const std::string &method,
+    const std::string &extraPath, const std::string &queryString) const {
   // Set up the session object
   if (m_session) {
     delete m_session;

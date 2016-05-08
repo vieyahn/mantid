@@ -120,7 +120,7 @@ void IFunctionMD::useDimension(const std::string &id) {
  * workspace
   * then calls init().
   */
-void IFunctionMD::useAllDimensions(IMDWorkspace_const_sptr workspace) {
+void IFunctionMD::useAllDimensions(const IMDWorkspace_const_sptr &workspace) {
   if (!workspace) {
     throw std::runtime_error("Method IFunctionMD::useAllDimensions() can only "
                              "be called after setting the workspace");

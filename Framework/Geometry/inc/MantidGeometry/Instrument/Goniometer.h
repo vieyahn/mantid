@@ -79,28 +79,29 @@ public:
   // Return rotation matrix
   const Kernel::DblMatrix &getR() const;
   // Set the rotation matrix
-  void setR(Kernel::DblMatrix rot);
+  void setR(const Kernel::DblMatrix &rot);
   // Return information about axes
   std::string axesInfo();
   // Add axis to goniometer
-  void pushAxis(std::string name, double axisx, double axisy, double axisz,
-                double angle = 0., int sense = CCW, int angUnit = angDegrees);
+  void pushAxis(const std::string &name, double axisx, double axisy,
+                double axisz, double angle = 0., int sense = CCW,
+                int angUnit = angDegrees);
   // Set rotation angle for an axis in the units the angle is set (default --
   // degrees)
-  void setRotationAngle(std::string name, double value);
+  void setRotationAngle(const std::string &name, double value);
   // Set rotation angle for an axis in the units the angle is set (default --
   // degrees)
   void setRotationAngle(size_t axisnumber, double value);
   // Get axis object
   const GoniometerAxis &getAxis(size_t axisnumber) const;
   // Get axis object
-  const GoniometerAxis &getAxis(std::string axisname) const;
+  const GoniometerAxis &getAxis(const std::string &axisname) const;
   // Return the number of axes
   size_t getNumberAxes() const;
   // Make a default universal goniometer
   void makeUniversalGoniometer();
   // Return Euler angles acording to a convention
-  std::vector<double> getEulerAngles(std::string convention = "YZX");
+  std::vector<double> getEulerAngles(const std::string &convention = "YZX");
 
   void saveNexus(::NeXus::File *file, const std::string &group) const;
   void loadNexus(::NeXus::File *file, const std::string &group);

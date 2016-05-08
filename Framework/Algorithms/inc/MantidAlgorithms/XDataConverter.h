@@ -70,8 +70,8 @@ private:
   void exec() override;
 
   /// Set the X data on given spectra
-  void setXData(API::MatrixWorkspace_sptr outputWS,
-                const API::MatrixWorkspace_sptr inputWS, const int index);
+  void setXData(const API::MatrixWorkspace_sptr &outputWS,
+                const API::MatrixWorkspace_sptr &inputWS, const int index);
 
   /// Flag if the X data is shared
   bool m_sharedX;

@@ -702,7 +702,7 @@ void IFunction::calNumericalDeriv(const FunctionDomain &domain,
  * @param endX :: The upper bin index
  */
 void IFunction::setMatrixWorkspace(
-    boost::shared_ptr<const API::MatrixWorkspace> workspace, size_t wi,
+    const boost::shared_ptr<const API::MatrixWorkspace> &workspace, size_t wi,
     double startX, double endX) {
   UNUSED_ARG(startX);
   UNUSED_ARG(endX);
@@ -891,9 +891,10 @@ void IFunction::setMatrixWorkspace(
  *  @param wsIndex :: workspace index
  *  @return converted value
  */
-double IFunction::convertValue(double value, Kernel::Unit_sptr &outUnit,
-                               boost::shared_ptr<const MatrixWorkspace> ws,
-                               size_t wsIndex) const {
+double
+IFunction::convertValue(double value, Kernel::Unit_sptr &outUnit,
+                        const boost::shared_ptr<const MatrixWorkspace> &ws,
+                        size_t wsIndex) const {
   // only required if formula or look-up-table different from ws unit
   const auto &wsUnit = ws->getAxis(0)->unit();
   if (outUnit->unitID().compare(wsUnit->unitID()) == 0)
@@ -921,7 +922,7 @@ double IFunction::convertValue(double value, Kernel::Unit_sptr &outUnit,
  */
 void IFunction::convertValue(std::vector<double> &values,
                              Kernel::Unit_sptr &outUnit,
-                             boost::shared_ptr<const MatrixWorkspace> ws,
+                             const boost::shared_ptr<const MatrixWorkspace> &ws,
                              size_t wsIndex) const {
   // only required if  formula or look-up-table different from ws unit
   const auto &wsUnit = ws->getAxis(0)->unit();
@@ -1085,7 +1086,7 @@ void IFunction::storeAttributeValue(const std::string &name,
  * @param covar :: A matrix to set.
  */
 void IFunction::setCovarianceMatrix(
-    boost::shared_ptr<Kernel::Matrix<double>> covar) {
+    const boost::shared_ptr<Kernel::Matrix<double>> &covar) {
   // the matrix shouldn't be empty
   if (!covar) {
     throw std::invalid_argument(

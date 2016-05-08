@@ -55,11 +55,13 @@ private:
   void init() override;
   void exec() override;
 
-  template <typename T> boost::optional<T> isSet(std::string propName) const;
+  template <typename T>
+  boost::optional<T> isSet(const std::string &propName) const;
 
-  double checkForDefault(std::string propName,
-                         Mantid::Geometry::Instrument_const_sptr instrument,
-                         std::string idf_name = "") const;
+  double
+  checkForDefault(const std::string &propName,
+                  const Mantid::Geometry::Instrument_const_sptr &instrument,
+                  const std::string &idf_name = "") const;
 };
 
 } // namespace Algorithms

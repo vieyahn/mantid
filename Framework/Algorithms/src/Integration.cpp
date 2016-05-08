@@ -280,9 +280,9 @@ void Integration::exec() {
 /**
 * Uses rebin to reduce event workspaces to a single bin histogram
 */
-API::MatrixWorkspace_sptr
-Integration::rangeFilterEventWorkspace(API::MatrixWorkspace_sptr workspace,
-                                       double minRange, double maxRange) {
+API::MatrixWorkspace_sptr Integration::rangeFilterEventWorkspace(
+    const API::MatrixWorkspace_sptr &workspace, double minRange,
+    double maxRange) {
   bool childLog = g_log.is(Logger::Priority::PRIO_DEBUG);
   auto childAlg = createChildAlgorithm("Rebin", 0, 0.5, childLog);
   childAlg->setProperty("InputWorkspace", workspace);
@@ -343,9 +343,9 @@ MatrixWorkspace_sptr Integration::getInputWorkspace() {
  *
  * @return the output workspace
  */
-MatrixWorkspace_sptr Integration::getOutputWorkspace(MatrixWorkspace_sptr inWS,
-                                                     const int minSpec,
-                                                     const int maxSpec) {
+MatrixWorkspace_sptr
+Integration::getOutputWorkspace(const MatrixWorkspace_sptr &inWS,
+                                const int minSpec, const int maxSpec) {
   if (inWS->id() == "RebinnedOutput") {
     MatrixWorkspace_sptr outWS = API::WorkspaceFactory::Instance().create(
         "Workspace2D", maxSpec - minSpec + 1, 2, 1);

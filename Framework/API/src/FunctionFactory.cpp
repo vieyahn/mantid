@@ -244,7 +244,7 @@ void FunctionFactoryImpl::inputError(const std::string &str) const {
  * separated by commas ','
  *    and enclosed in brackets "(...)" .
  */
-void FunctionFactoryImpl::addConstraints(IFunction_sptr fun,
+void FunctionFactoryImpl::addConstraints(const IFunction_sptr &fun,
                                          const Expression &expr) const {
   if (expr.name() == ",") {
     for (const auto &constraint : expr) {
@@ -260,7 +260,7 @@ void FunctionFactoryImpl::addConstraints(IFunction_sptr fun,
  * @param fun :: The function
  * @param expr :: The constraint expression.
  */
-void FunctionFactoryImpl::addConstraint(IFunction_sptr fun,
+void FunctionFactoryImpl::addConstraint(const IFunction_sptr &fun,
                                         const Expression &expr) const {
   IConstraint *c =
       ConstraintFactory::Instance().createInitialized(fun.get(), expr);
@@ -272,7 +272,7 @@ void FunctionFactoryImpl::addConstraint(IFunction_sptr fun,
  * @param expr :: The tie expression: either parName = TieString or a list
  *   of name = string pairs
  */
-void FunctionFactoryImpl::addTies(IFunction_sptr fun,
+void FunctionFactoryImpl::addTies(const IFunction_sptr &fun,
                                   const Expression &expr) const {
   if (expr.name() == "=") {
     addTie(fun, expr);
@@ -287,7 +287,7 @@ void FunctionFactoryImpl::addTies(IFunction_sptr fun,
  * @param fun :: The function
  * @param expr :: The tie expression: parName = TieString
  */
-void FunctionFactoryImpl::addTie(IFunction_sptr fun,
+void FunctionFactoryImpl::addTie(const IFunction_sptr &fun,
                                  const Expression &expr) const {
   if (expr.size() > 1) { // if size > 2 it is interpreted as setting a tie (last
                          // expr.term) to multiple parameters, e.g

@@ -91,7 +91,7 @@ void SetSpecialCoordinates::init() {
 }
 
 bool SetSpecialCoordinates::writeCoordinatesToMDEventWorkspace(
-    Workspace_sptr inWS, SpecialCoordinateSystem) {
+    const Workspace_sptr &inWS, SpecialCoordinateSystem) {
   bool written = false;
   if (auto mdEventWS = boost::dynamic_pointer_cast<IMDEventWorkspace>(inWS)) {
     g_log.warning("SetSpecialCoordinates: This algorithm cannot set the "
@@ -103,7 +103,7 @@ bool SetSpecialCoordinates::writeCoordinatesToMDEventWorkspace(
 }
 
 bool SetSpecialCoordinates::writeCoordinatesToMDHistoWorkspace(
-    Workspace_sptr inWS, SpecialCoordinateSystem) {
+    const Workspace_sptr &inWS, SpecialCoordinateSystem) {
   bool written = false;
   if (auto mdHistoWS = boost::dynamic_pointer_cast<IMDHistoWorkspace>(inWS)) {
     g_log.warning("SetSpecialCoordinates: This algorithm cannot set the "
@@ -115,7 +115,7 @@ bool SetSpecialCoordinates::writeCoordinatesToMDHistoWorkspace(
 }
 
 bool SetSpecialCoordinates::writeCoordinatesToPeaksWorkspace(
-    Workspace_sptr inWS, SpecialCoordinateSystem coordinateSystem) {
+    const Workspace_sptr &inWS, SpecialCoordinateSystem coordinateSystem) {
   bool written = false;
   if (auto peaksWS = boost::dynamic_pointer_cast<IPeaksWorkspace>(inWS)) {
     peaksWS->setCoordinateSystem(coordinateSystem);

@@ -186,7 +186,7 @@ void ConvertUnits::exec() {
  *  @param inputWS The input workspace
  */
 void ConvertUnits::setupMemberVariables(
-    const API::MatrixWorkspace_const_sptr inputWS) {
+    const API::MatrixWorkspace_const_sptr &inputWS) {
   m_numberOfSpectra = inputWS->getNumberHistograms();
   // In the context of this algorithm, we treat things as a distribution if the
   // flag is set
@@ -206,7 +206,7 @@ void ConvertUnits::setupMemberVariables(
  *  @param inputWS The input workspace
  */
 API::MatrixWorkspace_sptr ConvertUnits::setupOutputWorkspace(
-    const API::MatrixWorkspace_const_sptr inputWS) {
+    const API::MatrixWorkspace_const_sptr &inputWS) {
   MatrixWorkspace_sptr outputWS = getProperty("OutputWorkspace");
 
   // If input and output workspaces are NOT the same, create a new workspace for
@@ -249,7 +249,7 @@ API::MatrixWorkspace_sptr ConvertUnits::setupOutputWorkspace(
  *  @param factor :: the conversion factor a to apply
  *  @param power :: the Power b to apply to the conversion
  */
-void ConvertUnits::convertQuickly(API::MatrixWorkspace_sptr outputWS,
+void ConvertUnits::convertQuickly(const API::MatrixWorkspace_sptr &outputWS,
                                   const double &factor, const double &power) {
   Progress prog(this, 0.2, 1.0, m_numberOfSpectra);
   int64_t numberOfSpectra_i =
@@ -330,8 +330,8 @@ void ConvertUnits::convertQuickly(API::MatrixWorkspace_sptr outputWS,
  * @param fromUnit :: The unit of the input workspace
  * @param outputWS :: The output workspace
  */
-void ConvertUnits::convertViaTOF(Kernel::Unit_const_sptr fromUnit,
-                                 API::MatrixWorkspace_sptr outputWS) {
+void ConvertUnits::convertViaTOF(const Kernel::Unit_const_sptr &fromUnit,
+                                 const API::MatrixWorkspace_sptr &outputWS) {
   using namespace Geometry;
 
   EventWorkspace_sptr eventWS =
@@ -522,7 +522,7 @@ void ConvertUnits::convertViaTOF(Kernel::Unit_const_sptr fromUnit,
 
 /// Calls Rebin as a Child Algorithm to align the bins
 API::MatrixWorkspace_sptr
-ConvertUnits::alignBins(API::MatrixWorkspace_sptr workspace) {
+ConvertUnits::alignBins(const API::MatrixWorkspace_sptr &workspace) {
   // Create a Rebin child algorithm
   IAlgorithm_sptr childAlg = createChildAlgorithm("Rebin");
   childAlg->setProperty<MatrixWorkspace_sptr>("InputWorkspace", workspace);
@@ -538,7 +538,7 @@ ConvertUnits::alignBins(API::MatrixWorkspace_sptr workspace) {
 /// The Rebin parameters should cover the full range of the converted unit, with
 /// the same number of bins
 const std::vector<double> ConvertUnits::calculateRebinParams(
-    const API::MatrixWorkspace_const_sptr workspace) const {
+    const API::MatrixWorkspace_const_sptr &workspace) const {
   // Need to loop round and find the full range
   double XMin = DBL_MAX, XMax = DBL_MIN;
   const size_t numSpec = workspace->getNumberHistograms();
@@ -568,7 +568,7 @@ const std::vector<double> ConvertUnits::calculateRebinParams(
 /** Reverses the workspace if X values are in descending order
  *  @param WS The workspace to operate on
  */
-void ConvertUnits::reverse(API::MatrixWorkspace_sptr WS) {
+void ConvertUnits::reverse(const API::MatrixWorkspace_sptr &WS) {
   if (WorkspaceHelpers::commonBoundaries(WS) && !m_inputEvents) {
     std::reverse(WS->dataX(0).begin(), WS->dataX(0).end());
     std::reverse(WS->dataY(0).begin(), WS->dataY(0).end());
@@ -622,7 +622,7 @@ void ConvertUnits::reverse(API::MatrixWorkspace_sptr WS) {
  *  @return The workspace after bins have been removed
  */
 API::MatrixWorkspace_sptr ConvertUnits::removeUnphysicalBins(
-    const Mantid::API::MatrixWorkspace_const_sptr workspace) {
+    const Mantid::API::MatrixWorkspace_const_sptr &workspace) {
   MatrixWorkspace_sptr result;
 
   const size_t numSpec = workspace->getNumberHistograms();
@@ -718,7 +718,7 @@ API::MatrixWorkspace_sptr ConvertUnits::removeUnphysicalBins(
 /** Divide by the bin width if workspace is a distribution
  *  @param outputWS The workspace to operate on
  */
-void ConvertUnits::putBackBinWidth(const API::MatrixWorkspace_sptr outputWS) {
+void ConvertUnits::putBackBinWidth(const API::MatrixWorkspace_sptr &outputWS) {
   const size_t outSize = outputWS->blocksize();
 
   for (size_t i = 0; i < m_numberOfSpectra; ++i) {

@@ -126,7 +126,7 @@ public:
       Mantid::Geometry::MDImplicitFunction *function = nullptr) const;
 
   std::string getConvention() const;
-  void setConvention(std::string convention);
+  void setConvention(const std::string &convention);
   std::string changeQConvention();
 
   signal_t getSignalAtVMD(const Mantid::Kernel::VMD &coords,

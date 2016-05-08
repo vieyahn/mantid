@@ -69,7 +69,7 @@ int LoadReflTBL::confidence(Kernel::FileDescriptor &descriptor) const {
 * @param line the line to count from
 * @returns a size_t of how many commas were in line
 */
-size_t LoadReflTBL::countCommas(std::string line) const {
+size_t LoadReflTBL::countCommas(const std::string &line) const {
   size_t found = 0;
   size_t pos = line.find(',', 0);
   if (pos != std::string::npos) {
@@ -92,7 +92,8 @@ size_t LoadReflTBL::countCommas(std::string line) const {
 * @returns a size_t of how many pairs of quotes were in line
 */
 size_t LoadReflTBL::findQuotePairs(
-    std::string line, std::vector<std::vector<size_t>> &quoteBounds) const {
+    const std::string &line,
+    std::vector<std::vector<size_t>> &quoteBounds) const {
   size_t quoteOne = 0;
   size_t quoteTwo = 0;
   while (quoteOne != std::string::npos && quoteTwo != std::string::npos) {
@@ -124,7 +125,7 @@ size_t LoadReflTBL::findQuotePairs(
 * cell-delimiting commas) is found
 */
 void LoadReflTBL::csvParse(
-    std::string line, std::vector<std::string> &cols,
+    const std::string &line, std::vector<std::string> &cols,
     std::vector<std::vector<size_t>> &quoteBounds) const {
   size_t pairID = 0;
   size_t valsFound = 0;

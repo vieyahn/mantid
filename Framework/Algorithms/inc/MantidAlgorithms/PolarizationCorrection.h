@@ -53,9 +53,9 @@ private:
       boost::shared_ptr<Mantid::API::MatrixWorkspace> &input,
       const std::vector<double> &coefficients);
   boost::shared_ptr<Mantid::API::WorkspaceGroup>
-  execPA(boost::shared_ptr<Mantid::API::WorkspaceGroup> inWS);
+  execPA(const boost::shared_ptr<Mantid::API::WorkspaceGroup> &inWS);
   boost::shared_ptr<Mantid::API::WorkspaceGroup>
-  execPNR(boost::shared_ptr<Mantid::API::WorkspaceGroup> inWS);
+  execPNR(const boost::shared_ptr<Mantid::API::WorkspaceGroup> &inWS);
   boost::shared_ptr<Mantid::API::MatrixWorkspace>
   add(boost::shared_ptr<Mantid::API::MatrixWorkspace> &lhsWS,
       const double &rhs);

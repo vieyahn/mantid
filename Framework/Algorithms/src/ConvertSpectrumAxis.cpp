@@ -179,8 +179,8 @@ void ConvertSpectrumAxis::exec() {
   setProperty("OutputWorkspace", outputWS);
 }
 
-double ConvertSpectrumAxis::getEfixed(IDetector_const_sptr detector,
-                                      MatrixWorkspace_const_sptr inputWS,
+double ConvertSpectrumAxis::getEfixed(const IDetector_const_sptr &detector,
+                                      const MatrixWorkspace_const_sptr &inputWS,
                                       int emode) const {
   double efixed(0);
   double efixedProp = getProperty("Efixed");

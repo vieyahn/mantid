@@ -76,7 +76,7 @@ void addOrReplaceProperty(Run &self, const std::string &name,
  * @param key The key
  * @param default_ The default to return if it does not exist
  */
-bpl::object getWithDefault(bpl::object self, bpl::object key,
+bpl::object getWithDefault(bpl::object self, const bpl::object &key,
                            bpl::object default_) {
   bpl::object exists(self.attr("__contains__"));
   if (extract<bool>(exists(key))()) {
@@ -92,7 +92,7 @@ bpl::object getWithDefault(bpl::object self, bpl::object key,
  * @param self The bpl::object called on
  * @param key The key
  */
-bpl::object get(bpl::object self, bpl::object key) {
+bpl::object get(const bpl::object &self, const bpl::object &key) {
   return getWithDefault(self, key, bpl::object());
 }
 

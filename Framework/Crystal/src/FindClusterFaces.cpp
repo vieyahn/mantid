@@ -35,7 +35,7 @@ typedef boost::optional<LabelMap> OptionalLabelPeakIndexMap;
 */
 OptionalLabelPeakIndexMap
 createOptionalLabelFilter(size_t dimensionality, int emptyLabelId,
-                          IPeaksWorkspace_sptr filterWorkspace,
+                          const IPeaksWorkspace_sptr &filterWorkspace,
                           IMDHistoWorkspace_sptr &clusterImage) {
   OptionalLabelPeakIndexMap optionalAllowedLabels;
 

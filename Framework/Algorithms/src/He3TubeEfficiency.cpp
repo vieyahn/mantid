@@ -205,7 +205,7 @@ void He3TubeEfficiency::correctForEfficiency(std::size_t spectraIndex) {
  */
 double He3TubeEfficiency::calculateExponential(
     std::size_t spectraIndex,
-    boost::shared_ptr<const Geometry::IDetector> idet) {
+    const boost::shared_ptr<const Geometry::IDetector> &idet) {
   // Get the parameters for the current associated tube
   double pressure =
       this->getParameter("TubePressure", spectraIndex, "tube_pressure", idet);
@@ -389,8 +389,9 @@ void He3TubeEfficiency::logErrors() const {
  * @return the value of the detector property
  */
 double He3TubeEfficiency::getParameter(
-    std::string wsPropName, std::size_t currentIndex, std::string detPropName,
-    boost::shared_ptr<const Geometry::IDetector> idet) {
+    const std::string &wsPropName, std::size_t currentIndex,
+    const std::string &detPropName,
+    const boost::shared_ptr<const Geometry::IDetector> &idet) {
   std::vector<double> wsProp = this->getProperty(wsPropName);
 
   if (wsProp.empty()) {

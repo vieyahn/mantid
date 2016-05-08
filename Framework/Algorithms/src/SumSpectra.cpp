@@ -191,7 +191,7 @@ void SumSpectra::exec() {
  * @return The minimum spectrum No for all the spectra being summed.
  */
 specnum_t
-SumSpectra::getOutputSpecNo(MatrixWorkspace_const_sptr localworkspace) {
+SumSpectra::getOutputSpecNo(const MatrixWorkspace_const_sptr &localworkspace) {
   // initial value
   specnum_t specId =
       localworkspace->getSpectrum(*(this->m_indices.begin()))->getSpectrumNo();
@@ -222,7 +222,7 @@ SumSpectra::getOutputSpecNo(MatrixWorkspace_const_sptr localworkspace) {
  * @param numZeros The number of zero bins in histogram workspace or empty
  * spectra for event workspace.
  */
-void SumSpectra::doWorkspace2D(MatrixWorkspace_const_sptr localworkspace,
+void SumSpectra::doWorkspace2D(const MatrixWorkspace_const_sptr &localworkspace,
                                ISpectrum *outSpec, Progress &progress,
                                size_t &numSpectra, size_t &numMasked,
                                size_t &numZeros) {
@@ -311,7 +311,7 @@ void SumSpectra::doWorkspace2D(MatrixWorkspace_const_sptr localworkspace,
  * @param numMasked
  * @param numZeros
  */
-void SumSpectra::doRebinnedOutput(MatrixWorkspace_sptr outputWorkspace,
+void SumSpectra::doRebinnedOutput(const MatrixWorkspace_sptr &outputWorkspace,
                                   Progress &progress, size_t &numSpectra,
                                   size_t &numMasked, size_t &numZeros) {
   // Get a copy of the input workspace
@@ -427,7 +427,7 @@ void SumSpectra::doRebinnedOutput(MatrixWorkspace_sptr outputWorkspace,
  *@param localworkspace :: the input workspace
  *@param indices :: set of indices to sum up
  */
-void SumSpectra::execEvent(EventWorkspace_const_sptr localworkspace,
+void SumSpectra::execEvent(const EventWorkspace_const_sptr &localworkspace,
                            std::set<int> &indices) {
   // Make a brand new EventWorkspace
   EventWorkspace_sptr outputWorkspace =

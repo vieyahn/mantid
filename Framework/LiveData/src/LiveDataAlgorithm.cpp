@@ -198,7 +198,7 @@ ILiveListener_sptr LiveDataAlgorithm::getLiveListener() {
  * @param listener :: ILiveListener_sptr
  */
 void LiveDataAlgorithm::setLiveListener(
-    Mantid::API::ILiveListener_sptr listener) {
+    const Mantid::API::ILiveListener_sptr &listener) {
   m_listener = listener;
 }
 

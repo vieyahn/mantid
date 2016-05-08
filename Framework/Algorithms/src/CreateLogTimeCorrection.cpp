@@ -172,7 +172,7 @@ TableWorkspace_sptr CreateLogTimeCorrection::generateCorrectionTable() {
 //----------------------------------------------------------------------------------------------
 /** Write correction map to a text file
   */
-void CreateLogTimeCorrection::writeCorrectionToFile(string filename) {
+void CreateLogTimeCorrection::writeCorrectionToFile(const string &filename) {
   ofstream ofile;
   ofile.open(filename.c_str());
 

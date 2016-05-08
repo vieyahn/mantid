@@ -152,7 +152,7 @@ private:
                                             const std::string &fname) const;
 
   /// get a normal file name from a 'PAC Server*...' name
-  const std::string filterPACFilename(const std::string PACName) const;
+  const std::string filterPACFilename(const std::string &PACName) const;
 
   /// extremely simple parser for error messages from LSF PAC
   std::string extractPACErrMsg(const std::string &response) const;

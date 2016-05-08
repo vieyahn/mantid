@@ -72,7 +72,8 @@ void ConvertDiffCal::init() {
  * @param index
  * @return The proper detector id.
  */
-detid_t getDetID(OffsetsWorkspace_const_sptr offsetsWS, const size_t index) {
+detid_t getDetID(const OffsetsWorkspace_const_sptr &offsetsWS,
+                 const size_t index) {
   auto detIDs = offsetsWS->getSpectrum(index)->getDetectorIDs();
   if (detIDs.size() != 1) {
     std::stringstream msg;
@@ -89,7 +90,8 @@ detid_t getDetID(OffsetsWorkspace_const_sptr offsetsWS, const size_t index) {
  * @param detid
  * @return The offset value or zero if not specified.
  */
-double getOffset(OffsetsWorkspace_const_sptr offsetsWS, const detid_t detid) {
+double getOffset(const OffsetsWorkspace_const_sptr &offsetsWS,
+                 const detid_t detid) {
   const double offset = offsetsWS->getValue(detid, 0.0);
   if (offset <= -1.) { // non-physical
     std::stringstream msg;
@@ -106,7 +108,7 @@ double getOffset(OffsetsWorkspace_const_sptr offsetsWS, const detid_t detid) {
  * @param index
  * @return The offset adjusted value of DIFC
  */
-double calculateDIFC(OffsetsWorkspace_const_sptr offsetsWS,
+double calculateDIFC(const OffsetsWorkspace_const_sptr &offsetsWS,
                      const size_t index) {
   Instrument_const_sptr instrument = offsetsWS->getInstrument();
 

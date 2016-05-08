@@ -48,7 +48,7 @@ void setProperty(IPropertyManager &self, const std::string &name,
  * @param value :: The value of the property as a bpl object
  */
 void declareProperty(IPropertyManager &self, const std::string &name,
-                     boost::python::object value) {
+                     const boost::python::object &value) {
   auto p = std::unique_ptr<Mantid::Kernel::Property>(
       Registry::PropertyWithValueFactory::create(name, value, 0));
   self.declareProperty(std::move(p));
@@ -63,7 +63,7 @@ void declareProperty(IPropertyManager &self, const std::string &name,
  * @param value :: The value of the property as a bpl object
  */
 void declareOrSetProperty(IPropertyManager &self, const std::string &name,
-                          boost::python::object value) {
+                          const boost::python::object &value) {
   bool propExists = self.existsProperty(name);
   if (propExists) {
     setProperty(self, name, value);
