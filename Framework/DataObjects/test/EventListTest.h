@@ -69,7 +69,7 @@ public:
     el.setSpectrumNo(42);
     MantidVec x{0.1, 0.2, 0.3};
     el.histogram() = Histogram(BinEdges(x));
-    el.histogram().mutableDx() = x;
+    el.histogram().setSharedDx(Kernel::make_cow<HistogramData::HistogramDx>(x));
 
     EventList other;
     other = el;
