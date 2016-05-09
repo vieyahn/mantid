@@ -69,7 +69,7 @@ public:
     el.setSpectrumNo(42);
     MantidVec x{0.1, 0.2, 0.3};
     el.histogram() = Histogram(BinEdges(x));
-    el.setDx(x);
+    el.histogram().mutableDx() = x;
 
     EventList other;
     other = el;
