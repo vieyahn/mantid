@@ -173,9 +173,8 @@ void ExtractSpectra::execHistogram() {
       // Safe to just copy whole vector 'cos can't be cropping in X if not
       // common
       outputWorkspace->setX(j, m_inputWorkspace->refX(i));
-      if (hasDx) {
-        outputWorkspace->setDx(j, m_inputWorkspace->refDx(i));
-      }
+      outputWorkspace->histogram(j)
+          .setSharedDx(m_inputWorkspace->histogram(i).sharedDx());
     }
 
     const MantidVec &oldY = m_inputWorkspace->readY(i);
@@ -348,9 +347,7 @@ void ExtractSpectra::execEvent() {
       // If the X axis is NOT common, then keep the initial X axis, just clear
       // the events
       outEL.setX(el.ptrX());
-      if (hasDx) {
-        outEL.setDx(el.ptrDx());
-      }
+      outEL.histogram().setSharedDx(el.histogram().sharedDx());
     } else {
       // Common bin boundaries get all set to the same value
       outEL.setX(XValues_new.cowData());
