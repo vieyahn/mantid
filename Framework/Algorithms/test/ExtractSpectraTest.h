@@ -472,7 +472,7 @@ private:
       dX[k] = sqrt(double(k)) + 1;
     }
     for (size_t j = 0; j < nSpec; ++j) {
-      ws->setDx(j, dXvals);
+      ws->histogram(j).setSharedDx(dXvals);
     }
     return ws;
   }

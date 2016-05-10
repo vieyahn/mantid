@@ -158,7 +158,7 @@ bool ISpectrum::hasDx() const { return bool(histogram().sharedDx()); }
 /**
  * Resets the hasDx flag
  */
-void ISpectrum::resetHasDx() { setDx(nullptr); }
+void ISpectrum::resetHasDx() { histogram().setSharedDx(nullptr); }
 
 } // namespace Mantid
 } // namespace API
