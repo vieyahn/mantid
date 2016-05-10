@@ -35,7 +35,6 @@ using namespace Mantid::Kernel;
 using namespace Mantid::DataObjects;
 using namespace Mantid::API;
 using Mantid::detid_t;
-using Mantid::HistogramData::HistogramDx;
 
 // Note that this suite tests an old version of Nexus processed files that we
 // continue to support.
@@ -1216,8 +1215,8 @@ private:
     inputWs->dataY(0) = y1;
     inputWs->dataY(1) = y2;
     if (useXErrors) {
-      inputWs->histogram(0).setSharedDx(make_cow<HistogramDx>(dx1));
-      inputWs->histogram(1).setSharedDx(make_cow<HistogramDx>(dx2));
+      inputWs->histogram(0).setBinEdgeStandardDeviations(dx1);
+      inputWs->histogram(1).setBinEdgeStandardDeviations(dx2);
     }
     if (numericAxis) {
       auto numericAxis = new NumericAxis(2);
@@ -1300,8 +1299,8 @@ private:
     inputWs->dataY(0) = y1;
     inputWs->dataY(1) = y2;
     if (useXErrors) {
-      inputWs->histogram(0).setSharedDx(make_cow<HistogramDx>(dx1));
-      inputWs->histogram(1).setSharedDx(make_cow<HistogramDx>(dx2));
+      inputWs->histogram(0).setPointStandardDeviations(dx1);
+      inputWs->histogram(1).setPointStandardDeviations(dx2);
     }
 
     // Save workspace

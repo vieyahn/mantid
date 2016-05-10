@@ -207,11 +207,9 @@ void LoadAscii2::writeToWorkspace(API::MatrixWorkspace_sptr &localWorkspace,
       // E in file
       localWorkspace->dataE(i) = m_spectra[i].readE();
     }
-    if (m_baseCols == 4) {
-      // DX in file
-      localWorkspace->histogram(i)
-          .setSharedDx(m_spectra[i].histogram().sharedDx());
-    }
+    // DX could be NULL
+    localWorkspace->histogram(i)
+        .setSharedDx(m_spectra[i].histogram().sharedDx());
     if (m_spectrumIDcount != 0) {
       localWorkspace->getSpectrum(i)
           ->setSpectrumNo(m_spectra[i].getSpectrumNo());
@@ -504,8 +502,8 @@ void LoadAscii2::newSpectra() {
       size_t specSize = m_curSpectra->size();
       if (specSize > 0 && specSize == m_lastBins) {
         if(m_curSpectra->readX().size() == m_curDx.size())
-          m_curSpectra->histogram().setSharedDx(
-              Kernel::make_cow<HistogramData::HistogramDx>(std::move(m_curDx)));
+          m_curSpectra->histogram().setPointStandardDeviations(
+              std::move(m_curDx));
         m_spectra.push_back(*m_curSpectra);
       }
       delete m_curSpectra;
