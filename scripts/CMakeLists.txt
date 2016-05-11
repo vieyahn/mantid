@@ -45,7 +45,7 @@ set ( TEST_PY_FILES
       test/SANSCentreFinderTest.py
       test/SANSCommandInterfaceTest.py
       test/SANSDarkRunCorrectionTest.py
-      test/SANSUserFileParserTest.py
+      test/UserFileParserTest.py
       test/SANSUtilityTest.py
       test/SANSIsisInstrumentTest.py
       test/SANSReductionStepsUserFileTest.py
