@@ -182,7 +182,6 @@ public:
 
   /// Return reference to Histogram at the given workspace index.
   HistogramData::Histogram &histogram(const size_t index) {
-    invalidateCommonBinsFlag();
     return getSpectrum(index)->histogram();
   }
 
