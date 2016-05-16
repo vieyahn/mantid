@@ -17,11 +17,6 @@ Algorithms
 Data Analysis
 #############
 
-Elwin
-~~~~~
-
-- The interface now has the option to ungroup the files that were loaded as input after the algorithm is executed. By default, the workspace remain in a group
-
 
 Jump Fit
 ~~~~~~~~
