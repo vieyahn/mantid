@@ -202,12 +202,11 @@ void Elwin::run() {
   }
 
   connect(m_batchAlgoRunner, SIGNAL(batchComplete(bool)), this,
-	  SLOT(unGroupInput(bool)));
+          SLOT(unGroupInput(bool)));
   m_batchAlgoRunner->executeBatchAsync();
 
   // Set the result workspace for Python script export
   m_pythonExportWsName = qSquaredWorkspace.toStdString();
-
 }
 
 /**
@@ -219,11 +218,11 @@ void Elwin::unGroupInput(bool error) {
   if (error)
     return;
   if (!m_uiForm.ckGroupInput->isChecked()) {
-	  IAlgorithm_sptr ungroupAlg =
-		  AlgorithmManager::Instance().create("UnGroupWorkspace");
-	  ungroupAlg->initialize();
-	  ungroupAlg->setProperty("InputWorkspace", "IDA_Elwin_Input");
-	  ungroupAlg->execute();
+    IAlgorithm_sptr ungroupAlg =
+        AlgorithmManager::Instance().create("UnGroupWorkspace");
+    ungroupAlg->initialize();
+    ungroupAlg->setProperty("InputWorkspace", "IDA_Elwin_Input");
+    ungroupAlg->execute();
   }
 }
 
