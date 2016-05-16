@@ -34,10 +34,11 @@ namespace IDA
     void minChanged(double val);
     void maxChanged(double val);
     void updateRS(QtProperty* prop, double val);
+    void unGroupInput(bool error);
 
   private:
     void addSaveAlgorithm(QString workspaceName, QString filename="");
-	void addUnGroupInput();
+
 
     Ui::Elwin m_uiForm;
     QtTreePropertyBrowser* m_elwTree;
