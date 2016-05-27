@@ -41,24 +41,31 @@ class SavePlot1D(mantid.api.PythonAlgorithm):
             ok2run='Problem importing matplotlib'
         if ok2run!='':
             raise RuntimeError(ok2run)
+
+        #plotly import and version check
+        #import plotly.offline as pltly
+
         matplotlib=sys.modules['matplotlib']
         matplotlib.use("agg")
         import matplotlib.pyplot as plt
         self._wksp = self.getProperty("InputWorkspace").value
-        plt.figure()
         if type(self._wksp)==mantid.api.WorkspaceGroup:
+            num_subplots=self._wksp.getNumberOfEntries()
+            fig, axarr = plt.subplots(num_subplots)
             for i in range(self._wksp.getNumberOfEntries()):
-                plt.subplot(self._wksp.getNumberOfEntries(),1,i+1)
-                self.DoPlot(self._wksp.getItem(i))
+                self.DoPlot(axarr[i],self._wksp.getItem(i))
         else:
-            self.DoPlot(self._wksp)
-        plt.tight_layout(1.08)
-        plt.show()
-        filename = self.getProperty("OutputFilename").value
-        plt.savefig(filename,bbox_inches='tight')
+            fig, ax = plt.subplots()
+            self.DoPlot(ax,self._wksp)
 
-    def DoPlot(self,ws):
-        plt=sys.modules['matplotlib.pyplot']
+        #the following does not work with plotly
+        plt.tight_layout(1.08)
+        filename = self.getProperty("OutputFilename").value
+        #plotly or png
+        #pltly.plot_mpl(fig, filename=filename)
+        fig.savefig(filename,bbox_inches='tight')
+
+    def DoPlot(self,ax,ws):
         spectra=ws.getNumberHistograms()
         if spectra>10:
             mantid.kernel.logger.warning("more than 10 spectra to plot")
@@ -79,23 +86,27 @@ class SavePlot1D(mantid.api.PythonAlgorithm):
                 if LHS=="":
                     LHS=a.getUnit().caption()
                 plotlabel=LHS+" = "+str(float(a.label(j)))
-            plt.plot(x,y,label=plotlabel)
+            ax.plot(x,y,label=plotlabel)
             xlabel=self.getProperty("XLabel").value
             ylabel=self.getProperty("YLabel").value
             if xlabel=="":
                 xaxis=ws.getAxis(0)
                 unitLabel=xaxis.getUnit().symbol().latex()
-                xlabel=xaxis.getUnit().caption()+" ($"+unitLabel+"$)"
+                xlabel=xaxis.getUnit().caption()
+                if len(unitLabel)>0:
+                    xlabel+=" ($"+unitLabel+"$)"
             if ylabel=="":
                 ylabel=ws.YUnit()
                 if ylabel=='':
                     ylabel = ws.YUnitLabel()
 
-            plt.xlabel(xlabel)
-            plt.ylabel(ylabel)
+            # $...$ does not work with plotly
+            ax.set_xlabel(xlabel)
+            ax.set_ylabel(ylabel)
             prog_reporter.report("Processing")
+        #legend does not work with plotly
         if spectra>1 and spectra<=10:
-            plt.legend()
+            ax.legend()
 
 
 
