@@ -25,6 +25,7 @@
 #include "MantidGeometry/Instrument/ParameterMap.h"
 #include "MantidGeometry/Instrument/ReferenceFrame.h"
 #include "MantidGeometry/Instrument/Component.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
 #include "MantidGeometry/Objects/ShapeFactory.h"
 #include "MantidGeometry/Crystal/OrientedLattice.h"
 #include "MantidKernel/MersenneTwister.h"

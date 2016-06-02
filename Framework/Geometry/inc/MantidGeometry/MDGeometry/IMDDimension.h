@@ -3,9 +3,7 @@
 
 #include "MantidGeometry/DllConfig.h"
 #include "MantidGeometry/MDGeometry/MDTypes.h"
-#include "MantidGeometry/MDGeometry/MDFrame.h"
-#include "MantidKernel/MDUnit.h"
-#include "MantidKernel/V3D.h"
+
 #ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>
 #endif
@@ -17,10 +15,13 @@ namespace Kernel {
 //---------------------------------------------------------------------------
 // Forward declarations
 //---------------------------------------------------------------------------
+class MDUnit;
 class UnitLabel;
 }
 
 namespace Geometry {
+class MDFrame;
+
 /** The class describes one dimension of multidimensional dataset representing
 an orthogonal dimension and linear axis.
 *

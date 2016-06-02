@@ -3,10 +3,11 @@
 
 #include "MantidKernel/System.h"
 #include "MantidKernel/VMD.h"
-#include "MantidGeometry/MDGeometry/IMDDimension.h"
 #include "MantidAPI/AnalysisDataService.h"
-#include <Poco/NObserver.h>
+#include "MantidGeometry/MDGeometry/IMDDimension.h"
+
 #include <boost/shared_ptr.hpp>
+#include <Poco/NObserver.h>
 
 namespace Mantid {
 namespace API {

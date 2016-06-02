@@ -7,6 +7,7 @@
 #include "MantidAPI/FrameworkManager.h"
 #include "MantidKernel/SpecialCoordinateSystem.h"
 #include "MantidGeometry/Crystal/PeakTransformFactory.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
 #include "MantidDataObjects/Peak.h"
 #include "MantidDataObjects/PeakShapeSpherical.h"
 #include "MantidQtSliceViewer/ConcretePeaksPresenter.h"

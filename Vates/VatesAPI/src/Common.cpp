@@ -1,5 +1,6 @@
 #include "MantidVatesAPI/Common.h"
 #include "MantidGeometry/MDGeometry/IMDDimension.h"
+#include "MantidKernel/MDUnit.h"
 #include "MantidKernel/UnitLabel.h"
 
 #include <vtkNew.h>

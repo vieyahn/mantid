@@ -6,6 +6,8 @@
 #include "MantidQtSliceViewer/CompositePeaksPresenter.h"
 #include "MantidQtSliceViewer/NullPeaksPresenter.h"
 #include "MantidDataObjects/PeaksWorkspace.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
+#include "MantidKernel/MDUnit.h"
 #include "MockObjects.h"
 
 using namespace MantidQt::SliceViewer;

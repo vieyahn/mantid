@@ -5,6 +5,8 @@
 #include "MockObjects.h"
 #include <gmock/gmock.h>
 #include "MantidQtSliceViewer/NullPeaksPresenter.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
+#include "MantidKernel/MDUnit.h"
 
 using namespace MantidQt::SliceViewer;
 

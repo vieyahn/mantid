@@ -3,16 +3,18 @@
 
 #include "MantidAPI/IMDWorkspace.h"
 #include "MantidAPI/IPeaksWorkspace.h"
+#include "MantidGeometry/Crystal/IPeak.h"
 #include "MantidGeometry/Crystal/PeakTransform.h"
 #include "MantidGeometry/Crystal/PeakTransformFactory.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
+#include "MantidKernel/UnitLabel.h"
 #include "MantidQtSliceViewer/PeaksPresenter.h"
 #include "MantidQtSliceViewer/PeakOverlayView.h"
 #include "MantidQtSliceViewer/PeakOverlayViewFactory.h"
 #include "MantidQtSliceViewer/PeakViewColor.h"
 #include "MantidQtSliceViewer/ZoomablePeaksView.h"
 #include "MantidQtSliceViewer/UpdateableOnDemand.h"
-#include "MantidGeometry/Crystal/IPeak.h"
-#include "MantidKernel/UnitLabel.h"
+
 #include <boost/regex.hpp>
 #include <gmock/gmock.h>
 #include <QColor>

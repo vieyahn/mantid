@@ -8,6 +8,8 @@
 
 #include "MantidGeometry/MDGeometry/MDGeometryXMLBuilder.h"
 #include "MantidGeometry/MDGeometry/IMDDimension.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
+#include "MantidKernel/MDUnit.h"
 
 #include "MantidKernel/UnitLabel.h"
 

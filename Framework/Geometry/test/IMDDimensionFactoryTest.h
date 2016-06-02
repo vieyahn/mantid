@@ -4,6 +4,7 @@
 #include <cxxtest/TestSuite.h>
 
 #include "MantidGeometry/MDGeometry/IMDDimensionFactory.h"
+#include "MantidGeometry/MDGeometry/MDFrame.h"
 #include "MantidKernel/UnitLabel.h"
 
 #include <Poco/AutoPtr.h>

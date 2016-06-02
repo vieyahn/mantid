@@ -5,15 +5,15 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidKernel/DllConfig.h"
-#include "MantidKernel/SingletonHolder.h"
 #include "MantidKernel/ProxyInfo.h"
-#include <vector>
-#include <map>
-#include <set>
+#include "MantidKernel/SingletonHolder.h"
 
 #include <Poco/Notification.h>
 #include <Poco/NotificationCenter.h>
-#include <Poco/AutoPtr.h>
+
+#include <map>
+#include <set>
+#include <vector>
 
 //----------------------------------------------------------------------
 // Forward declarations
