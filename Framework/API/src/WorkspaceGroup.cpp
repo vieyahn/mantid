@@ -2,10 +2,10 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/WorkspaceGroup.h"
-#include "MantidAPI/MatrixWorkspace.h"
 #include "MantidAPI/AnalysisDataService.h"
-#include "MantidKernel/Logger.h"
+#include "MantidAPI/MatrixWorkspace.h"
 #include "MantidKernel/IPropertyManager.h"
+#include "MantidKernel/Logger.h"
 
 namespace Mantid {
 namespace API {

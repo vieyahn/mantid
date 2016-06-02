@@ -11,6 +11,7 @@
 #include "MantidGeometry/MDGeometry/IMDDimension.h"
 #include "MantidGeometry/MDGeometry/MDImplicitFunction.h"
 #include "MantidKernel/SpecialCoordinateSystem.h"
+
 #include <cstdarg>
 #include <cstdint>
 #include <vector>

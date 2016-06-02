@@ -1,16 +1,17 @@
 #include "MantidAPI/DataProcessorAlgorithm.h"
+#include "MantidAPI/AlgorithmManager.h"
 #include "MantidAPI/AlgorithmProperty.h"
 #include "MantidAPI/AnalysisDataService.h"
+#include "MantidAPI/FileFinder.h"
 #include "MantidAPI/IEventWorkspace.h"
 #include "MantidAPI/ITableWorkspace.h"
-#include "MantidKernel/Exception.h"
-#include "MantidKernel/System.h"
-#include "MantidAPI/FileFinder.h"
-#include "MantidAPI/AlgorithmManager.h"
-#include "MantidKernel/PropertyManagerDataService.h"
 #include "MantidAPI/WorkspaceFactory.h"
+#include "MantidKernel/Exception.h"
 #include "MantidKernel/FacilityInfo.h"
 #include "MantidKernel/PropertyManager.h"
+#include "MantidKernel/PropertyManagerDataService.h"
+#include "MantidKernel/System.h"
+
 #include <stdexcept>
 #include "Poco/Path.h"
 #ifdef MPI_BUILD

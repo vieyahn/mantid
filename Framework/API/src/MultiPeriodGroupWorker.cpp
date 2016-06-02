@@ -1,9 +1,9 @@
 #include "MantidAPI/MultiPeriodGroupWorker.h"
+#include "MantidAPI/AlgorithmManager.h"
+#include "MantidAPI/IAlgorithm.h"
+#include "MantidAPI/MatrixWorkspace.h"
 #include "MantidKernel/ArrayProperty.h"
 #include "MantidKernel/Property.h"
-#include "MantidAPI/MatrixWorkspace.h"
-#include "MantidAPI/IAlgorithm.h"
-#include "MantidAPI/AlgorithmManager.h"
 
 using namespace Mantid::Kernel;
 

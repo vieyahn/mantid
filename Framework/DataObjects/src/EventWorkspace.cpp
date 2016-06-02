@@ -1,21 +1,21 @@
+#include "MantidAPI/ISpectrum.h"
+#include "MantidAPI/Progress.h"
 #include "MantidAPI/RefAxis.h"
 #include "MantidAPI/SpectraAxis.h"
-#include "MantidAPI/Progress.h"
-#include "MantidAPI/WorkspaceProperty.h"
 #include "MantidAPI/WorkspaceFactory.h"
+#include "MantidAPI/WorkspaceProperty.h"
 #include "MantidDataObjects/EventWorkspace.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/IDetector.h"
-#include "MantidKernel/Exception.h"
-#include "MantidKernel/TimeSeriesProperty.h"
-#include "MantidKernel/MultiThreaded.h"
-#include "MantidKernel/FunctionTask.h"
-#include "MantidKernel/ThreadPool.h"
-#include "MantidKernel/DateAndTime.h"
-#include <limits>
-#include <numeric>
-#include "MantidAPI/ISpectrum.h"
 #include "MantidKernel/CPUTimer.h"
+#include "MantidKernel/DateAndTime.h"
+#include "MantidKernel/Exception.h"
+#include "MantidKernel/FunctionTask.h"
+#include "MantidKernel/MultiThreaded.h"
+#include "MantidKernel/ThreadPool.h"
+#include "MantidKernel/TimeSeriesProperty.h"
+
+#include <limits>
 
 using namespace boost::posix_time;
 using Mantid::API::ISpectrum;

@@ -1,15 +1,15 @@
 #include "MantidMDAlgorithms/ConvertCWSDExpToMomentum.h"
+#include "MantidAPI/ExperimentInfo.h"
+#include "MantidAPI/FileProperty.h"
 #include "MantidAPI/WorkspaceProperty.h"
-#include "MantidKernel/ArrayProperty.h"
+#include "MantidDataObjects/MDBoxBase.h"
+#include "MantidDataObjects/MDEventFactory.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/MDGeometry/QSample.h"
-#include "MantidDataObjects/MDEventFactory.h"
-#include "MantidAPI/ExperimentInfo.h"
+#include "MantidKernel/ArrayProperty.h"
 #include "MantidGeometry/Instrument/ComponentHelper.h"
 #include "MantidMDAlgorithms/MDWSDescription.h"
 #include "MantidMDAlgorithms/MDWSTransform.h"
-#include "MantidAPI/FileProperty.h"
-#include "MantidDataObjects/MDBoxBase.h"
 
 using namespace Mantid::API;
 using namespace Mantid::Kernel;

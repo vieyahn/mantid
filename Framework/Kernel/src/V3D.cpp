@@ -1,7 +1,3 @@
-#include <cfloat>
-#include <cmath>
-#include <vector>
-
 #include "MantidKernel/V3D.h"
 #include "MantidKernel/Tolerance.h"
 #include "MantidKernel/Exception.h"

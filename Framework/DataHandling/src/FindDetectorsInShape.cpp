@@ -2,11 +2,12 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidDataHandling/FindDetectorsInShape.h"
-#include "MantidGeometry/Objects/ShapeFactory.h"
-#include "MantidKernel/ArrayProperty.h"
 #include "MantidAPI/MatrixWorkspace.h"
+#include "MantidGeometry/Objects/ShapeFactory.h"
 #include "MantidGeometry/Instrument.h"
+#include "MantidKernel/ArrayProperty.h"
 #include "MantidKernel/MandatoryValidator.h"
+
 #include <Poco/DOM/DOMParser.h>
 #include <Poco/DOM/Document.h>
 #include <Poco/DOM/Element.h>

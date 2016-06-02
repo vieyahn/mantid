@@ -1,6 +1,5 @@
 #include "MantidKernel/ProgressText.h"
 #include <iostream>
-#include <fstream>
 #include <iomanip>
 
 namespace Mantid {

@@ -1,8 +1,8 @@
-#include <algorithm>
-#include <sstream>
-#include <stdexcept>
 #include "MantidKernel/Atom.h"
 #include "MantidKernel/PhysicalConstants.h"
+
+#include <sstream>
+
 #include <boost/math/special_functions/fpclassify.hpp>
 
 namespace Mantid {
