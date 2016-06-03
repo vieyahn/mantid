@@ -5,6 +5,7 @@
 #include "MantidAPI/Axis.h"
 #include "MantidAPI/InstrumentValidator.h"
 #include "MantidAPI/WorkspaceFactory.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/BoundedValidator.h"
 #include "MantidKernel/UnitFactory.h"

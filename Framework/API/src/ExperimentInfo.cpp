@@ -4,8 +4,9 @@
 #include "MantidAPI/InstrumentDataService.h"
 #include "MantidAPI/ModeratorModel.h"
 
-#include "MantidGeometry/Instrument/InstrumentDefinitionParser.h"
 #include "MantidGeometry/Crystal/OrientedLattice.h"
+#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument/InstrumentDefinitionParser.h"
 #include "MantidGeometry/Instrument/ParameterMap.h"
 #include "MantidGeometry/Instrument/ParComponentFactory.h"
 #include "MantidGeometry/Instrument/XMLInstrumentParameter.h"

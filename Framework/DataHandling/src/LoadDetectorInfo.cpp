@@ -2,6 +2,7 @@
 #include "MantidAPI/FileProperty.h"
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidKernel/Exception.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ComponentHelper.h"
 #include "LoadRaw/isisraw2.h"
 

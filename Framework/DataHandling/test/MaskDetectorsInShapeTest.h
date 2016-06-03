@@ -4,10 +4,11 @@
 #include <cxxtest/TestSuite.h>
 
 #include "MantidDataHandling/MaskDetectorsInShape.h"
+#include "MantidAPI/FrameworkManager.h"
 #include "MantidDataHandling/LoadEmptyInstrument.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/ArrayProperty.h"
-#include "MantidAPI/FrameworkManager.h"
 
 using namespace Mantid::API;
 

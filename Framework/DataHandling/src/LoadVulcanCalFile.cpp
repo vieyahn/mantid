@@ -6,6 +6,7 @@
 #include "MantidDataObjects/MaskWorkspace.h"
 #include "MantidDataObjects/OffsetsWorkspace.h"
 #include "MantidDataObjects/Workspace2D.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/System.h"
 #include "MantidKernel/ListValidator.h"
 #include "MantidKernel/ArrayProperty.h"

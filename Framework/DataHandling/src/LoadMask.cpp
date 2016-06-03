@@ -7,9 +7,10 @@
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidDataObjects/MaskWorkspace.h"
 #include "MantidKernel/Strings.h"
-#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/ICompAssembly.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/IDTypes.h"
+#include "MantidGeometry/Instrument.h"
 
 #include <fstream>
 #include <sstream>

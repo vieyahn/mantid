@@ -6,9 +6,10 @@
 #include "MantidKernel/BoundedValidator.h"
 #include "MantidKernel/Strings.h"
 #include "MantidKernel/ListValidator.h"
+#include "MantidGeometry/Crystal/OrientedLattice.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/MDGeometry/MDHistoDimension.h"
-#include "MantidGeometry/Crystal/OrientedLattice.h"
 #include "MantidKernel/VectorHelper.h"
 
 namespace Mantid {

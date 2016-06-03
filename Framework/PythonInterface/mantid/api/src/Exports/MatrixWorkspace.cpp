@@ -1,6 +1,7 @@
 #include "MantidAPI/Axis.h"
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidAPI/WorkspaceOpOverloads.h"
+#include "MantidGeometry/IDetector.h"
 
 #include "MantidPythonInterface/api/CloneMatrixWorkspace.h"
 #include "MantidPythonInterface/kernel/Converters/WrapWithNumpy.h"

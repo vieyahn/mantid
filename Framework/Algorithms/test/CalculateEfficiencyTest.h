@@ -6,6 +6,7 @@
 #include "MantidAPI/Axis.h"
 #include "MantidDataHandling/LoadSpice2D.h"
 #include "MantidDataHandling/MoveInstrumentComponent.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidTestHelpers/SANSInstrumentCreationHelper.h"
 
 using namespace Mantid::API;

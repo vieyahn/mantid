@@ -6,7 +6,7 @@
 //----------------------------------------------------------------------
 #include "MantidGeometry/DllConfig.h"
 #include "MantidGeometry/Instrument_fwd.h"
-#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/IDetector_fwd.h"
 #include "MantidGeometry/Instrument/CompAssembly.h"
 #include "MantidGeometry/Instrument/ObjComponent.h"
 

@@ -14,6 +14,7 @@
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidAPI/RegisterFileLoader.h"
 #include "MantidAPI/WorkspaceFactory.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ComponentHelper.h"
 #include "MantidGeometry/MDGeometry/MDHistoDimension.h"
 #include "MantidKernel/DateAndTime.h"

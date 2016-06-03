@@ -6,6 +6,7 @@
 #include "MantidKernel/ListValidator.h"
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidKernel/Strings.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/ICompAssembly.h"
 #include "MantidGeometry/IDTypes.h"

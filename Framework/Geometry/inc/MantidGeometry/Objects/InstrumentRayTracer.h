@@ -4,10 +4,8 @@
 //-------------------------------------------------------------
 // Includes
 //-------------------------------------------------------------
-#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/IDetector_fwd.h"
 #include "MantidGeometry/Instrument.h"
-#include <deque>
-#include <list>
 
 namespace Mantid {
 namespace Kernel {

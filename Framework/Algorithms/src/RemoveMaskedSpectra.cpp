@@ -4,6 +4,7 @@
 #include "MantidAPI/TextAxis.h"
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataObjects/MaskWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 
 namespace Mantid {
 namespace Algorithms {

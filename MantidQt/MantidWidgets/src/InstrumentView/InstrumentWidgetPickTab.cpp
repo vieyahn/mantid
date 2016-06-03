@@ -10,7 +10,6 @@
 
 #include "MantidKernel/ConfigService.h"
 #include "MantidKernel/DynamicFactory.h"
-#include "MantidGeometry/Instrument/ParameterMap.h"
 #include "MantidAPI/AnalysisDataService.h"
 #include "MantidAPI/Axis.h"
 #include "MantidAPI/ITableWorkspace.h"
@@ -20,6 +19,8 @@
 #include "MantidAPI/TableRow.h"
 #include "MantidAPI/FrameworkManager.h"
 #include "MantidGeometry/Crystal/OrientedLattice.h"
+#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument/ParameterMap.h"
 
 #include "qwt_scale_widget.h"
 #include "qwt_scale_div.h"

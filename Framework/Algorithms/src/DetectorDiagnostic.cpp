@@ -5,6 +5,7 @@
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataObjects/EventWorkspaceHelpers.h"
 #include "MantidDataObjects/MaskWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/BoundedValidator.h"
 #include "MantidKernel/EnabledWhenProperty.h"
 #include "MantidKernel/Exception.h"

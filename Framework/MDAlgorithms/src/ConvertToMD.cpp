@@ -20,6 +20,7 @@
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidDataObjects/BoxControllerNeXusIO.h"
 
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/MDGeometry/MDHistoDimensionBuilder.h"
 
 #include "MantidMDAlgorithms/ConvToMDSelector.h"

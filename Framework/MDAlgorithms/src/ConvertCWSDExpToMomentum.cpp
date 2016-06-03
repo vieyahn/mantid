@@ -7,6 +7,7 @@
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/MDGeometry/QSample.h"
 #include "MantidKernel/ArrayProperty.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ComponentHelper.h"
 #include "MantidMDAlgorithms/MDWSDescription.h"
 #include "MantidMDAlgorithms/MDWSTransform.h"

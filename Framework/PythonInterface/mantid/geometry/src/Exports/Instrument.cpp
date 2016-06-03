@@ -1,4 +1,5 @@
 #include "MantidGeometry/Instrument.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ReferenceFrame.h"
 #include "MantidPythonInterface/kernel/Policies/RemoveConst.h"
 

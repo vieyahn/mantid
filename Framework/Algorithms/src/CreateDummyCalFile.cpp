@@ -6,6 +6,7 @@
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidKernel/ConfigService.h"
 #include "MantidAPI/InstrumentDataService.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/IDFObject.h"
 
 #include <queue>

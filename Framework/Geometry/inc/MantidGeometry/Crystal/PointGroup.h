@@ -2,17 +2,19 @@
 #define MANTID_GEOMETRY_POINTGROUP_H_
 
 #include "MantidGeometry/DllConfig.h"
+#include "MantidGeometry/Crystal/Group.h"
+#include "MantidGeometry/Crystal/SymmetryOperation.h"
 #include "MantidKernel/V3D.h"
 #include "MantidKernel/Matrix.h"
 #ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>
 #endif
-#include <vector>
-#include <string>
-#include <set>
 
-#include "MantidGeometry/Crystal/SymmetryOperation.h"
-#include "MantidGeometry/Crystal/Group.h"
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
+
 
 namespace Mantid {
 namespace Geometry {

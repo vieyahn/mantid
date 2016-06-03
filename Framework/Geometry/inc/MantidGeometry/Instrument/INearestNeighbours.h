@@ -2,7 +2,7 @@
 #define MANTID_GEOMETRY_INSTRUMENT_INEARESTNEIGHBOURS_H
 
 #include "MantidGeometry/DllConfig.h"
-#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/IDetector_fwd.h"
 #include "MantidGeometry/IDTypes.h"
 #include "MantidKernel/V3D.h"
 // Boost graphing

@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------
 #include "MantidAlgorithms/CopyInstrumentParameters.h"
 #include "MantidAPI/MatrixWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ParameterMap.h"
 
 #include <iostream>

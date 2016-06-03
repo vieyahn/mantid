@@ -2,12 +2,13 @@
 #include "MantidAPI/Axis.h"
 #include "MantidAPI/InstrumentValidator.h"
 #include "MantidAPI/WorkspaceFactory.h"
+#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/Objects/ShapeFactory.h"
 #include "MantidKernel/BoundedValidator.h"
 #include "MantidKernel/UnitFactory.h"
 #include "MantidKernel/Fast_Exponential.h"
 #include "MantidKernel/VectorHelper.h"
-#include "MantidGeometry/Instrument.h"
 
 /*  Following A.J.Schultz's anvred, the weight factors should be:
  *

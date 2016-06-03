@@ -22,10 +22,11 @@
 #ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>
 #endif
+#include <sstream>
+#include <stdexcept>
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include <stdexcept>
 
 namespace Mantid {
 

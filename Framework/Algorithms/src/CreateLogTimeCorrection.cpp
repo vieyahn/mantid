@@ -5,6 +5,7 @@
 #include "MantidAPI/Run.h"
 #include "MantidAPI/TableRow.h"
 #include "MantidAPI/WorkspaceProperty.h"
+#include "MantidGeometry/IDetector.h"
 
 #include <fstream>
 

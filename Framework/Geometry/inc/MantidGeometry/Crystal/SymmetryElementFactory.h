@@ -2,13 +2,15 @@
 #define MANTID_GEOMETRY_SYMMETRYELEMENTFACTORY_H_
 
 #include "MantidGeometry/DllConfig.h"
-#include "MantidKernel/SingletonHolder.h"
 #include "MantidGeometry/Crystal/SymmetryElement.h"
 #include "MantidGeometry/Crystal/SymmetryOperation.h"
 #include "MantidKernel/RegistrationHelper.h"
+#include "MantidKernel/SingletonHolder.h"
+
+#include <map>
+#include <unordered_set>
 
 #include <boost/make_shared.hpp>
-#include <unordered_set>
 
 namespace Mantid {
 namespace Geometry {

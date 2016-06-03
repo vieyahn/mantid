@@ -11,6 +11,7 @@
 #include "MantidAPI/FileProperty.h"
 #include "MantidKernel/PropertyManagerDataService.h"
 #include "MantidAPI/WorkspaceUnitValidator.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/PropertyManager.h"
 #include "MantidKernel/TimeSeriesProperty.h"

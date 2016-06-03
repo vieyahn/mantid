@@ -1,5 +1,6 @@
 #include "MantidAlgorithms/IntegrateByComponent.h"
 #include "MantidAPI/HistogramValidator.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/BoundedValidator.h"
 

@@ -1,12 +1,13 @@
 #ifndef MANTID_DATAHANDLING_LOADCALFILETEST_H_
 #define MANTID_DATAHANDLING_LOADCALFILETEST_H_
 
-#include <cxxtest/TestSuite.h>
+#include "MantidDataHandling/LoadCalFile.h"
+#include "MantidDataObjects/GroupingWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/Timer.h"
 #include "MantidKernel/System.h"
 
-#include "MantidDataHandling/LoadCalFile.h"
-#include "MantidDataObjects/GroupingWorkspace.h"
+#include <cxxtest/TestSuite.h>
 
 using namespace Mantid::DataHandling;
 using namespace Mantid::DataObjects;

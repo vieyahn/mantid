@@ -2,8 +2,8 @@
 #define MANTID_DATAHANDLING_LOCALVULCANCALFILETEST_H_
 
 #include <cxxtest/TestSuite.h>
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/Timer.h"
-#include "MantidKernel/System.h"
 
 #include "MantidDataHandling/LoadVulcanCalFile.h"
 #include "MantidDataObjects/GroupingWorkspace.h"

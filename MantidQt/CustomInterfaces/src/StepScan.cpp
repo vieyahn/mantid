@@ -8,6 +8,8 @@
 #include "MantidAPI/LiveListenerFactory.h"
 #include "MantidKernel/InstrumentInfo.h"
 #include "MantidKernel/TimeSeriesProperty.h"
+#include "MantidGeometry/IDetector.h"
+
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QUrl>

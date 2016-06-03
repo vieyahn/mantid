@@ -6,7 +6,10 @@
 #include "MantidGeometry/Crystal/V3R.h"
 
 #include "MantidKernel/Exception.h"
+
 #include <functional>
+#include <map>
+
 #include <boost/spirit/include/qi.hpp>
 
 namespace Mantid {

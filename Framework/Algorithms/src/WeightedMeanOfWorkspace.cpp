@@ -2,6 +2,7 @@
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataObjects/EventWorkspace.h"
 #include "MantidGeometry/Instrument.h"
+#include "MantidGeometry/IDetector.h"
 
 #include <boost/math/special_functions/fpclassify.hpp>
 

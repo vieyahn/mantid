@@ -4,14 +4,12 @@
 #include "MantidAPI/Run.h"
 #include "MantidKernel/DateAndTime.h"
 #include "MantidKernel/TimeSeriesProperty.h"
+#include "MantidKernel/TimeSplitter.h"
 #include "MantidKernel/VectorHelper.h"
 
 #include <nexus/NeXusFile.hpp>
 
 #include <boost/lexical_cast.hpp>
-
-#include <algorithm>
-#include <numeric>
 
 namespace Mantid {
 namespace API {

@@ -2,6 +2,7 @@
 #include "MantidAPI/WorkspaceProperty.h"
 #include "MantidAPI/TableRow.h"
 #include "MantidDataObjects/MaskWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/ArrayProperty.h"
 

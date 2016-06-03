@@ -1,12 +1,16 @@
 #include "MantidGeometry/Instrument/Goniometer.h"
+#include "MantidKernel/Quat.h"
+#include "MantidKernel/Strings.h"
+
+#include <cstdlib>
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include "MantidKernel/Quat.h"
 #include <vector>
+
 #include <boost/algorithm/string.hpp>
-#include <cstdlib>
-#include "MantidKernel/Strings.h"
+
+#include <nexus/NeXusFile.hpp>
 
 using namespace Mantid::Kernel;
 using Mantid::Kernel::Strings::toString;

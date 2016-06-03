@@ -3,6 +3,7 @@
 //----------------------------------------------------------------------
 #include "MantidCrystal/FindSXPeaks.h"
 #include "MantidAPI/HistogramValidator.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/VectorHelper.h"
 #include "MantidKernel/BoundedValidator.h"
 

@@ -2,6 +2,7 @@
 // Includes
 //-------------------------------------------------------------
 #include "MantidGeometry/Objects/InstrumentRayTracer.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Objects/BoundingBox.h"
 #include "MantidGeometry/Objects/Track.h"
 #include "MantidKernel/V3D.h"

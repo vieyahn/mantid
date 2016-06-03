@@ -3,7 +3,6 @@
 
 #include "MantidAPI/DllConfig.h"
 #include "MantidAPI/LogManager.h"
-#include "MantidKernel/TimeSplitter.h"
 #include "MantidGeometry/Instrument/Goniometer.h"
 
 #include <vector>
@@ -13,6 +12,10 @@ class File;
 }
 
 namespace Mantid {
+
+namespace Kernel {
+class TimeSplitter;
+}
 
 namespace API {
 

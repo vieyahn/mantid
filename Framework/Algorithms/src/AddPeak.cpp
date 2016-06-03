@@ -4,6 +4,7 @@
 #include "MantidAPI/IPeaksWorkspace.h"
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidGeometry/Crystal/IPeak.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/Unit.h"
 #include "MantidKernel/System.h"
 

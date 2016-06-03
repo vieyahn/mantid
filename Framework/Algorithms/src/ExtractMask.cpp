@@ -3,6 +3,7 @@
 //------------------------------------------------------------------------------
 #include "MantidAlgorithms/ExtractMask.h"
 #include "MantidDataObjects/MaskWorkspace.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidKernel/MultiThreaded.h"
 #include "MantidKernel/ArrayProperty.h"
 #include "MantidKernel/NullValidator.h"

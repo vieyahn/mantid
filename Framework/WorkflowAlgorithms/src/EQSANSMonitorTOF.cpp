@@ -5,6 +5,7 @@
 #include "MantidAPI/WorkspaceUnitValidator.h"
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidKernel/TimeSeriesProperty.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "Poco/NumberFormatter.h"
 

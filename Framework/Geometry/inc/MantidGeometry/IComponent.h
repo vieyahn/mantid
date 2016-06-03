@@ -7,9 +7,10 @@
 #include "MantidGeometry/DllConfig.h"
 #include "MantidKernel/V3D.h"
 
+#include <map>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
 
 #ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>

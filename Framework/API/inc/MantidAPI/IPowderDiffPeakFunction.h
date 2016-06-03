@@ -8,6 +8,8 @@
 #include "MantidAPI/IFunction1D.h"
 #include "MantidGeometry/Crystal/UnitCell.h"
 
+#include <complex>
+
 namespace Mantid {
 namespace API {
 /** An interface to a peak function, which extend the interface of

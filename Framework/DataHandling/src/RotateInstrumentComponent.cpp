@@ -4,6 +4,7 @@
 #include "MantidDataHandling/RotateInstrumentComponent.h"
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidKernel/Exception.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument/ComponentHelper.h"
 #include "MantidDataObjects/PeaksWorkspace.h"
 

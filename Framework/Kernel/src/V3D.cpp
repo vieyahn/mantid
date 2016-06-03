@@ -2,7 +2,12 @@
 #include "MantidKernel/Tolerance.h"
 #include "MantidKernel/Exception.h"
 #include "MantidKernel/Quat.h"
+
+#include <complex>
+
 #include <boost/math/common_factor.hpp>
+
+#include <nexus/NeXusFile.hpp>
 
 namespace Mantid {
 namespace Kernel {

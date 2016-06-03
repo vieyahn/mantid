@@ -4,6 +4,7 @@
 #include "MantidDataHandling/FindDetectorsInShape.h"
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidGeometry/Objects/ShapeFactory.h"
+#include "MantidGeometry/IDetector.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidKernel/ArrayProperty.h"
 #include "MantidKernel/MandatoryValidator.h"

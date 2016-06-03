@@ -3,7 +3,7 @@
 
 #include "MantidGeometry/DllConfig.h"
 #include "MantidGeometry/IComponent.h"
-#include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/IDetector_fwd.h"
 #include "MantidGeometry/IDTypes.h" //For specnum_t
 #include "MantidGeometry/Instrument/Parameter.h"
 #include "MantidGeometry/Instrument/ParameterFactory.h"
@@ -12,7 +12,6 @@
 
 #include <map>
 #include <vector>
-#include <typeinfo>
 
 namespace Mantid {
 namespace Geometry {
