@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "MantidAPI/DllConfig.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 namespace Mantid {
 namespace API {

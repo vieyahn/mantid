@@ -19,6 +19,7 @@
 //----------------------------------------------------------------------
 #include "MantidAPI/DllConfig.h"
 #include "MantidKernel/DynamicFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "MantidKernel/SingletonHolder.h"
 #include "MantidAPI/MatrixWorkspace_fwd.h"
 #include "MantidAPI/Workspace_fwd.h"

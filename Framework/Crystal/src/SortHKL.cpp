@@ -1,6 +1,7 @@
-#include "MantidAPI/FileProperty.h"
-
 #include "MantidCrystal/SortHKL.h"
+
+#include "MantidAPI/FileProperty.h"
+#include "MantidAPI/TableRow.h"
 
 #include "MantidDataObjects/Peak.h"
 #include "MantidDataObjects/PeaksWorkspace.h"
@@ -14,10 +15,6 @@
 #include "MantidKernel/ListValidator.h"
 #include "MantidKernel/Statistics.h"
 #include "MantidKernel/Utils.h"
-
-#include <cmath>
-#include <fstream>
-#include <numeric>
 
 using namespace Mantid::Geometry;
 using namespace Mantid::DataObjects;

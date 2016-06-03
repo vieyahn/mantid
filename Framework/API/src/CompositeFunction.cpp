@@ -7,6 +7,7 @@
 #include "MantidAPI/FunctionFactory.h"
 #include "MantidKernel/Exception.h"
 #include "MantidKernel/Logger.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/shared_array.hpp>

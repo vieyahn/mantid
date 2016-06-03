@@ -12,8 +12,8 @@
 #include "MantidAPI/Progress.h"
 #include "MantidAPI/WorkspaceProperty.h"
 #include "MantidAPI/WorkspaceOpOverloads.h"
-#include "MantidKernel/MultiThreaded.h"
 #include "MantidKernel/EmptyValues.h"
+#include "MantidKernel/MultiThreaded.h"
 
 //----------------------------------------------------------------------
 // Forward Declaration

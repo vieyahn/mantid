@@ -6,16 +6,14 @@
 //----------------------------------------------------------------------
 
 #include "MantidAPI/Column.h"
-#include "MantidKernel/Logger.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #include <vector>
-#include <typeinfo>
 #include <stdexcept>
 #include <boost/shared_ptr.hpp>
 #include <limits>
 #include <boost/lexical_cast.hpp>
 #include <boost/mpl/if.hpp>
-#include <boost/type_traits.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
 namespace Mantid {

@@ -6,6 +6,7 @@
 //------------------------
 #include "DllOption.h"
 #include "MantidKernel/DynamicFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "MantidKernel/SingletonHolder.h"
 #include <QHash>
 #include <QStringList>

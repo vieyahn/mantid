@@ -13,14 +13,18 @@
 #include "MantidKernel/DateAndTime.h"
 #include "MantidKernel/UnitFactory.h"
 
-#include <boost/lexical_cast.hpp>
-#include <Poco/File.h>
-#include <Poco/Path.h>
-
 #include <algorithm>
 #include <cmath>
 #include <map>
 #include <vector>
+
+#include <boost/lexical_cast.hpp>
+
+#include <nexus/NeXusFile.hpp>
+#include <nexus/NeXusException.hpp>
+
+#include <Poco/File.h>
+#include <Poco/Path.h>
 
 using Mantid::DataObjects::EventWorkspace;
 using Mantid::DataObjects::EventWorkspace_sptr;

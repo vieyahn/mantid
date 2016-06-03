@@ -5,7 +5,6 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/DllConfig.h"
-#include "MantidKernel/Unit.h"
 #include "MantidAPI/IFunction.h"
 #include "MantidAPI/IMDIterator.h"
 #include "MantidAPI/FunctionFactory.h"

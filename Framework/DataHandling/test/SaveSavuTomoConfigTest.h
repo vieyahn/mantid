@@ -10,6 +10,7 @@
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataHandling/SaveSavuTomoConfig.h"
 
+#include <nexus/NeXusFile.hpp>
 #include <Poco/File.h>
 
 using namespace Mantid::API;

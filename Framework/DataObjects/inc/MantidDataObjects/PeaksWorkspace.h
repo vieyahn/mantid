@@ -5,17 +5,12 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/Column.h"
-#include "MantidAPI/ExperimentInfo.h"
 #include "MantidAPI/IPeaksWorkspace.h"
-#include "MantidAPI/TableRow.h"
 #include "MantidDataObjects/Peak.h"
 #include "MantidDataObjects/PeakColumn.h"
 #include "MantidDataObjects/TableWorkspace.h"
-#include "MantidGeometry/Instrument.h"
-#include "MantidKernel/DateAndTime.h"
+#include "MantidGeometry/Instrument_fwd.h"
 #include "MantidKernel/Exception.h"
-#include "MantidKernel/Logger.h"
-#include "MantidKernel/Matrix.h"
 #include "MantidKernel/System.h"
 #include "MantidKernel/V3D.h"
 #include <string>
@@ -25,12 +20,6 @@
 
 // IsamplePosition should be IsampleOrientation
 namespace Mantid {
-//----------------------------------------------------------------------
-// Forward declarations
-//----------------------------------------------------------------------
-namespace Kernel {
-class Logger;
-}
 
 namespace DataObjects {
 //==========================================================================================
@@ -67,7 +56,7 @@ public:
 
   PeaksWorkspace();
   PeaksWorkspace &operator=(const PeaksWorkspace &other) = delete;
-  /** Get access to shared pointer containing workspace porperties. This
+  /** Get access to shared pointer containing workspace properties. This
    function is there to provide common interface of iTableWorkspace
     * Despite it is non-constant method, one should be very carefull using it to
    change the log values when cloning of a table workspace can occur
@@ -78,7 +67,7 @@ public:
     * Use mutableRun interface to change log values rather then this method.
    **/
   API::LogManager_sptr logs() override;
-  /**Get constant access to shared pointer containing workspace porperties;
+  /**Get constant access to shared pointer containing workspace properties;
      Copies logs into new LogManager variable
      Meaningfull only for some multithereaded methods when a thread wants to
      have its own copy of logs   */

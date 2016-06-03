@@ -5,8 +5,7 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/Algorithm.h"
-
-#include <climits>
+#include <nexus/NeXusFile.hpp>
 
 //----------------------------------------------------------------------
 // Forward declaration

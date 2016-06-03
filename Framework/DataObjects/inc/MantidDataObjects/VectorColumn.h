@@ -2,6 +2,7 @@
 #define MANTID_DATAOBJECTS_VECTORCOLUMN_H_
 
 #include "MantidAPI/Column.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/tokenizer.hpp>

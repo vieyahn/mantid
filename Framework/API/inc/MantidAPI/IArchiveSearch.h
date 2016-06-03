@@ -5,6 +5,7 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/DllConfig.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #ifndef Q_MOC_RUN
 #include <boost/shared_ptr.hpp>

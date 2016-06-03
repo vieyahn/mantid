@@ -3,7 +3,8 @@
 //----------------------------------------------------------------------
 #include "MantidAPI/AlgorithmHistory.h"
 #include "MantidAPI/Algorithm.h"
-#include <sstream>
+
+#include <nexus/NeXusFile.hpp>
 
 namespace Mantid {
 namespace API {

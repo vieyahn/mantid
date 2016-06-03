@@ -7,7 +7,6 @@
 #include "MantidKernel/DllConfig.h"
 #include "MantidKernel/Instantiator.h"
 #include "MantidKernel/Exception.h"
-#include "MantidKernel/RegistrationHelper.h"
 
 // Boost
 #ifndef Q_MOC_RUN
@@ -17,7 +16,6 @@
 // Poco
 #include <Poco/Notification.h>
 #include <Poco/NotificationCenter.h>
-#include <Poco/AutoPtr.h>
 
 // std
 #include <cstring>

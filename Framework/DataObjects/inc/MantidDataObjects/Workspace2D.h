@@ -5,7 +5,6 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/MatrixWorkspace.h"
-#include "MantidDataObjects/Histogram1D.h"
 #include "MantidAPI/ISpectrum.h"
 
 namespace Mantid {

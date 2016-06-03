@@ -24,6 +24,7 @@
 // inheriting classes if it is included here
 #include "MantidAPI/IAlgorithm.h"
 #include "MantidAPI/AlgorithmObserver.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #include <QDialog>
 #include <QString>

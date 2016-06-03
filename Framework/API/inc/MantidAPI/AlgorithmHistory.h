@@ -7,13 +7,12 @@
 #include "MantidAPI/DllConfig.h"
 #include "MantidKernel/PropertyHistory.h"
 #include "MantidKernel/DateAndTime.h"
-#include <nexus/NeXusFile.hpp>
 
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-#include <ctime>
-#include <vector>
 #include <set>
+
+namespace NeXus {
+class File;
+}
 
 namespace Mantid {
 namespace API {

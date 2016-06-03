@@ -12,7 +12,6 @@
 #include <cstring>
 #include <string>
 #include <limits>
-#include <typeinfo>
 #include <vector>
 
 namespace Mantid {

@@ -25,6 +25,7 @@
 #include "MantidAPI/ExperimentInfo.h"
 #include "MantidAPI/ParamFunction.h"
 #include "MantidMDAlgorithms/Quantification/ForegroundModelFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 // Includes that each model will most probably require
 // This lightens the load for the user model writer

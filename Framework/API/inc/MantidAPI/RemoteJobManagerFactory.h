@@ -4,6 +4,7 @@
 #include "MantidAPI/DllConfig.h"
 #include "MantidAPI/IRemoteJobManager.h"
 #include "MantidKernel/DynamicFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "MantidKernel/SingletonHolder.h"
 
 namespace Mantid {

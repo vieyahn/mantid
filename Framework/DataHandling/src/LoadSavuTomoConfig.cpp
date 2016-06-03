@@ -6,6 +6,7 @@
 #include "MantidDataHandling/LoadSavuTomoConfig.h"
 #include "MantidKernel/PropertyWithValue.h"
 
+#include <nexus/NeXusFile.hpp>
 #include <nexus/NeXusException.hpp>
 
 namespace Mantid {

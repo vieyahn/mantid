@@ -1,10 +1,10 @@
 #include "MantidDataObjects/Workspace2D.h"
-#include "MantidKernel/Exception.h"
 #include "MantidAPI/RefAxis.h"
 #include "MantidAPI/SpectraAxis.h"
-#include "MantidAPI/WorkspaceProperty.h"
 #include "MantidAPI/WorkspaceFactory.h"
-#include "MantidAPI/ISpectrum.h"
+#include "MantidAPI/WorkspaceProperty.h"
+#include "MantidDataObjects/Histogram1D.h"
+#include "MantidKernel/Exception.h"
 #include "MantidKernel/VectorHelper.h"
 
 using Mantid::API::ISpectrum;

@@ -5,7 +5,6 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/DllConfig.h"
-#include "MantidKernel/Unit.h"
 #include "MantidAPI/Axis.h"
 
 #ifndef Q_MOC_RUN

@@ -6,6 +6,7 @@
 #include "MantidAPI/RegisterFileLoader.h"
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataHandling/LoadAscii.h"
+#include "MantidDataObjects/Histogram1D.h"
 #include "MantidDataObjects/Workspace2D.h"
 #include "MantidKernel/UnitFactory.h"
 #include "MantidKernel/BoundedValidator.h"

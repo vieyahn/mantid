@@ -4,20 +4,22 @@
 #include <cxxtest/TestSuite.h>
 
 #include "MantidAlgorithms/CheckWorkspacesMatch.h"
+#include "MantidAlgorithms/CreatePeaksWorkspace.h"
 #include "MantidAPI/FrameworkManager.h"
+#include "MantidAPI/MatrixWorkspace.h"
 #include "MantidAPI/NumericAxis.h"
-#include "MantidKernel/UnitFactory.h"
+#include "MantidAPI/TableRow.h"
 #include "MantidDataObjects/EventWorkspace.h"
-#include "MantidDataObjects/PeaksWorkspace.h"
+#include "MantidDataObjects/MDBoxBase.h"
 #include "MantidDataObjects/MDHistoWorkspace.h"
+#include "MantidDataObjects/PeaksWorkspace.h"
+#include "MantidDataObjects/Workspace2D.h"
+#include "MantidGeometry/Instrument.h"
+#include "MantidKernel/UnitFactory.h"
+#include "MantidKernel/V3D.h"
+
 #include "MantidTestHelpers/WorkspaceCreationHelper.h"
 #include "MantidTestHelpers/MDEventsTestHelper.h"
-#include "MantidDataObjects/Workspace2D.h"
-#include "MantidAlgorithms/CreatePeaksWorkspace.h"
-#include "MantidAPI/MatrixWorkspace.h"
-#include "MantidGeometry/Instrument.h"
-#include "MantidDataObjects/MDBoxBase.h"
-#include "MantidKernel/V3D.h"
 
 using namespace Mantid::Algorithms;
 using namespace Mantid::API;

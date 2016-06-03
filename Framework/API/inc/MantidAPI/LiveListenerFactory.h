@@ -22,6 +22,7 @@
 //----------------------------------------------------------------------
 #include "MantidAPI/DllConfig.h"
 #include "MantidKernel/DynamicFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "MantidKernel/SingletonHolder.h"
 #include "MantidAPI/ILiveListener.h"
 

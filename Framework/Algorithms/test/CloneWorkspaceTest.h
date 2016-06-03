@@ -4,16 +4,18 @@
 #include <cxxtest/TestSuite.h>
 
 #include "MantidAlgorithms/CloneWorkspace.h"
+#include "MantidAlgorithms/CheckWorkspacesMatch.h"
+#include "MantidAPI/AnalysisDataService.h"
+#include "MantidAPI/TableRow.h"
 #include "MantidDataHandling/LoadRaw3.h"
 #include "MantidDataObjects/EventWorkspace.h"
-#include "MantidAlgorithms/CheckWorkspacesMatch.h"
-#include "MantidTestHelpers/WorkspaceCreationHelper.h"
-#include "MantidTestHelpers/ComponentCreationHelper.h"
-#include "MantidAPI/AnalysisDataService.h"
 #include "MantidDataObjects/MDEventFactory.h"
-#include "MantidTestHelpers/MDEventsTestHelper.h"
-#include "MantidGeometry/Instrument.h"
 #include "MantidDataObjects/PeaksWorkspace.h"
+#include "MantidGeometry/Instrument.h"
+
+#include "MantidTestHelpers/ComponentCreationHelper.h"
+#include "MantidTestHelpers/MDEventsTestHelper.h"
+#include "MantidTestHelpers/WorkspaceCreationHelper.h"
 
 using namespace Mantid;
 using namespace Mantid::Geometry;

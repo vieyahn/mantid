@@ -2,11 +2,12 @@
 #define MANTID_CRYSTAL_SORTPEAKSWORKSPACETEST_H_
 
 #include <cxxtest/TestSuite.h>
-#include <vector>
 #include <algorithm>
+#include <vector>
 #include "MantidCrystal/SortPeaksWorkspace.h"
-#include "MantidTestHelpers/WorkspaceCreationHelper.h"
+#include "MantidAPI/TableRow.h"
 #include "MantidDataObjects/PeaksWorkspace.h"
+#include "MantidTestHelpers/WorkspaceCreationHelper.h"
 
 using namespace Mantid::Crystal;
 using namespace Mantid::API;

@@ -27,6 +27,7 @@
 
 #include "MantidAPI/DllConfig.h"
 #include "MantidKernel/ArrayProperty.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "ImplicitFunctionParameter.h"
 
 namespace Poco {

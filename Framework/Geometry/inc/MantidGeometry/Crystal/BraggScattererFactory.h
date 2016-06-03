@@ -3,6 +3,7 @@
 
 #include "MantidGeometry/DllConfig.h"
 #include "MantidKernel/DynamicFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 #include "MantidKernel/SingletonHolder.h"
 
 #include "MantidGeometry/Crystal/BraggScatterer.h"

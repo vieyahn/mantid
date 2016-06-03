@@ -5,18 +5,21 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/IFileLoader.h"
-#include "MantidDataObjects/EventWorkspace.h"
-#include <nexus/NeXusFile.hpp>
-#include <nexus/NeXusException.hpp>
-#include "MantidDataObjects/Events.h"
 #include "MantidAPI/WorkspaceGroup.h"
+#include "MantidDataHandling/EventWorkspaceCollection.h"
+#include "MantidDataObjects/EventWorkspace.h"
+#include "MantidDataObjects/Events.h"
 #include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/Instrument/ParameterMap.h"
 #include "MantidKernel/TimeSeriesProperty.h"
-#include "MantidDataHandling/EventWorkspaceCollection.h"
+
+#include <boost/lexical_cast.hpp>
+
+#include <nexus/NeXusFile.hpp>
+#include <nexus/NeXusException.hpp>
+
 #include <memory>
 #include <mutex>
-#include <boost/lexical_cast.hpp>
 
 namespace Mantid {
 

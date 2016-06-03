@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------
 #include "MantidKernel/System.h"
 #include "MantidAPI/CostFunctionFactory.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 namespace Mantid {
 namespace API {

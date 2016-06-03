@@ -10,6 +10,8 @@
 
 #include <boost/algorithm/string/split.hpp>
 
+#include <nexus/NeXusFile.hpp>
+
 #include "Poco/DateTime.h"
 #include <Poco/DateTimeParser.h>
 
