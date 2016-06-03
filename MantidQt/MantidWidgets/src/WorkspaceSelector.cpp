@@ -8,6 +8,7 @@
 #include <Poco/AutoPtr.h>
 #include <Poco/NObserver.h>
 
+#include "MantidAPI/Algorithm.h"
 #include "MantidAPI/AlgorithmManager.h"
 #include "MantidAPI/MatrixWorkspace.h"
 

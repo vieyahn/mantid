@@ -2,14 +2,20 @@
 #define MANTID_API_IPEAK_H_
 
 #include "MantidGeometry/DllConfig.h"
-#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/Crystal/PeakShape.h"
+#include "MantidGeometry/IDetector_fwd.h"
+#include "MantidGeometry/Instrument_fwd.h"
 #include "MantidKernel/Matrix.h"
-#include "MantidKernel/V3D.h"
 #include "MantidKernel/PhysicalConstants.h"
+
 #include <boost/optional.hpp>
 
 namespace Mantid {
+
+namespace Kernel {
+class V3D;
+}
+
 namespace Geometry {
 
 /** Structure describing a single-crystal peak

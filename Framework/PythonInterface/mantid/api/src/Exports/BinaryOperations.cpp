@@ -1,6 +1,7 @@
 #include "MantidPythonInterface/api/BinaryOperations.h"
 
 #include "MantidAPI/AlgorithmManager.h"
+#include "MantidAPI/Algorithm.h"
 #include "MantidAPI/AnalysisDataService.h"
 #include "MantidAPI/IMDHistoWorkspace.h"
 #include "MantidAPI/IMDWorkspace.h"

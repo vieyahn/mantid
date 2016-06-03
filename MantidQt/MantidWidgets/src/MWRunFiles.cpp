@@ -1,12 +1,13 @@
 #include "MantidQtMantidWidgets/MWRunFiles.h"
 
-#include "MantidKernel/ConfigService.h"
-#include "MantidKernel/FacilityInfo.h"
+#include "MantidAPI/Algorithm.h"
 #include "MantidAPI/AlgorithmManager.h"
 #include "MantidAPI/FileFinder.h"
 #include "MantidAPI/FileProperty.h"
-#include "MantidAPI/MultipleFileProperty.h"
 #include "MantidAPI/LiveListenerFactory.h"
+#include "MantidAPI/MultipleFileProperty.h"
+#include "MantidKernel/ConfigService.h"
+#include "MantidKernel/FacilityInfo.h"
 
 #include <QStringList>
 #include <QFileDialog>

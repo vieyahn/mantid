@@ -5,6 +5,7 @@
 #include "MantidQtMantidWidgets/InstrumentView/RectangularDetectorActor.h"
 #include "MantidQtMantidWidgets/InstrumentView/StructuredDetectorActor.h"
 
+#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/Instrument/ObjCompAssembly.h"
 #include "MantidKernel/Logger.h"
 #include "MantidKernel/Tolerance.h"

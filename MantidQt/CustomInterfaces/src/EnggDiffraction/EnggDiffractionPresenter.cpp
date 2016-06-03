@@ -1,3 +1,4 @@
+#include "MantidAPI/Algorithm.h"
 #include "MantidAPI/ITableWorkspace.h"
 #include "MantidAPI/MatrixWorkspace.h"
 #include "MantidAPI/TableRow.h"

@@ -13,6 +13,8 @@
 #include "MantidDataObjects/TableWorkspace.h"
 #include "MantidDataObjects/EventWorkspace.h"
 #include "MantidGeometry/Crystal/IPeak.h"
+#include "MantidGeometry/Instrument.h"
+#include "MantidGeometry/Instrument/ParameterMap.h"
 
 namespace Mantid {
 namespace Algorithms {

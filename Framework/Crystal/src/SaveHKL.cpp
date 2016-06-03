@@ -1,12 +1,13 @@
-#include "MantidAPI/FileProperty.h"
 #include "MantidCrystal/SaveHKL.h"
+#include "MantidAPI/FileProperty.h"
+#include "MantidCrystal/AnvredCorrection.h"
+#include "MantidGeometry/Crystal/OrientedLattice.h"
 #include "MantidGeometry/Instrument/RectangularDetector.h"
 #include "MantidKernel/Utils.h"
 #include "MantidKernel/BoundedValidator.h"
+#include "MantidKernel/Unit.h"
 #include "MantidKernel/UnitFactory.h"
 #include "MantidKernel/ListValidator.h"
-#include "MantidCrystal/AnvredCorrection.h"
-#include "MantidGeometry/Crystal/OrientedLattice.h"
 #include <fstream>
 
 #include <Poco/File.h>

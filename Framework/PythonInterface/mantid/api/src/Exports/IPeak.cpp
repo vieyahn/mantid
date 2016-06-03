@@ -1,4 +1,5 @@
 #include "MantidGeometry/Crystal/IPeak.h"
+#include "MantidKernel/V3D.h"
 #include <boost/python/class.hpp>
 #include <boost/python/register_ptr_to_python.hpp>
 

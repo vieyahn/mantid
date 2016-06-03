@@ -8,17 +8,18 @@
 #include "MantidDataObjects/Events.h"
 #include "MantidDataObjects/EventWorkspaceMRU.h"
 #include "MantidKernel/cow_ptr.h"
-#include "MantidKernel/DateAndTime.h"
+#include "MantidKernel/MultiThreaded.h"
 #include "MantidKernel/System.h"
-#include "MantidKernel/TimeSplitter.h"
-#include "MantidKernel/Unit.h"
 #include <cstddef>
 #include <iosfwd>
-#include <set>
 #include <vector>
-#include "MantidKernel/MultiThreaded.h"
 
 namespace Mantid {
+
+namespace Kernel {
+class Unit;
+}
+
 namespace DataObjects {
 
 /// How the event list is sorted.

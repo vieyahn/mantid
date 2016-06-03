@@ -25,6 +25,7 @@
 
 #include "MantidAPI/Axis.h"
 #include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument.h"
 #include "MantidKernel/Property.h"
 #include "MantidKernel/ConfigService.h"
 #include "MantidKernel/DateAndTime.h"

@@ -23,6 +23,7 @@
 #include <qwt_scale_widget.h>
 #include <qwt_scale_engine.h>
 
+#include "MantidGeometry/Instrument.h"
 #include "MantidKernel/ConfigService.h"
 #include "MantidQtMantidWidgets/InstrumentView/InstrumentWidget.h"
 #include "MantidQtMantidWidgets/InstrumentView/BinDialog.h"

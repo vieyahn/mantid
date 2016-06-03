@@ -1,11 +1,11 @@
-#include "MantidAPI/MatrixWorkspace.h"
 #include "MantidDataObjects/EventList.h"
 #include "MantidDataObjects/EventWorkspaceMRU.h"
 #include "MantidKernel/DateAndTime.h"
 #include "MantidKernel/Exception.h"
 #include "MantidKernel/Logger.h"
-#include <cfloat>
+#include "MantidKernel/Unit.h"
 
+#include <cfloat>
 #include <cmath>
 #include <functional>
 #include <limits>

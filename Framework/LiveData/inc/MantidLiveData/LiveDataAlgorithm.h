@@ -3,10 +3,14 @@
 
 #include "MantidKernel/System.h"
 #include "MantidAPI/Algorithm.h"
-#include "MantidKernel/DateAndTime.h"
 #include "MantidAPI/ILiveListener.h"
 
 namespace Mantid {
+
+namespace Kernel {
+class DateAndTime;
+}
+
 namespace LiveData {
 
 /** Abstract base class with common properties

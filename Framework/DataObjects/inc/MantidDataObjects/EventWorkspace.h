@@ -6,10 +6,9 @@
 //----------------------------------------------------------------------
 
 #include "MantidAPI/IEventWorkspace.h"
-#include "MantidAPI/ISpectrum.h"
 #include "MantidDataObjects/EventList.h"
 #include "MantidKernel/System.h"
-#include <boost/date_time/posix_time/posix_time.hpp>
+
 #include <string>
 
 namespace Mantid {
@@ -17,6 +16,7 @@ namespace Mantid {
 // Forward declarations
 //----------------------------------------------------------------------
 namespace API {
+class ISpectrum;
 class Progress;
 }
 

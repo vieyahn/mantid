@@ -1,5 +1,6 @@
 #include "MantidQtMantidWidgets/InstrumentView/RotationSurface.h"
 #include "MantidKernel/Logger.h"
+#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/IDetector.h"
 
 #include <QCursor>

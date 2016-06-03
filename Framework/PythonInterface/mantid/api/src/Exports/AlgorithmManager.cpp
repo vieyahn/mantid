@@ -1,4 +1,5 @@
 #include "MantidAPI/AlgorithmManager.h"
+#include "MantidAPI/Algorithm.h"
 #include "MantidPythonInterface/api/AlgorithmIDProxy.h"
 
 #include <boost/python/class.hpp>

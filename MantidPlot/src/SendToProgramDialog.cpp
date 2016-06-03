@@ -2,6 +2,7 @@
 #include "ConfigDialog.h"
 #include "pixmaps.h"
 #include "MantidKernel/ConfigService.h"
+#include "MantidAPI/AlgorithmFactory.h"
 #include "MantidAPI/AlgorithmManager.h"
 
 #include <QPushButton>

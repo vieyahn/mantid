@@ -4,10 +4,12 @@
 #include <cxxtest/TestSuite.h>
 #include "MantidDataObjects/EventList.h"
 #include "MantidDataObjects/EventWorkspace.h"
+#include "MantidKernel/CPUTimer.h"
 #include "MantidKernel/Timer.h"
+#include "MantidKernel/Unit.h"
+
 #include <cmath>
 #include <boost/math/special_functions/fpclassify.hpp>
-#include "MantidKernel/CPUTimer.h"
 
 using namespace Mantid;
 using namespace Mantid::API;

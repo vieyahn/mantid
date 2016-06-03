@@ -6,6 +6,7 @@
 //----------------------------------------------------------------------
 #include "MantidAPI/Algorithm.h"
 #include "MantidDataObjects/EventWorkspace.h"
+#include "MantidKernel/Unit.h"
 
 namespace Mantid {
 namespace Algorithms {

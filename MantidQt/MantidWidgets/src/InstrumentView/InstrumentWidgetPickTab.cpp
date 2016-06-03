@@ -20,6 +20,7 @@
 #include "MantidAPI/FrameworkManager.h"
 #include "MantidGeometry/Crystal/OrientedLattice.h"
 #include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument.h"
 #include "MantidGeometry/Instrument/ParameterMap.h"
 
 #include "qwt_scale_widget.h"

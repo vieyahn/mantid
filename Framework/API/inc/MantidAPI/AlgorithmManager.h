@@ -7,7 +7,7 @@
 #include <Poco/NotificationCenter.h>
 #include "MantidAPI/DllConfig.h"
 #include "MantidKernel/SingletonHolder.h"
-#include "MantidAPI/Algorithm.h"
+#include "MantidAPI/IAlgorithm.h"
 
 #include <deque>
 #include <mutex>
@@ -15,6 +15,8 @@
 
 namespace Mantid {
 namespace API {
+
+class Algorithm;
 
 //----------------------------------------------------------------------------
 /// Class for when an algorithm is starting asynchronously

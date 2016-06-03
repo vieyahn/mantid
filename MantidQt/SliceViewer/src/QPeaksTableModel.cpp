@@ -3,6 +3,7 @@
 #include "MantidGeometry/Crystal/IPeak.h"
 #include "MantidGeometry/IComponent.h"
 #include "MantidGeometry/IDetector.h"
+#include "MantidGeometry/Instrument.h"
 #include "MantidKernel/ConfigService.h"
 #include "MantidKernel/FacilityInfo.h"
 #include "MantidKernel/InstrumentInfo.h"
