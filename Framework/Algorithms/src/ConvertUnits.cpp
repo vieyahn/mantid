@@ -17,7 +17,6 @@
 #include "MantidKernel/CompositeValidator.h"
 #include "MantidKernel/DeltaEMode.h"
 #include "MantidKernel/ListValidator.h"
-#include "MantidKernel/Unit.h"
 #include "MantidKernel/UnitFactory.h"
 
 #include <boost/bind.hpp>
