@@ -596,7 +596,7 @@ void SaveHKL::exec() {
           out << std::setw(9) << std::fixed << std::setprecision(4) << dsp;
         }
 
-        out << std::endl;
+        out << '\n';
       }
     }
   }
@@ -616,7 +616,7 @@ void SaveHKL::exec() {
     out << "    0.00    0.00   0  0.0000 0.0000      0      0 0.0000 "
            "  0  0.00000   0.0000";
   }
-  out << std::endl;
+  out << '\n';
   out.flush();
   out.close();
   // delete banned peaks

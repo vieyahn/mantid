@@ -254,7 +254,7 @@ void SaveAscii2::exec() {
     if (m_writeDX) {
       file << " " << m_sep << " DX";
     }
-    file << std::endl;
+    file << '\n';
   }
   // populate the meta data map
   if (m_metaData.size() > 0) {
@@ -285,8 +285,7 @@ be saved
 */
 void SaveAscii2::writeSpectra(const std::set<int>::const_iterator &spectraItr,
                               std::ofstream &file) {
-  auto spec = m_ws->getSpectrum(*spectraItr);
-  const auto specNo = spec->getSpectrumNo();
+  const auto specNo = m_ws->getSpectrum(*spectraItr).getSpectrumNo();
   const auto workspaceIndex = m_specToIndexMap[specNo];
   for (auto iter = m_metaData.begin(); iter != m_metaData.end(); ++iter) {
     auto value = m_metaDataMap[*iter][workspaceIndex];
@@ -295,7 +294,7 @@ void SaveAscii2::writeSpectra(const std::set<int>::const_iterator &spectraItr,
       file << " " << m_sep << " ";
     }
   }
-  file << std::endl;
+  file << '\n';
 
   for (int bin = 0; bin < m_nBins; bin++) {
     if (!m_isCommonBins) // checking for ragged workspace
@@ -329,7 +328,7 @@ void SaveAscii2::writeSpectra(const std::set<int>::const_iterator &spectraItr,
         file << m_ws->readDx(0)[bin];
       }
     }
-    file << std::endl;
+    file << '\n';
   }
 }
 
@@ -338,8 +337,7 @@ void SaveAscii2::writeSpectra(const std::set<int>::const_iterator &spectraItr,
 @param file :: the file writer object
 */
 void SaveAscii2::writeSpectra(const int &spectraIndex, std::ofstream &file) {
-  auto spec = m_ws->getSpectrum(spectraIndex);
-  const auto specNo = spec->getSpectrumNo();
+  const auto specNo = m_ws->getSpectrum(spectraIndex).getSpectrumNo();
   const auto workspaceIndex = m_specToIndexMap[specNo];
   for (auto iter = m_metaData.begin(); iter != m_metaData.end(); ++iter) {
     auto value = m_metaDataMap[*iter][workspaceIndex];
@@ -348,7 +346,7 @@ void SaveAscii2::writeSpectra(const int &spectraIndex, std::ofstream &file) {
       file << " " << m_sep << " ";
     }
   }
-  file << std::endl;
+  file << '\n';
 
   for (int bin = 0; bin < m_nBins; bin++) {
     if (m_isHistogram & m_isCommonBins) // bin centres,
@@ -379,7 +377,7 @@ void SaveAscii2::writeSpectra(const int &spectraIndex, std::ofstream &file) {
         file << m_ws->readDx(0)[bin];
       }
     }
-    file << std::endl;
+    file << '\n';
   }
 }
 
@@ -415,7 +413,7 @@ void SaveAscii2::populateQMetaData() {
   std::vector<std::string> qValues;
   const auto nHist = m_ws->getNumberHistograms();
   for (size_t i = 0; i < nHist; i++) {
-    const auto specNo = m_ws->getSpectrum(i)->getSpectrumNo();
+    const auto specNo = m_ws->getSpectrum(i).getSpectrumNo();
     const auto workspaceIndex = m_specToIndexMap[specNo];
     const auto detector = m_ws->getDetector(workspaceIndex);
     double twoTheta(0.0), efixed(0.0);
@@ -445,8 +443,8 @@ void SaveAscii2::populateSpectrumNumberMetaData() {
   std::vector<std::string> spectrumNumbers;
   const size_t nHist = m_ws->getNumberHistograms();
   for (size_t i = 0; i < nHist; i++) {
-    const auto specNum = m_ws->getSpectrum(i)->getSpectrumNo();
-    const auto specNumStr = boost::lexical_cast<std::string>(specNum);
+    const auto specNum = m_ws->getSpectrum(i).getSpectrumNo();
+    const auto specNumStr = std::to_string(specNum);
     spectrumNumbers.push_back(specNumStr);
   }
   m_metaDataMap["spectrumnumber"] = spectrumNumbers;
@@ -459,7 +457,7 @@ void SaveAscii2::populateAngleMetaData() {
   std::vector<std::string> angles;
   const size_t nHist = m_ws->getNumberHistograms();
   for (size_t i = 0; i < nHist; i++) {
-    const auto specNo = m_ws->getSpectrum(i)->getSpectrumNo();
+    const auto specNo = m_ws->getSpectrum(i).getSpectrumNo();
     const auto workspaceIndex = m_specToIndexMap[specNo];
     auto det = m_ws->getDetector(workspaceIndex);
     const auto two_theta = m_ws->detectorTwoTheta(*det);

@@ -32,8 +32,6 @@ using namespace API;
 using namespace Geometry;
 using namespace DataObjects;
 
-CreateDummyCalFile::CreateDummyCalFile() : API::Algorithm() {}
-
 /** Initialisation method. Declares properties to be used in algorithm.
  *
  */

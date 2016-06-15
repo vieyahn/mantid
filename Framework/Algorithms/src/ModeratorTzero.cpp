@@ -158,7 +158,7 @@ void ModeratorTzero::exec() {
     } // end of try
     catch (Exception::NotFoundError &) {
       g_log.error() << "Unable to calculate distances to/from detector" << i
-                    << std::endl;
+                    << '\n';
       outbins = inbins;
     }
     if (L2 >= 0) {
@@ -182,7 +182,7 @@ void ModeratorTzero::exec() {
             t2 = L2 / v2;
           } else {
             // t2 is kept to -1 if no Efixed is found
-            g_log.debug() << "Efixed not found for detector " << i << std::endl;
+            g_log.debug() << "Efixed not found for detector " << i << '\n';
           }
         }
         // shift the time of flights by the emission time from the moderator
@@ -278,7 +278,7 @@ void ModeratorTzero::execEvent(const std::string &emode) {
   for (int i = 0; i < static_cast<int>(numHists); ++i) {
     PARALLEL_START_INTERUPT_REGION
     size_t wsIndex = static_cast<size_t>(i);
-    EventList &evlist = outputWS->getEventList(wsIndex);
+    EventList &evlist = outputWS->getSpectrum(wsIndex);
     if (evlist.getNumberEvents() > 0) // don't bother with empty lists
     {
       IDetector_const_sptr det;
@@ -296,7 +296,7 @@ void ModeratorTzero::execEvent(const std::string &emode) {
         }
       } catch (Exception::NotFoundError &) {
         g_log.error() << "Unable to calculate distances to/from detector" << i
-                      << std::endl;
+                      << '\n';
       }
 
       if (L2 >= 0) {
@@ -326,8 +326,7 @@ void ModeratorTzero::execEvent(const std::string &emode) {
               t2 = L2 / v2;
             } else {
               // t2 is kept to -1 if no Efixed is found
-              g_log.debug() << "Efixed not found for detector " << i
-                            << std::endl;
+              g_log.debug() << "Efixed not found for detector " << i << '\n';
             }
           }
           if (t2 >= 0) // t2 < 0 when no detector info is available

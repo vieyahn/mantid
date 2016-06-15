@@ -104,7 +104,7 @@ std::string Goniometer::axesInfo() {
                            ? ((*it).angle)
                            : ((*it).angle * rad2deg);
         info << (*it).name << "\t" << (*it).rotationaxis << "\t" << sense
-             << "\t" << angle << std::endl;
+             << "\t" << angle << '\n';
       }
     }
     return info.str();

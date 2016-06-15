@@ -243,7 +243,7 @@ void FindSXPeaks::reducePeakList(const peakvector &pcv) {
         delete peak;
       }
     } catch (std::exception &e) {
-      g_log.error() << e.what() << std::endl;
+      g_log.error() << e.what() << '\n';
     }
   }
 }

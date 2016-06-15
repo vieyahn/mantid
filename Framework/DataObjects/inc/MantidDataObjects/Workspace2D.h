@@ -5,7 +5,7 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidAPI/MatrixWorkspace.h"
-#include "MantidAPI/ISpectrum.h"
+#include "MantidDataObjects/Histogram1D.h"
 
 namespace Mantid {
 
@@ -64,12 +64,8 @@ public:
   std::size_t size() const override;
   std::size_t blocksize() const override;
 
-  /// Return the underlying ISpectrum ptr at the given workspace index.
-  Mantid::API::ISpectrum *getSpectrum(const size_t index) override;
-
-  /// Return the underlying ISpectrum ptr (const version) at the given workspace
-  /// index.
-  const Mantid::API::ISpectrum *getSpectrum(const size_t index) const override;
+  Histogram1D &getSpectrum(const size_t index) override;
+  const Histogram1D &getSpectrum(const size_t index) const override;
 
   /// Generate a new histogram by rebinning the existing histogram.
   void generateHistogram(const std::size_t index, const MantidVec &X,
@@ -108,7 +104,7 @@ protected:
   std::vector<specnum_t> m_monitorList;
 
   /// A vector that holds the 1D histograms
-  std::vector<Mantid::API::ISpectrum *> data;
+  std::vector<Histogram1D *> data;
 
 private:
   Workspace2D *doClone() const override { return new Workspace2D(*this); }

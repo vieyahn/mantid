@@ -7,10 +7,9 @@
 #include "MantidAPI/WorkspaceFactory.h"
 #include "MantidDataObjects/Histogram1D.h"
 #include "MantidDataObjects/Workspace2D.h"
-#include "MantidKernel/UnitFactory.h"
 #include "MantidKernel/ListValidator.h"
-
-#include <boost/tokenizer.hpp>
+#include "MantidKernel/StringTokenizer.h"
+#include "MantidKernel/UnitFactory.h"
 
 #include <cstring>
 #include <fstream>
@@ -52,7 +51,7 @@ void LoadSpec::init() {
 */
 void LoadSpec::exec() {
   std::string filename = getProperty("Filename");
-  // std::string separator = " "; //separator can be 1 or more spaces
+  // separator can be 1 or more spaces
   std::ifstream file(filename.c_str());
 
   file.seekg(0, std::ios::end);
@@ -87,15 +86,12 @@ void LoadSpec::exec() {
 
     // line with data, need to be parsed by white spaces
     if (!str.empty() && str[0] != '#') {
-      typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
-      boost::char_separator<char> sep(" ");
-      tokenizer tok(str, sep);
-      for (tokenizer::iterator beg = tok.begin(); beg != tok.end(); ++beg) {
-        std::stringstream ss;
-        ss << *beg;
-        double d;
-        ss >> d;
-        input.push_back(d);
+      typedef Mantid::Kernel::StringTokenizer tokenizer;
+      const std::string sep = " ";
+      tokenizer tok(str, sep,
+                    Mantid::Kernel::StringTokenizer::TOK_IGNORE_EMPTY);
+      for (const auto &beg : tok) {
+        input.push_back(std::stod(beg));
       }
     }
 
@@ -148,7 +144,7 @@ void LoadSpec::exec() {
       localWorkspace->dataY(i) = spectra[i].dataY();
       localWorkspace->dataE(i) = spectra[i].dataE();
       // Just have spectrum number start at 1 and count up
-      localWorkspace->getSpectrum(i)->setSpectrumNo(i + 1);
+      localWorkspace->getSpectrum(i).setSpectrumNo(i + 1);
     }
 
     setProperty("OutputWorkspace", localWorkspace);

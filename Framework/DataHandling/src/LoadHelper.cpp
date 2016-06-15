@@ -141,7 +141,7 @@ LoadHelper::getInstrumentProperty(const API::MatrixWorkspace_sptr &workspace,
     g_log.debug("Property <" + s + "> doesn't exist!");
     return EMPTY_DBL();
   } else {
-    g_log.debug() << "Property <" + s + "> = " << prop[0] << std::endl;
+    g_log.debug() << "Property <" + s + "> = " << prop[0] << '\n';
     return boost::lexical_cast<double>(prop[0]);
   }
 }
@@ -178,7 +178,7 @@ void LoadHelper::addNexusFieldsToWsRun(NXhandle nxfileID,
                                         emptyStr, 1 /* level */);
       } else {
         g_log.debug() << "Unexpected group name in nexus file : " << nxname
-                      << std::endl;
+                      << '\n';
       }
       NXclosegroup(nxfileID);
     }
@@ -223,7 +223,7 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
 
     if (getnextentry_status == NX_OK) {
       g_log.debug() << indent_str << parent_name << "." << nxname << " ; "
-                    << nxclass << std::endl;
+                    << nxclass << '\n';
 
       NXstatus opengroup_status;
       NXstatus opendata_status;
@@ -243,12 +243,12 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
       } // if(NXopengroup
       else if ((opendata_status = NXopendata(nxfileID, nxname)) == NX_OK) {
         // dump_attributes(nxfileID, indent_str);
-        g_log.debug() << indent_str << nxname << " opened." << std::endl;
+        g_log.debug() << indent_str << nxname << " opened.\n";
 
         if (parent_class == "NXData" || parent_class == "NXMonitor" ||
             std::string(nxname) == "data") {
           g_log.debug() << indent_str << "skipping " << parent_class << " ("
-                        << nxname << ")" << std::endl;
+                        << nxname << ")\n";
           /* nothing */
         } else { // create a property
           int rank;
@@ -260,7 +260,7 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
               (parent_name.empty() ? nxname : parent_name + "." + nxname);
 
           g_log.debug() << indent_str << "considering property "
-                        << property_name << std::endl;
+                        << property_name << '\n';
 
           // Get the value
           NXgetinfo(nxfileID, &rank, dims, &type);
@@ -275,13 +275,13 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
             } else {
               g_log.debug() << indent_str
                             << "ignored multi dimension float data on "
-                            << property_name << std::endl;
+                            << property_name << '\n';
             }
           } else if (type != NX_CHAR) {
             if ((rank != 1) || (dims[0] != 1) || (dims[1] != 1) ||
                 (dims[2] != 1) || (dims[3] != 1)) {
               g_log.debug() << indent_str << "ignored multi dimension data on "
-                            << property_name << std::endl;
+                            << property_name << '\n';
             }
           }
 
@@ -316,7 +316,7 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
                                      &units_type);
             if (units_status != NX_ERROR) {
               g_log.debug() << indent_str << "[ " << property_name
-                            << " has unit " << units_sbuf << " ]" << std::endl;
+                            << " has unit " << units_sbuf << " ]\n";
             }
 
             if ((type == NX_FLOAT32) || (type == NX_FLOAT64)) {
@@ -348,9 +348,9 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
                     property_double_value =
                         (reinterpret_cast<double *>(dataBuffer))[dim_index];
                   }
-                  std::string indexed_property_name =
-                      property_name + std::string("_") +
-                      boost::lexical_cast<std::string>(dim_index);
+                  std::string indexed_property_name = property_name +
+                                                      std::string("_") +
+                                                      std::to_string(dim_index);
                   if (units_status != NX_ERROR)
                     runDetails.addProperty(indexed_property_name,
                                            property_double_value,
@@ -384,7 +384,7 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
 
           } else {
             g_log.debug() << indent_str << "unexpected data on "
-                          << property_name << std::endl;
+                          << property_name << '\n';
           } // test on nxdata type
 
           NXfree(&dataBuffer);
@@ -395,15 +395,15 @@ void LoadHelper::recurseAndAddNexusFieldsToWsRun(NXhandle nxfileID,
         NXclosedata(nxfileID);
       } else {
         g_log.debug() << indent_str << "unexpected status (" << opendata_status
-                      << ") on " << nxname << std::endl;
+                      << ") on " << nxname << '\n';
       }
 
     } else if (getnextentry_status == NX_EOD) {
-      g_log.debug() << indent_str << "End of Dir" << std::endl;
+      g_log.debug() << indent_str << "End of Dir\n";
       has_entry = false; // end of loop
     } else {
       g_log.debug() << indent_str << "unexpected status ("
-                    << getnextentry_status << ")" << std::endl;
+                    << getnextentry_status << ")\n";
       has_entry = false; // end of loop
     }
 

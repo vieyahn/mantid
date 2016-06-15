@@ -42,11 +42,6 @@ CalculateCoverageDGS::CalculateCoverageDGS()
       m_normWS() {}
 
 //----------------------------------------------------------------------------------------------
-/** Destructor
- */
-CalculateCoverageDGS::~CalculateCoverageDGS() {}
-
-//----------------------------------------------------------------------------------------------
 
 /// Algorithms name for identification. @see Algorithm::name
 const std::string CalculateCoverageDGS::name() const {

@@ -353,7 +353,7 @@ ExperimentInfo::getGroupMembers(const detid_t detID) const {
   } else {
     throw std::runtime_error(
         "ExperimentInfo::getGroupMembers - Unable to find ID " +
-        boost::lexical_cast<std::string>(detID) + " in lookup");
+        std::to_string(detID) + " in lookup");
   }
 }
 
@@ -815,8 +815,7 @@ ExperimentInfo::getInstrumentFilename(const std::string &instrumentName,
                                       const std::string &date) {
   if (date.empty()) {
     // Just use the current date
-    g_log.debug() << "No date specified, using current date and time."
-                  << std::endl;
+    g_log.debug() << "No date specified, using current date and time.\n";
     const std::string now =
         Kernel::DateAndTime::getCurrentTime().toISO8601String();
     // Recursively call this method, but with both parameters.
@@ -888,7 +887,7 @@ ExperimentInfo::getInstrumentFilename(const std::string &instrumentName,
       }
     }
   }
-  g_log.debug() << "IDF selected is " << mostRecentIDF << std::endl;
+  g_log.debug() << "IDF selected is " << mostRecentIDF << '\n';
   return mostRecentIDF;
 }
 
@@ -1091,7 +1090,7 @@ std::string ExperimentInfo::loadInstrumentXML(const std::string &filename) {
     return Strings::loadFile(filename);
   } catch (std::exception &e) {
     g_log.error() << "Error loading instrument IDF file: " << filename << ".\n";
-    g_log.debug() << e.what() << std::endl;
+    g_log.debug() << e.what() << '\n';
     throw;
   }
 }

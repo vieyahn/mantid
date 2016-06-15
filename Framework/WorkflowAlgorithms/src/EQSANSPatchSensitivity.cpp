@@ -62,7 +62,7 @@ void EQSANSPatchSensitivity::exec() {
       // EQSANS-specific: get detector ID from pixel coordinates
       int iDet = ny_pixels * i + j;
       if (iDet > numberOfSpectra) {
-        g_log.notice() << "Got an invalid detector ID " << iDet << std::endl;
+        g_log.notice() << "Got an invalid detector ID " << iDet << '\n';
         continue;
       }
 
@@ -123,8 +123,7 @@ void EQSANSPatchSensitivity::exec() {
             pmap.addBool(det, "masked", false);
           }
         } catch (Kernel::Exception::NotFoundError &e) {
-          g_log.warning() << e.what() << " Found while setting mask bit"
-                          << std::endl;
+          g_log.warning() << e.what() << " Found while setting mask bit\n";
         }
       }
     }
