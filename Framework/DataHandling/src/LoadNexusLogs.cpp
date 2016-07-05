@@ -160,6 +160,7 @@ void LoadNexusLogs::exec() {
   } catch (::NeXus::Exception &) {
     // No time. This is not an SNS group
   }
+
   // print out the entry level fields
   std::map<std::string, std::string> entries = file.getEntries();
   std::map<std::string, std::string>::const_iterator iend = entries.end();
@@ -189,6 +190,7 @@ void LoadNexusLogs::exec() {
   // filter the proton_charge log based on event_frame_number
   // This difference will be removed in future for compatibility with SNS, but
   // the code below will allow current SANS2D files to load
+
   if (workspace->mutableRun().hasProperty("proton_log")) {
     std::vector<int> event_frame_number;
     this->getLogger().notice()
@@ -236,6 +238,7 @@ void LoadNexusLogs::exec() {
       ptime.reserve(event_frame_number.size());
       std::vector<Mantid::Kernel::DateAndTime> plogt = plog->timesAsVector();
       std::vector<double> plogv = plog->valuesAsVector();
+
       for (auto number : event_frame_number) {
         ptime.push_back(plogt[number]);
         pval.push_back(plogv[number]);
@@ -245,6 +248,7 @@ void LoadNexusLogs::exec() {
       workspace->mutableRun().addProperty(pcharge, true);
     }
   }
+
   try {
     // Read the start and end time strings
     file.openData("start_time");
@@ -260,6 +264,7 @@ void LoadNexusLogs::exec() {
   if (!workspace->run().hasProperty("gd_prtn_chrg")) {
     // Try pulling it from the main proton_charge entry first
     try {
+      g_log.warning() << " HERE B: try proton_charge\n";
       file.openData("proton_charge");
       std::vector<double> values;
       file.getDataCoerce(values);
@@ -283,6 +288,19 @@ void LoadNexusLogs::exec() {
 
   // Close the file
   file.close();
+
+  Kernel::TimeSeriesProperty<double> *log =
+      dynamic_cast<Kernel::TimeSeriesProperty<double> *>(
+          workspace->mutableRun().getProperty("proton_charge"));
+  std::vector<Kernel::DateAndTime> pcts;
+  g_log.warning() << " end of LoadLogs, the log proton_charge is:" << log
+                  << '\n';
+  if (log) {
+    g_log.warning() << " end of LoadLogs, the log proton_charge is:" << log
+                    << '\n';
+    pcts = log->timesAsVector();
+    g_log.warning() << " after LoadLogs, first time: :" << pcts.front() << '\n';
+  }
 }
 
 /** Try to load the "Veto_pulse" field in DASLogs
@@ -362,18 +380,21 @@ void LoadNexusLogs::loadLogs(
   file.openGroup(entry_name, entry_class);
   std::map<std::string, std::string> entries = file.getEntries();
   std::map<std::string, std::string>::const_iterator iend = entries.end();
-  for (std::map<std::string, std::string>::const_iterator itr = entries.begin();
-       itr != iend; ++itr) {
-    std::string log_class = itr->second;
-    if (log_class == "NXlog" || log_class == "NXpositioner") {
-      loadNXLog(file, itr->first, log_class, workspace);
-    } else if (log_class == "IXseblock") {
-      loadSELog(file, itr->first, workspace);
-    } else if (log_class == "NXcollection") {
-      int jj = 0;
-      ++jj;
+
+  if ("proton_charge" == entry_name)
+    for (std::map<std::string, std::string>::const_iterator itr =
+             entries.begin();
+         itr != iend; ++itr) {
+      std::string log_class = itr->second;
+      if (log_class == "NXlog" || log_class == "NXpositioner") {
+        loadNXLog(file, itr->first, log_class, workspace);
+      } else if (log_class == "IXseblock") {
+        loadSELog(file, itr->first, workspace);
+      } else if (log_class == "NXcollection") {
+        int jj = 0;
+        ++jj;
+      }
     }
-  }
   loadVetoPulses(file, workspace);
 
   file.closeGroup();
@@ -504,6 +525,7 @@ void LoadNexusLogs::loadSELog(
 Kernel::Property *
 LoadNexusLogs::createTimeSeries(::NeXus::File &file,
                                 const std::string &prop_name) const {
+
   file.openData("time");
   //----- Start time is an ISO8601 string date and time. ------
   std::string start;
@@ -527,15 +549,32 @@ LoadNexusLogs::createTimeSeries(::NeXus::File &file,
   Kernel::DateAndTime start_time = Kernel::DateAndTime(start);
   std::string time_units;
   file.getAttr("units", time_units);
+
+  if ("proton_charge" == prop_name) {
+    g_log.warning() << "*** createTimeSeries() - start:" << start << '\n';
+    g_log.warning() << "*** createTimeSeries() - units:" << time_units << '\n';
+  }
+
   if (time_units.compare("second") < 0 && time_units != "s" &&
       time_units != "minutes") // Can be s/second/seconds/minutes
   {
     file.closeData();
     throw ::NeXus::Exception("Unsupported time unit '" + time_units + "'");
   }
+
+  // Now the actual data
+  ::NeXus::Info info_fix = file.getInfo();
+  if ("proton_charge" == prop_name) {
+    g_log.warning() << "**** createTimeSeries() - info size of time:"
+                    << size_t(info_fix.dims[0]) << '\n';
+    g_log.warning() << "**** createTimeSeries() - info, type of time:"
+                    << size_t(info_fix.type) << '\n';
+  }
+
   //--- Load the seconds into a double array ---
   std::vector<double> time_double;
   try {
+    // This is buggy in HDF5 for ENGIN-X proton_charge time series
     file.getDataCoerce(time_double);
   } catch (::NeXus::Exception &e) {
     g_log.warning() << "Log entry's time field could not be loaded: '"
@@ -545,6 +584,17 @@ LoadNexusLogs::createTimeSeries(::NeXus::File &file,
   }
   file.closeData(); // Close time data
   g_log.debug() << "   done reading \"time\" array\n";
+
+  if (false) {
+    if ("proton_charge" == prop_name) {
+      for (size_t i = 0; i < time_double.size(); i++) {
+        const auto &time = time_double[i];
+        if (time < 0.0)
+          g_log.warning() << "**** B found negative time:" << time
+                          << ", index: " << i << '\n';
+      }
+    }
+  }
 
   // Convert to seconds if needed
   if (time_units == "minutes") {
@@ -564,6 +614,20 @@ LoadNexusLogs::createTimeSeries(::NeXus::File &file,
 
   // Now the actual data
   ::NeXus::Info info = file.getInfo();
+
+  if ("proton_charge" == prop_name) {
+    g_log.warning() << "**** createTimeSeries() - size:" << time_double.size()
+                    << '\n';
+
+    for (size_t idx = 1; idx < time_double.size(); ++idx) {
+      if (time_double[idx] < 0 || time_double[idx] < time_double[idx - 1] ||
+          time_double[idx] > 10000) {
+        time_double[idx] =
+            time_double[idx - 1] + 0.040; // the 40ms from the pulses
+      }
+    }
+  }
+
   // Check the size
   if (size_t(info.dims[0]) != time_double.size()) {
     file.closeData();
@@ -623,6 +687,7 @@ LoadNexusLogs::createTimeSeries(::NeXus::File &file,
       file.closeData();
       throw;
     }
+
     auto tsp = new TimeSeriesProperty<double>(prop_name);
     tsp->create(start_time, time_double, values);
     tsp->setUnits(value_units);
