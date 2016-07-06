@@ -381,20 +381,18 @@ void LoadNexusLogs::loadLogs(
   std::map<std::string, std::string> entries = file.getEntries();
   std::map<std::string, std::string>::const_iterator iend = entries.end();
 
-  if ("proton_charge" == entry_name)
-    for (std::map<std::string, std::string>::const_iterator itr =
-             entries.begin();
-         itr != iend; ++itr) {
-      std::string log_class = itr->second;
-      if (log_class == "NXlog" || log_class == "NXpositioner") {
-        loadNXLog(file, itr->first, log_class, workspace);
-      } else if (log_class == "IXseblock") {
-        loadSELog(file, itr->first, workspace);
-      } else if (log_class == "NXcollection") {
-        int jj = 0;
-        ++jj;
-      }
+  for (std::map<std::string, std::string>::const_iterator itr = entries.begin();
+       itr != iend; ++itr) {
+    std::string log_class = itr->second;
+    if (log_class == "NXlog" || log_class == "NXpositioner") {
+      loadNXLog(file, itr->first, log_class, workspace);
+    } else if (log_class == "IXseblock") {
+      loadSELog(file, itr->first, workspace);
+    } else if (log_class == "NXcollection") {
+      int jj = 0;
+      ++jj;
     }
+  }
   loadVetoPulses(file, workspace);
 
   file.closeGroup();
