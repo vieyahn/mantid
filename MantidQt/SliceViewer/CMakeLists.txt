@@ -6,15 +6,16 @@ set ( SRC_FILES
 	src/EllipsoidPlaneSliceCalculator.cpp
 	src/LineOverlay.cpp
 	src/LineViewer.cpp
+  src/NonOrthogonal.cpp
 	src/PeakBoundingBox.cpp
 	src/PeaksViewerOverlayDialog.cpp
-        src/PeakOverlayInteractive.cpp
+  src/PeakOverlayInteractive.cpp
 	src/PeakOverlayViewFactoryBase.cpp
 	src/PeakPalette.cpp
 	src/PeakRepresentation.cpp
 	src/PeakRepresentationCross.cpp
-        src/PeakRepresentationEllipsoid.cpp
-        src/PeakRepresentationSphere.cpp
+  src/PeakRepresentationEllipsoid.cpp
+  src/PeakRepresentationSphere.cpp
 	src/PeaksTableColumnsDialog.cpp
 	src/PeakView.cpp
 	src/PeakViewFactory.cpp
@@ -41,20 +42,21 @@ set ( INC_FILES
 	inc/MantidQtSliceViewer/LineOverlay.h
 	inc/MantidQtSliceViewer/LinePlotOptions.h
 	inc/MantidQtSliceViewer/LineViewer.h
+  inc/MantidQtSliceViewer/NonOrthogonal.h
 	inc/MantidQtSliceViewer/NullPeaksPresenter.h
 	inc/MantidQtSliceViewer/PeakEditMode.h
-        inc/MantidQtSliceViewer/PeakBoundingBox.h
-        inc/MantidQtSliceViewer/PeakOverlayInteractive.h
+  inc/MantidQtSliceViewer/PeakBoundingBox.h
+  inc/MantidQtSliceViewer/PeakOverlayInteractive.h
 	inc/MantidQtSliceViewer/PeakOverlayView.h
 	inc/MantidQtSliceViewer/PeakOverlayViewFactory.h
 	inc/MantidQtSliceViewer/PeakOverlayViewFactoryBase.h
 	inc/MantidQtSliceViewer/PeakPalette.h
 	inc/MantidQtSliceViewer/PeaksPresenter.h
 	inc/MantidQtSliceViewer/PeakPrimitives.h
-        inc/MantidQtSliceViewer/PeakRepresentation.h
+  inc/MantidQtSliceViewer/PeakRepresentation.h
 	inc/MantidQtSliceViewer/PeakRepresentationCross.h
-        inc/MantidQtSliceViewer/PeakRepresentationEllipsoid.h
-        inc/MantidQtSliceViewer/PeakRepresentationSphere.h
+  inc/MantidQtSliceViewer/PeakRepresentationEllipsoid.h
+  inc/MantidQtSliceViewer/PeakRepresentationSphere.h
 	inc/MantidQtSliceViewer/PeaksTableColumnsDialog.h
 	inc/MantidQtSliceViewer/PeakView.h
 	inc/MantidQtSliceViewer/PeakViewColor.h
@@ -80,7 +82,7 @@ set ( MOC_FILES
 	inc/MantidQtSliceViewer/LineOverlay.h
 	inc/MantidQtSliceViewer/LineViewer.h
 	inc/MantidQtSliceViewer/LinePlotOptions.h
-        inc/MantidQtSliceViewer/PeakOverlayInteractive.h
+  inc/MantidQtSliceViewer/PeakOverlayInteractive.h
 	inc/MantidQtSliceViewer/PeaksTableColumnsDialog.h
 	inc/MantidQtSliceViewer/SliceViewer.h
 	inc/MantidQtSliceViewer/SliceViewerWindow.h
@@ -108,6 +110,7 @@ set ( TEST_FILES
     test/CompositePeaksPresenterTest.h
     test/ConcretePeaksPresenterTest.h
     test/EllipsoidPlaneSliceCalculatorTest.h
+    test/NonOrthogonalTest.h
     test/PeakBoundingBoxTest.h
     test/PeakPaletteTest.h
     test/PeakRepresentationCrossTest.h
