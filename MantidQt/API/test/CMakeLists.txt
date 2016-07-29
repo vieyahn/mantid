@@ -14,6 +14,7 @@ if ( CXXTEST_FOUND )
     
     cxxtest_add_test ( MantidQtAPITest ${TEST_FILES} )
     target_link_libraries( MantidQtAPITest LINK_PRIVATE ${TCMALLOC_LIBRARIES_LINKTIME} 
+            Crystal
             MantidQtAPI
             API
             DataObjects

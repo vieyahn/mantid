@@ -24,8 +24,10 @@
 #include "MantidQtAPI/FileDialogHandler.h"
 #include "MantidQtAPI/PlotAxis.h"
 #include "MantidQtAPI/MdSettings.h"
+#include "MantidQtAPI/NonOrthogonal.h"
 #include "MantidQtAPI/SignalBlocker.h"
 #include "MantidQtAPI/SignalRange.h"
+#include "MantidQtAPI/QwtRasterDataMDNonOrthogonal.h"
 #include "MantidQtSliceViewer/SliceViewer.h"
 #include "MantidQtSliceViewer/CustomTools.h"
 #include "MantidQtSliceViewer/DimensionSliceWidget.h"
@@ -695,6 +697,31 @@ void SliceViewer::updateDimensionSliceWidgets() {
  */
 void SliceViewer::setWorkspace(Mantid::API::IMDWorkspace_sptr ws) {
   m_ws = ws;
+
+  // If the workspace qualifies to be treated as a non-orthogonal workspace,
+  // then we swap to a QwtRasterDataMDNonOrthogonal
+  m_requiresSkewMatrix = API::requiresSkewMatrix(ws);
+  if (m_requiresSkewMatrix) {
+      delete m_data;
+      m_data = new API::QwtRasterDataMDNonOrthogonal();
+
+      // Set the skewMatrix for the non-orthogonal data
+      auto numberOfDimensions = ws->getNumDims();
+      Mantid::Kernel::DblMatrix skewMatrix(numberOfDimensions, numberOfDimensions,
+                                           true);
+      API::provideSkewMatrix(skewMatrix, ws);
+
+      // Transform from double to coord_t
+      std::size_t index = 0;
+      for (std::size_t i = 0; i < skewMatrix.numRows(); ++i) {
+          for (std::size_t j = 0; j < skewMatrix.numCols(); ++j) {
+              m_skewMatrix[index]
+                  = static_cast<Mantid::coord_t>(skewMatrix[i][j]);
+              ++index;
+          }
+      }
+  }
+
   m_data->setWorkspace(ws);
   m_plot->setWorkspace(ws);
 
@@ -1492,11 +1519,22 @@ void SliceViewer::showInfoAt(double x, double y) {
   // Show the coordinates in the viewed workspace
   if (!m_ws)
     return;
+
   VMD coords(m_ws->getNumDims());
   for (size_t d = 0; d < m_ws->getNumDims(); d++)
     coords[d] = VMD_t(m_dimWidgets[d]->getSlicePoint());
   coords[m_dimX] = VMD_t(x);
   coords[m_dimY] = VMD_t(y);
+
+  // Perform non-orthogonal correction if required
+  if (m_requiresSkewMatrix) {
+    auto v1 = coords[0];
+    auto v2 = coords[1];
+    auto v3 = coords[2];
+    coords[m_dimX] = v1 * m_skewMatrix[0 + 3*m_dimX] + v2 * m_skewMatrix[1 + 3*m_dimX] + v3 * m_skewMatrix[2 + 3*m_dimX];
+    coords[m_dimY] = v1 * m_skewMatrix[0 + 3*m_dimY] + v2 * m_skewMatrix[1 + 3*m_dimY] + v3 * m_skewMatrix[2 + 3*m_dimY];
+  }
+
   signal_t signal =
       m_ws->getSignalWithMaskAtVMD(coords, this->m_data->getNormalization());
   ui.lblInfoX->setText(QString::number(x, 'g', 4));

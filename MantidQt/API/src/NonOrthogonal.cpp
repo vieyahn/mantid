@@ -1,4 +1,4 @@
-#include "MantidQtSliceViewer/NonOrthogonal.h"
+#include "MantidQtAPI/NonOrthogonal.h"
 #include "MantidAPI/IMDWorkspace.h"
 #include "MantidAPI/Sample.h"
 #include "MantidAPI/Run.h"
@@ -166,20 +166,20 @@ template <typename T> bool doRequiresSkewMatrix(T workspace)
 }
 }
 
-namespace Mantid
+namespace MantidQt
 {
-namespace SliceViewer
+namespace API
 {
 
-void provideSkewMatrix(Kernel::DblMatrix &skewMatrix,
-                       API::IMDWorkspace_sptr workspace)
+void provideSkewMatrix(Mantid::Kernel::DblMatrix &skewMatrix,
+                       Mantid::API::IMDWorkspace_const_sptr workspace)
 {
-    if (Mantid::API::IMDEventWorkspace_sptr eventWorkspace
-        = boost::dynamic_pointer_cast<Mantid::API::IMDEventWorkspace>(
+    if (Mantid::API::IMDEventWorkspace_const_sptr eventWorkspace
+        = boost::dynamic_pointer_cast<const Mantid::API::IMDEventWorkspace>(
             workspace)) {
         doProvideSkewMatrix(skewMatrix, eventWorkspace);
-    } else if (Mantid::API::IMDHistoWorkspace_sptr histoWorkspace
-               = boost::dynamic_pointer_cast<Mantid::API::IMDHistoWorkspace>(
+    } else if (Mantid::API::IMDHistoWorkspace_const_sptr histoWorkspace
+               = boost::dynamic_pointer_cast<const Mantid::API::IMDHistoWorkspace>(
                    workspace)) {
         doProvideSkewMatrix(skewMatrix, histoWorkspace);
     } else {
@@ -189,16 +189,16 @@ void provideSkewMatrix(Kernel::DblMatrix &skewMatrix,
     }
 }
 
-bool requiresSkewMatrix(API::IMDWorkspace_sptr workspace)
+bool requiresSkewMatrix(Mantid::API::IMDWorkspace_const_sptr workspace)
 {
 
     auto requiresSkewMatrix(false);
-    if (Mantid::API::IMDEventWorkspace_sptr eventWorkspace
-        = boost::dynamic_pointer_cast<Mantid::API::IMDEventWorkspace>(
+    if (Mantid::API::IMDEventWorkspace_const_sptr eventWorkspace
+        = boost::dynamic_pointer_cast<const Mantid::API::IMDEventWorkspace>(
             workspace)) {
         requiresSkewMatrix = doRequiresSkewMatrix(eventWorkspace);
-    } else if (Mantid::API::IMDHistoWorkspace_sptr histoWorkspace
-               = boost::dynamic_pointer_cast<Mantid::API::IMDHistoWorkspace>(
+    } else if (Mantid::API::IMDHistoWorkspace_const_sptr histoWorkspace
+               = boost::dynamic_pointer_cast<const Mantid::API::IMDHistoWorkspace>(
                    workspace)) {
         requiresSkewMatrix = doRequiresSkewMatrix(histoWorkspace);
     } else {
@@ -208,5 +208,6 @@ bool requiresSkewMatrix(API::IMDWorkspace_sptr workspace)
     }
     return requiresSkewMatrix;
 }
+
 }
 }

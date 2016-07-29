@@ -364,6 +364,11 @@ private:
   /// Logger
   Mantid::Kernel::Logger m_logger;
 
+  /// NonOrthogonal Fields
+  Mantid::coord_t m_skewMatrix[9];
+
+  bool m_requiresSkewMatrix;
+
   // -------------------------- Controllers ------------------------
   boost::shared_ptr<CompositePeaksPresenter> m_peaksPresenter;
 
@@ -383,6 +388,7 @@ private:
   static const QString NumEventsNormalizationKey;
 
   AspectRatioType m_aspectRatioType;
+
 };
 
 } // namespace SliceViewer

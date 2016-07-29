@@ -6,7 +6,6 @@ set ( SRC_FILES
 	src/EllipsoidPlaneSliceCalculator.cpp
 	src/LineOverlay.cpp
 	src/LineViewer.cpp
-  src/NonOrthogonal.cpp
 	src/PeakBoundingBox.cpp
 	src/PeaksViewerOverlayDialog.cpp
   src/PeakOverlayInteractive.cpp
@@ -42,7 +41,6 @@ set ( INC_FILES
 	inc/MantidQtSliceViewer/LineOverlay.h
 	inc/MantidQtSliceViewer/LinePlotOptions.h
 	inc/MantidQtSliceViewer/LineViewer.h
-  inc/MantidQtSliceViewer/NonOrthogonal.h
 	inc/MantidQtSliceViewer/NullPeaksPresenter.h
 	inc/MantidQtSliceViewer/PeakEditMode.h
   inc/MantidQtSliceViewer/PeakBoundingBox.h
@@ -110,7 +108,6 @@ set ( TEST_FILES
     test/CompositePeaksPresenterTest.h
     test/ConcretePeaksPresenterTest.h
     test/EllipsoidPlaneSliceCalculatorTest.h
-    test/NonOrthogonalTest.h
     test/PeakBoundingBoxTest.h
     test/PeakPaletteTest.h
     test/PeakRepresentationCrossTest.h

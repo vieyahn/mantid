@@ -1,8 +1,8 @@
-#ifndef SLICE_VIEWER_NON_ORTHOGONAL_TEST_H_
-#define SLICE_VIEWER_NON_ORTHOGONAL_TEST_H_
+#ifndef MANTIDQT_API_NON_ORTHOGONAL_TEST_H_
+#define MANTIDQT_API_NON_ORTHOGONAL_TEST_H_
 
 #include <cxxtest/TestSuite.h>
-#include "MantidQtSliceViewer/NonOrthogonal.h"
+#include "MantidQtAPI/NonOrthogonal.h"
 #include "MantidAPI/IMDEventWorkspace.h"
 #include "MantidAPI/IMDHistoWorkspace.h"
 #include "MantidTestHelpers/MDEventsTestHelper.h"
@@ -16,12 +16,12 @@
 #include "MantidDataObjects/CoordTransformAffine.h"
 #include "MantidCrystal/SetUB.h"
 
-
 using namespace Mantid::DataObjects;
 using namespace Mantid::Kernel;
 using namespace Mantid::API;
-using namespace Mantid::SliceViewer;
 using namespace Mantid::Geometry;
+using namespace MantidQt::API;
+
 
 class NonOrthogonalTest : public CxxTest::TestSuite {
 public:
@@ -58,23 +58,14 @@ public:
 
   void test_that_non_orhtogonal_matrix_creates_expected_skew_matrix() {
     // Arrange
-    auto eventWorkspace = getNonOrthogonalEventWorkspace(true);
+    //auto eventWorkspace = getNonOrthogonalEventWorkspace(true);
 
     // Act
-    Mantid::Kernel::DblMatrix matrix(4,4,true);
-    provideSkewMatrix(matrix, eventWorkspace);
+    //Mantid::Kernel::DblMatrix matrix(4,4,true);
+    //provideSkewMatrix(matrix, eventWorkspace);
 
     // Assert
-    std::cout << "===============" <<std::endl;
-    std::cout << matrix.numCols()<<std::endl;;
-    std::cout << matrix.numRows()<<std::endl;;
-    std::cout << std::endl;
-    for (size_t x = 0; x < 3; ++x) {
-        for (size_t y = 0; y < 3; ++y) {
-          std::cout << matrix[x][y] << " ";
-        }
-        std::cout << std::endl;
-    }
+    // How to test here? Maybe follow tests from vtkNonOrthogonalToDataSetTest
   }
 
 
@@ -86,7 +77,7 @@ private:
     auto workspace = MDEventsTestHelper::makeMDEWWithFrames<3>(5, -10, 10, frame);
     return workspace;
   }
-
+#if 0
   IMDEventWorkspace_sptr getNonOrthogonalEventWorkspace(bool nonUnityTransform, bool wrongCoords = false,
                                       bool forgetUB = false, bool forgetWmat = false,
                                       bool forgetAffmat = false, double scale = 1.0) {
@@ -159,6 +150,7 @@ private:
 
       return ws;
   }
+#endif
 
 };
 
