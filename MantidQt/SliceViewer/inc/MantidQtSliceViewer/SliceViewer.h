@@ -13,6 +13,7 @@
 #include "MantidQtAPI/MdSettings.h"
 #include "MantidQtMantidWidgets/SafeQwtPlot.h"
 #include "MantidQtAPI/SyncedCheckboxes.h"
+#include "MantidQtSliceViewer/CoordinateTransform.h"
 #include "MantidQtSliceViewer/LineOverlay.h"
 #include "MantidQtSliceViewer/PeaksPresenter.h"
 #include "MantidQtSliceViewer/ZoomablePeaksView.h"
@@ -160,6 +161,7 @@ public slots:
   void showInfoAt(double, double);
 
   // Change in view slots
+  void checkForHKLDimension(int index, int dim, int oldDim);
   void changedShownDim(int index, int dim, int oldDim);
   void updateDisplaySlot(int index, double value);
   void resetZoom();
@@ -363,6 +365,9 @@ private:
 
   /// Logger
   Mantid::Kernel::Logger m_logger;
+
+  ///NonOrthogonal Fields
+  std::unique_ptr<CoordinateTransform> m_coordinateTransform; 
 
   // -------------------------- Controllers ------------------------
   boost::shared_ptr<CompositePeaksPresenter> m_peaksPresenter;
