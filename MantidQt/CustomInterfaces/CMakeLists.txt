@@ -13,6 +13,8 @@ set ( SRC_FILES
 	src/EnggDiffraction/EnggDiffFittingViewQtWidget.cpp
 	src/EnggDiffraction/EnggDiffractionPresenter.cpp
 	src/EnggDiffraction/EnggDiffractionViewQtGUI.cpp
+    src/EnggDiffraction/EnggDiffPeakDiagPresenter.cpp
+    src/EnggDiffraction/EnggDiffPeakDiagView.cpp
 	src/Homer.cpp
 	src/Indirect/AbsorptionCorrections.cpp
 	src/Indirect/ApplyPaalmanPings.cpp
@@ -155,9 +157,13 @@ set ( INC_FILES
 	inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionPresWorker.h
 	inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionPresenter.h
 	inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionViewQtGUI.h
+    inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiagPresenter.h
+    inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiagView.h
 	inc/MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffFittingPresenter.h
 	inc/MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffractionPresenter.h
 	inc/MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffractionView.h
+    inc/MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffPeakDiagPresenter.h
+    inc/MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffPeakDiagView.h
 	inc/MantidQtCustomInterfaces/Homer.h
 	inc/MantidQtCustomInterfaces/Indirect/AbsorptionCorrections.h
 	inc/MantidQtCustomInterfaces/Indirect/ApplyPaalmanPings.h
