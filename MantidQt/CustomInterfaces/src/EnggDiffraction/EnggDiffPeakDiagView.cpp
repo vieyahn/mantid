@@ -1,12 +1,12 @@
 #include "MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiagView.h"
-#include "MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffFittingView.h"
+#include "MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiagPresenter.h"
 
 namespace MantidQt {
 namespace CustomInterfaces {
 
 	EnggDiffPeakDiagView::EnggDiffPeakDiagView(QWidget *parent)
 	: IEnggDiffPeakDiagView() {
-		//Todo
+		initLayout();
 	}
 
 	EnggDiffPeakDiagView::~EnggDiffPeakDiagView() {}
@@ -16,7 +16,7 @@ namespace CustomInterfaces {
 		m_ui.setupUi(this);
 
 		// Next create a presenter to handle view
-		m_presenter = std::make_shared<IEnggDiffPeakDiagPresenter>();
+		m_presenter = std::make_shared<EnggDiffPeakDiagPresenter>(this);
 
 
 

@@ -5,6 +5,7 @@
 #include "MantidQtAPI/HelpWindow.h"
 #include "MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionPresenter.h"
 #include "MantidQtMantidWidgets/MWRunFiles.h"
+#include "MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiagView.h"
 
 #include <Poco/DirectoryIterator.h>
 #include <Poco/Path.h>
@@ -808,7 +809,9 @@ void EnggDiffractionViewQtGUI::rebinMultiperiodClicked() {
 
 void EnggDiffractionViewQtGUI::openPeakDiag()
 {
-	//TODO
+	auto * peakView = new EnggDiffPeakDiagView;
+	peakView->setVisible(true);
+	
 }
 
 void EnggDiffractionViewQtGUI::browseInputDirCalib() {

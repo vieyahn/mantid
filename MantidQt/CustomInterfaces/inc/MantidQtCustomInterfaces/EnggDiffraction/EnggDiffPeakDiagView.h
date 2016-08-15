@@ -76,6 +76,9 @@ private:
 
 	/// Holds shared pointer to presenter
 	std::shared_ptr<IEnggDiffPeakDiagPresenter> m_presenter;
+
+	/// Sets up any signals and slots used by the interface
+	void setupSignalsSlots();
 };
 
 } // namespace MantidQt
