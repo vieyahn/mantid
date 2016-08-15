@@ -1,5 +1,5 @@
-#ifndef MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFRACTIONPEAKDIAGPRESENTER_H_
-#define MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFRACTIONPEAKDIAGPRESENTER_H_
+#ifndef MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFPEAKDIAGPRESENTER_H_
+#define MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFPEAKDIAGPRESENTER_H_
 
 #include "MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffPeakDiagPresenter.h"
 #include "MantidQtCustomInterfaces/EnggDiffraction/IEnggDiffPeakDiagView.h"
@@ -41,11 +41,17 @@ class MANTIDQT_CUSTOMINTERFACES_DLL EnggDiffPeakDiagPresenter :
 		public IEnggDiffPeakDiagPresenter {
 
 public:
+
 	EnggDiffPeakDiagPresenter(IEnggDiffPeakDiagView *view);
 
 	~EnggDiffPeakDiagPresenter() override;
 
-	void notify(IEnggDiffPeakDiagPresenter::Notification notifications) override;
+	void notify(const IEnggDiffPeakDiagPresenter::Notification notification) override;
+
+
+private:
+	/// The view for this presenter (MVP)
+	IEnggDiffPeakDiagView *const m_view;
 
 };
 
@@ -53,4 +59,4 @@ public:
 } // namespace CustomInterfaces
 
 
-#endif // MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFRACTIONPEAKDIAGPRESENTER_H_
+#endif // MANTIDQTCUSTOMINTERFACES_ENGGDIFF_ENGGDIFFPEAKDIAGPRESENTER_H_

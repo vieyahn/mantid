@@ -49,7 +49,7 @@ public:
 	 * 
 	 * @param notification Flag indicating what action has been performed
 	 */
-	virtual void notify(IEnggDiffPeakDiagPresenter::Notification notification) = 0;
+	virtual void notify(const IEnggDiffPeakDiagPresenter::Notification notification) = 0;
 
 };
 

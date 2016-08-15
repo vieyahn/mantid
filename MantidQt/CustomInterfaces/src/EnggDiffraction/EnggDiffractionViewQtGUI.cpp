@@ -160,6 +160,9 @@ void EnggDiffractionViewQtGUI::doSetupTabCalib() {
   connect(m_uiTabCalib.comboBox_calib_cropped_bank_name,
           SIGNAL(currentIndexChanged(int)), this, SLOT(enableSpecNos()));
 
+  connect(m_uiTabCalib.pushButton_peak_diag, SIGNAL(released()), this,
+	  SLOT(openPeakDiag()));
+
   enableCalibrateFocusFitUserActions(true);
 }
 
@@ -801,6 +804,11 @@ void EnggDiffractionViewQtGUI::rebinTimeClicked() {
 
 void EnggDiffractionViewQtGUI::rebinMultiperiodClicked() {
   m_presenter->notify(IEnggDiffractionPresenter::RebinMultiperiod);
+}
+
+void EnggDiffractionViewQtGUI::openPeakDiag()
+{
+	//TODO
 }
 
 void EnggDiffractionViewQtGUI::browseInputDirCalib() {

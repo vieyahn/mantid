@@ -35,6 +35,11 @@ class IEnggDiffPeakDiagView {
 
 public:
   virtual ~IEnggDiffPeakDiagView() = default;
+
+  /**
+   * Initializes the window to be displayed
+   */
+  virtual void initLayout() = 0;
 };
 
 } // namespace MantidQt

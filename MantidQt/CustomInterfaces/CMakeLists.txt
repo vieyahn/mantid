@@ -420,7 +420,7 @@ set ( UI_FILES inc/MantidQtCustomInterfaces/DataComparison.ui
                inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionQtTabPreproc.ui
                inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionQtTabFitting.ui
                inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionQtTabSettings.ui
-               inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffractionQtTabPeakDiag.ui
+               inc/MantidQtCustomInterfaces/EnggDiffraction/EnggDiffPeakDiag.ui
                inc/MantidQtCustomInterfaces/Indirect/AbsorptionCorrections.ui
                inc/MantidQtCustomInterfaces/Indirect/ApplyPaalmanPings.ui
                inc/MantidQtCustomInterfaces/Indirect/CalculatePaalmanPings.ui

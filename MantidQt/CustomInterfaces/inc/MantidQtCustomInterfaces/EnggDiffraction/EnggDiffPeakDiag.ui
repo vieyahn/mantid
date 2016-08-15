@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EnggDiffractionQtTabPeakDiag</class>
- <widget class="QWidget" name="EnggDiffractionQtTabPeakDiag">
+ <class>EnggDiffPeakDiag</class>
+ <widget class="QWidget" name="EnggDiffPeakDiag">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -184,6 +184,7 @@ private slots:
   void focusStopClicked();
   void rebinTimeClicked();
   void rebinMultiperiodClicked();
+  void openPeakDiag();
 
   // slots of the settings tab/section of the interface
   void browseInputDirCalib();
