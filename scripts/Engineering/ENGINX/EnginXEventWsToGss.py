@@ -1,7 +1,9 @@
 import mantid.api as mantidApi
 import mantid.simpleapi as mantidSapi
 
-def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", detector_indicies="", gsas_cal_fname="", out_fname_pattern="" ):
+#pylint: disable=too-many-arguments
+def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", detector_indicies="",
+                                  gsas_cal_fname="", out_fname_pattern="", out_f_dir="" ):
     """
     Runs a calibration using the input vanadium and cerium oxide
     runs then saves this as a .prm file. Using this calibration
@@ -21,25 +23,22 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
      defaults to 'all' if not specified
 
     @param :: detector_indicies Optional: The detectors to use for focusing
-    
-    @param :: gsas_cal_fname Optional: Allows the user to specify a filename and path 
-    for the GSAS calibration file
-    
-    @param :: out_fname_pattern Optional:: Allows the user to specify a custom naming
-    scheme for the focused files. This will have the suffix '_<fileNumber>' if a list
-    of files is used where the 2nd file on the list would be '<out_fname_pattern>_2'
+
+    @param :: gsas_cal_fname Optional: Allows the user to specify a filename and path
+     for the GSAS calibration file
+
+    @param :: out_fname_pattern Optional: Allows the user to specify a custom naming
+     scheme for the focused files. This will have the suffix '_<fileNumber>' if a list
+     of files is used where the 2nd file on the list would be '<out_fname_pattern>_2'
+
+    @param :: out_f_dir Optional: Allows the user to select where to save output files
     """
 
-    #Load to check all data exists
-    #First vanadium and cerium calibration runs
-    van_ws = load_van_calib(van_file)
-    cer_ws = load_cer_calib(cer_file)
-
     #Next perform the calibration
-    calibrate(van_ws=van_ws, cer_ws=cer_ws, bank=bank, gsas_cal_fname=gsas_cal_fname)
+    calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
 
     #Load run data
-    input_workspaces = load_run_data(input_file_list)
+    #input_workspaces = load_run_data(input_file_list)
 
     #Rebin all event workspaces to histogram workspace
     rebinned_workspaces = rebin_workspaces(input_workspaces)
@@ -50,25 +49,22 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
     #Finally save each run
     save_gss_files(focused_workspaces)
 
-def load_van_calib(van_filePath):
+def load_van_calib(van_file_name):
     """
     Attempts to load a vanadium calibration file at
      the file path input
-    @param :: van_filePath The location of the vanadium run
-    @returns :: The vanadium run workspace
+    @param :: van_file_name The name of the vanadium run
     """
-    van_ws = mantidSapi.Load(van_filePath)
-    return van_ws
+    mantidSapi.Load(Filename=van_file_name, OutputWorkspace=van_file_name)
 
-def load_cer_calib(cer_filePath):
+
+def load_cer_calib(cer_file_name):
     """
     Attempts to load a cerium oxide calibration file at
      the file path input
-    @param :: cer_filePath The location of the cerium run
-    @returns :: The cerium oxide run workspace
+    @param :: cer_file_name The name of the cerium run
     """
-    cer_ws = mantidSapi.Load(cer_filePath)
-    return cer_ws
+    mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)
 
 def load_run_data(file_list):
     """
@@ -85,23 +81,28 @@ def load_run_data(file_list):
 
     return loadedList
 
-def calibrate(van_ws, cer_ws, bank, gsas_cal_fname):
+def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     """
     Runs the calibration using the vanadium and cerium
     workspaces entered
-    @param :: van_ws The workspace containing a vanadium run
-    @param :: cer_ws The workspace containing a cerium run
+    @param :: van_file_name The filename of the vanadium run
+    @param :: cer_file_name The filename of the vanadium run
     @param :: bank The bank to run the calibration on
     @param :: detector_indicies List/Range of detectors to calibrate
     @param :: gsas_cal_fname The filename to save the GSAS param file to
     """
 
+        #Load to check all data exists
+    #First vanadium and cerium calibration runs
+    load_van_calib(van_file_name)
+    load_cer_calib(cer_file_name)
+
     van_integral_ws = "van_integral_ws"
     van_curves_ws = "van_curves_ws"
 
-    #Apply vanadium correction before calibration 
+    #Apply vanadium correction before calibration
     mantidSapi.EnggVanadiumCorrections(
-        VanadiumWorkspace=van_ws, OutIntegrationWorkspace=van_integral_ws, OutCurvesWorkspace=van_curves_ws)
+        VanadiumWorkspace=van_file_name, OutIntegrationWorkspace=van_integral_ws, OutCurvesWorkspace=van_curves_ws)
 
     # Create lists for multiple return values which can be n length long
 
@@ -109,39 +110,56 @@ def calibrate(van_ws, cer_ws, bank, gsas_cal_fname):
     difC_cal = []
     tZero_cal = []
     fitted_peaks_cal = []
-    
-        
+
+
     if bank == "":
         print "Calibrating both"
         for i in range(2):
             # Calibration for bank one and two
             # We could use zip() however EnggCalibrate fails if we nest it so just use longer method
             tmp_a, tmp_c, tmp_zero, tmp_fitted = mantidSapi.EnggCalibrate(
-                InputWorkspace=cer_ws, VanIntegrationWorkspace=van_integral_ws,
+                InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
                 VanCurvesWorkspace=van_curves_ws, Bank=str(i+1))
-            
-            
-            # We only need difc and tZero so comment out the other lines if they need them
-            difC_cal.append(tmp_c)
-            tZero_cal.append(tmp_zero)
-            #tmp_fitted.append(tmp_fitted)
-            #difA_cal.append(tmp_a)
-        
-        # Next set bank for when we save to GSAS
-        bank = ['North', 'South']
-            
+
     else:
         print "Calibrating specified bank"
-        difA_cal, difC_cal, tZero_cal, fitted_peaks_cal = mantidSapi.EnggCalibrate(InputWorkspace=cer_ws, VanadiumWorkspace=van_ws, Bank=bank)
-        
-        
+        tmp_a, tmp_c, tmp_zero, tmp_fitted = mantidSapi.EnggCalibrate(
+                InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
+                VanCurvesWorkspace=van_curves_ws, Bank=bank)
+                
+    # We only need difc and tZero so comment out the other lines if they need them
+    difC_cal.append(tmp_c)
+    tZero_cal.append(tmp_zero)
+    #tmp_fitted.append(tmp_fitted)
+    #difA_cal.append(tmp_a)
+    
+    #Strip the file names so they are run number only
+    van_run_number = ''.join(i for i in van_file_name if i.isdigit())
+    cer_run_number = ''.join(i for i in cer_file_name if i.isdigit())
+    
+    #Then strip any leading zeros
+    van_run_number = van_run_number.lstrip("0")
+    cer_run_number = cer_run_number.lstrip("0")
+    
+    #EnggUtils expects a bank list
+    bank_list = []
+    
+    #If calibration save file name not specified generate it
+    if gsas_cal_fname == "":
+        if bank == "":
+            gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_all_banks.prm'
+            
+        else:
+            gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_bank_' + str(bank)
+            # Cast bank to list for EnggUtils
+            bank_list.append(bank)
+
     #Finally save out calibration
     import EnggUtils
     EnggUtils.write_ENGINX_GSAS_iparam_file(
-        output_file=gsas_cal_fname, difc=difC_cal, tzero=tZero_cal, bank_names=bank, 
-        ceria_run=cer_ws, vanadium_run=van_ws)
-    
-        
+        output_file=gsas_cal_fname, difc=difC_cal, tzero=tZero_cal, bank_names=bank_list,
+        ceria_run=cer_file_name, vanadium_run=van_file_name)
+
 
 def rebin_workspaces(input_workspaces):
     """
@@ -169,11 +187,11 @@ import os
 
 inList = []
 for file in os.listdir("D:\\ENGINX Test Data\\SplitEvent"):
-    inList.append("D:\\ENGINX Test Data\\SplitEvent\\" + file)
+    inList.append(file)
     print file
 
 for list in inList:
     print list
 
 
-convert_event_ws_to_histo_gss(van_file="ENGINX00246043.nxs",cer_file="ENGINX00249918.nxs", input_file_list=inList)
+convert_event_ws_to_histo_gss(van_file="ENGINX00246043.nxs",cer_file="ENGINX00249918.nxs", input_file_list=inList, bank="North")
