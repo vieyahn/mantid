@@ -37,17 +37,18 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
     #Next perform the calibration
     calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
 
-    #Load run data
-    #input_workspaces = load_run_data(input_file_list)
-
-    #Rebin all event workspaces to histogram workspace
-    rebinned_workspaces = rebin_workspaces(input_workspaces)
-
-    #Focus each workspace
-    focused_workspaces = focus_workspaces(rebinned_workspaces)
-
-    #Finally save each run
-    save_gss_files(focused_workspaces)
+    for input_file in input_file_list
+        #Load run data
+        input_workspace = load_run_data(input_file)
+    
+        #Rebin all event workspaces to histogram workspace
+        rebinned_workspace = rebin_workspaces(input_workspace)
+    
+        #Focus each workspace
+        focused_workspace = focus_workspaces(rebinned_workspace)
+    
+        #Finally save each run
+        save_gss_files(focused_workspace)
 
 def load_van_calib(van_file_name):
     """
@@ -57,7 +58,6 @@ def load_van_calib(van_file_name):
     """
     mantidSapi.Load(Filename=van_file_name, OutputWorkspace=van_file_name)
 
-
 def load_cer_calib(cer_file_name):
     """
     Attempts to load a cerium oxide calibration file at
@@ -65,21 +65,6 @@ def load_cer_calib(cer_file_name):
     @param :: cer_file_name The name of the cerium run
     """
     mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)
-
-def load_run_data(file_list):
-    """
-    Attempts to load all runs specified in the run list into
-    workspaces for later processing
-    @param :: file_list The list of event workspaces to load
-    @returns :: A list of loaded workspaces
-    """
-    loadedList = []
-    for filePath in file_list:
-        #Have to assign to WS then append that to list
-        tempWs = mantidSapi.Load(filePath)
-        loadedList.append(tempWs)
-
-    return loadedList
 
 def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     """
@@ -154,31 +139,56 @@ def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
             # Cast bank to list for EnggUtils
             bank_list.append(bank)
 
-    #Finally save out calibration
+    # Save out calibration
     import EnggUtils
     EnggUtils.write_ENGINX_GSAS_iparam_file(
         output_file=gsas_cal_fname, difc=difC_cal, tzero=tZero_cal, bank_names=bank_list,
         ceria_run=cer_file_name, vanadium_run=van_file_name)
+        
+    #To end tidy up any workspaces
+    #First hardcoded output from enggCalibrate
+    mantidSapi.DeleteWorkspace("engg_fit_ws_dsp")
+    mantidSapi.DeleteWorkspace("engg_van_ws_dsp")
+    
+    #Any created workspaces
+    mantidSapi.DeleteWorkspace(tmp_fitted)
+    mantidSapi.DeleteWorkspace(van_curves_ws)
+    mantidSapi.DeleteWorkspace(van_integral_ws)
+    
+    #Loaded calibration workspaces
+    mantidSapi.DeleteWorkspace(van_file_name)
+    mantidSapi.DeleteWorkspace(cer_file_name)
+    
+def load_run_data(file_list):
+    """
+    Attempts to load the run specified into a workspace 
+    for later processing
+    @param :: file_list The list of event workspaces to load
+    @returns :: The loaded workspaces
+    """
+    mantidSapi.Load(InputWorkspace=file_path, OutputWorkspace=file_path)
+    
+    return file_path
+    
+def rebin_workspaces(input_workspace):
+    """
+    Rebins the event workspace into histogram workspace
+    @param :: input_workspace The event workspaces to convertEventWsToHistoGss
+    @returns :: Event workspaces
+    """
+    
+    
+def focus_workspaces(rebinned_workspace):
+    """
+    Focuses the histogram workspace using 'EnggFocus'
+    @param :: rebinned_workspace Workspace to focus
+    @returns :: The focused workspace
+    """
 
-
-def rebin_workspaces(input_workspaces):
+def save_gss_files(focused_workspace):
     """
-    Rebins the list of event workspaces into histogram workspaces
-    @param :: input_workspaces The list of event workspaces to convertEventWsToHistoGss
-    @returns :: A list of event workspaces
-    """
-
-def focus_workspaces(rebinned_workspaces):
-    """
-    Focuses the list of histogram workspaces using 'EnggFocus'
-    @param :: rebinned_workspaces The list of workspaces to focus
-    @returns :: A list of focused workspaces
-    """
-
-def save_gss_files(focused_workspaces):
-    """
-    Takes a list of focused workspaces and saves them to Gss files
-    @param :: focus_workspaces The list of workspaces to save out
+    Takes a focused workspace and saves it to a GS files
+    @param :: focus_workspace The workspace to save out
     """
 
 #TODO remove hardcoded file paths used during testing
