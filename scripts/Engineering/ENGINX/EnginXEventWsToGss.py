@@ -33,9 +33,9 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
 
     @param :: out_f_dir Optional: Allows the user to select where to save output files
     """
-
+    
     #Next perform the calibration
-    calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
+    van_curves, van_integral = van_calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
 
     for input_file in input_file_list
         #Load run data
@@ -64,17 +64,18 @@ def load_cer_calib(cer_file_name):
      the file path input
     @param :: cer_file_name The name of the cerium run
     """
-    mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)
-
+    mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)  
+    
 def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     """
     Runs the calibration using the vanadium and cerium
     workspaces entered
     @param :: van_file_name The filename of the vanadium run
-    @param :: cer_file_name The filename of the vanadium run
+    @param :: cer_file_name The filename of the cerium run
     @param :: bank The bank to run the calibration on
     @param :: detector_indicies List/Range of detectors to calibrate
     @param :: gsas_cal_fname The filename to save the GSAS param file to
+    @returns :: The vanadium curves and integration workspaces
     """
 
         #Load to check all data exists
@@ -146,18 +147,19 @@ def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
         ceria_run=cer_file_name, vanadium_run=van_file_name)
         
     #To end tidy up any workspaces
-    #First hardcoded output from enggCalibrate
+    #First hard coded output from enggCalibrate
     mantidSapi.DeleteWorkspace("engg_fit_ws_dsp")
     mantidSapi.DeleteWorkspace("engg_van_ws_dsp")
     
-    #Any created workspaces
+    #tmp created workspaces
     mantidSapi.DeleteWorkspace(tmp_fitted)
-    mantidSapi.DeleteWorkspace(van_curves_ws)
-    mantidSapi.DeleteWorkspace(van_integral_ws)
-    
+   
     #Loaded calibration workspaces
     mantidSapi.DeleteWorkspace(van_file_name)
     mantidSapi.DeleteWorkspace(cer_file_name)
+    
+    return van_curves_ws, van_integral_ws
+    
     
 def load_run_data(file_list):
     """
