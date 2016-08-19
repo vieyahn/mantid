@@ -3,7 +3,7 @@ import mantid.simpleapi as mantidSapi
 
 #pylint: disable=too-many-arguments
 def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", detector_indicies="",
-                                  gsas_cal_fname="", out_fname_pattern="", out_f_dir="" ):
+                                  gsas_cal_fname="", out_fname_pattern="", out_f_dir="", rebin_param=""):
     """
     Runs a calibration using the input vanadium and cerium oxide
     runs then saves this as a .prm file. Using this calibration
@@ -32,23 +32,25 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
      of files is used where the 2nd file on the list would be '<out_fname_pattern>_2'
 
     @param :: out_f_dir Optional: Allows the user to select where to save output files
+    
+    @param :: rebin_param Optional: Allows the user to override the rebin parameters
     """
     
     #Next perform the calibration
-    van_curves, van_integral = van_calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
+    van_curves, van_integral = calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
 
-    for input_file in input_file_list
+    for input_file in input_file_list:
         #Load run data
         input_workspace = load_run_data(input_file)
     
         #Rebin all event workspaces to histogram workspace
-        rebinned_workspace = rebin_workspaces(input_workspace)
+        rebinned_workspace = rebin_workspace(input_workspace, rebin_param)
     
         #Focus each workspace
-        focused_workspace = focus_workspaces(rebinned_workspace)
+        focused_workspace = focus_workspace(rebinned_workspace)
     
         #Finally save each run
-        save_gss_files(focused_workspace)
+        save_gss_file(focused_workspace)
 
 def load_van_calib(van_file_name):
     """
@@ -161,33 +163,40 @@ def calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     return van_curves_ws, van_integral_ws
     
     
-def load_run_data(file_list):
+def load_run_data(file_path):
     """
     Attempts to load the run specified into a workspace 
     for later processing
-    @param :: file_list The list of event workspaces to load
-    @returns :: The loaded workspaces
+    @param :: file_path The path of the event workspaces to load
+    @returns :: The loaded workspace
     """
-    mantidSapi.Load(InputWorkspace=file_path, OutputWorkspace=file_path)
+    mantidSapi.Load(Filename=file_path, OutputWorkspace=file_path)
     
     return file_path
     
-def rebin_workspaces(input_workspace):
+def rebin_workspace(input_workspace, params):
     """
     Rebins the event workspace into histogram workspace
     @param :: input_workspace The event workspaces to convertEventWsToHistoGss
+    @param :: params The parameters to use during rebin, if blank default
+    is selected
     @returns :: Event workspaces
     """
+    output_workspace = input_workspace + '_rebin'
+    if params == "":
+        # Use hardcoded default rebin parameters
+        params = -0.00050000
+    mantidSapi.Rebin(InputWorkspace=input_workspace, Params=params, OutputWorkspace=output_workspace)
+    return output_workspace
     
-    
-def focus_workspaces(rebinned_workspace):
+def focus_workspace(rebinned_workspace):
     """
     Focuses the histogram workspace using 'EnggFocus'
     @param :: rebinned_workspace Workspace to focus
     @returns :: The focused workspace
     """
 
-def save_gss_files(focused_workspace):
+def save_gss_file(focused_workspace):
     """
     Takes a focused workspace and saves it to a GS files
     @param :: focus_workspace The workspace to save out
