@@ -1688,9 +1688,7 @@ void SliceViewer::checkForHKLDimension() {
 			switchQWTRaster(useNonOrthogonal);
 			//Tell Nonorth whether to toggle or not here?
 		}
-		//if (!ui.btnNonOrthogonalToggle->isChecked()) {
-		//	switchQWTRaster(!isHKL);
-		//}
+		emit setNonOrthogonalbtn();
 	}
 	
 }
