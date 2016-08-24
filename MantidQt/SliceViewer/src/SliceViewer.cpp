@@ -32,7 +32,6 @@
 #include "MantidQtSliceViewer/CustomTools.h"
 #include "MantidQtSliceViewer/DimensionSliceWidget.h"
 #include "MantidQtSliceViewer/LineOverlay.h"
-//#include "MantidQtSliceViewer/NonOrthogonalOverlay.h"
 #include "MantidQtSliceViewer/SnapToGridDialog.h"
 #include "MantidQtSliceViewer/XYLimitsDialog.h"
 #include "MantidQtSliceViewer/ConcretePeaksPresenter.h"
@@ -154,6 +153,8 @@ SliceViewer::SliceViewer(QWidget *parent)
 
   updateDisplay();
 
+  
+
   // -------- Line Overlay ----------------
   m_lineOverlay = new LineOverlay(m_plot, m_plot->canvas());
   m_lineOverlay->setShown(false);
@@ -177,6 +178,9 @@ SliceViewer::SliceViewer(QWidget *parent)
 
   Mantid::Kernel::UsageService::Instance().registerFeatureUsage(
       "Interface", "SliceViewer", false);
+
+
+ 
 }
 
 void SliceViewer::updateAspectRatios() {
@@ -715,7 +719,7 @@ void SliceViewer::switchQWTRaster(
  */
 void SliceViewer::setWorkspace(Mantid::API::IMDWorkspace_sptr ws) {
   m_ws = ws;
-
+  
   m_coordinateTransform = createCoordinateTransform(ws, m_dimX, m_dimY);
   // disconnect and reconnect here
   QObject::connect(this, SIGNAL(changedShownDim(size_t, size_t)), this,
@@ -724,7 +728,7 @@ void SliceViewer::setWorkspace(Mantid::API::IMDWorkspace_sptr ws) {
 	  SLOT(switchQWTRaster(bool)));
   QObject::connect(ui.btnNonOrthogonalToggle, SIGNAL(toggled(bool)), this,
 	  SLOT(setNonOrthogonalbtn()));
-  
+  emit setNonOrthogonalbtn();
   m_data->setWorkspace(ws);
   m_plot->setWorkspace(ws);
 
@@ -1691,8 +1695,9 @@ void SliceViewer::checkForHKLDimension() {
 			switchQWTRaster(useNonOrthogonal);
 		}
 		emit setNonOrthogonalbtn();
-		//testing line thing here
+		//Orthogonal Overlay
 		m_nonOrthogonalOverlay = new NonOrthogonalOverlay(m_plot, m_plot->canvas(), &m_ws);
+		//need to move it from here
 
 	}
 	
