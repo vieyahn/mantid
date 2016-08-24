@@ -185,7 +185,7 @@ def rebin_workspace(input_workspace, params):
     output_workspace = input_workspace + '_rebin'
     if params == "":
         # Use hardcoded default rebin parameters
-        params = -0.00050000
+        params = "0.5, -0.00050000, 4"
     mantidSapi.Rebin(InputWorkspace=input_workspace, Params=params, OutputWorkspace=output_workspace)
     return output_workspace
     
