@@ -37,7 +37,8 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
     """
 
     # Next perform the calibration
-    van_curves, van_integral = _calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
+    van_curves, van_integral = _calibrate(van_file_name=van_file, cer_file_name=cer_file,\
+    bank=bank, gsas_cal_fname=gsas_cal_fname)
 
     for input_file in input_file_list:
         # Load run data
@@ -51,16 +52,16 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
             van_integral_ws=van_integral, van_curves_ws=van_curves)
 
         # Finally save each run
-        _save_focused_XYE_file(focused_workspace=focused_ws_list, save_path=out_f_dir)
+        _save_focused_xye_file(focused_workspace=focused_ws_list, save_path=out_f_dir)
 
         # Tidy all to save memory space
-        deleteList = [input_ws, rebinned_ws]
-        deleteList.extend(focused_ws_list)
-        _delete_ws_list(deleteList)
+        delete_list = [input_ws, rebinned_ws]
+        delete_list.extend(focused_ws_list)
+        _delete_ws_list(delete_list)
 
     # Remove the vanadium curves and integral
-    deleteList = [van_curves, van_integral]
-    _delete_ws_list(deleteList)
+    delete_list = [van_curves, van_integral]
+    _delete_ws_list(delete_list)
 
 def _load_van_calib(van_file_name):
     """
@@ -110,7 +111,7 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     fitted_peaks_cal = []
 
 
-    if bank == "":
+    if not bank:
         print "Calibrating both banks"
         for i in range(2):
             # TODO wrap in its own function
@@ -130,8 +131,8 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     else:
         print "Calibrating specified bank"
         tmp_a, tmp_c, tmp_zero, tmp_fitted = mantidSapi.EnggCalibrate(
-                InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
-                VanCurvesWorkspace=van_curves_ws, Bank=bank)
+            InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
+            VanCurvesWorkspace=van_curves_ws, Bank=bank)
 
         # We only need difc and tZero so comment out the other lines if they need them
         difC_cal.append(tmp_c)
@@ -154,10 +155,10 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     # If calibration save file name not specified generate it
     if gsas_cal_fname == "":
         if bank == "":
-            gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_all_banks.prm'
+            gsas_cal_fname = 'ENGINX_' + van_run_number + '_' + cer_run_number + '_all_banks.prm'
 
         else:
-            gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_bank_' + str(bank)
+            gsas_cal_fname = 'ENGINX_' + van_run_number + '_' + cer_run_number + '_bank_' + str(bank)
             # Cast bank to list for EnggUtils
             bank_list.append(bank)
 
@@ -245,13 +246,13 @@ def _focus_workspace(rebinned_workspace, van_integral_ws, van_curves_ws):
     mantidSapi.EnggFocus(InputWorkspace=rebinned_workspace, OutputWorkspace=bank_two_ws,\
         VanIntegrationWorkspace=van_integral_ws, VanCurvesWorkspace=van_curves_ws, Bank='2')
 
-    focusList = []
-    focusList.append(bank_one_ws)
-    focusList.append(bank_two_ws)
+    focus_list = []
+    focus_list.append(bank_one_ws)
+    focus_list.append(bank_two_ws)
 
-    return focusList
+    return focus_list
 
-def _save_focused_XYE_file(focused_workspace, save_path):
+def _save_focused_xye_file(focused_workspace, save_path):
     """
     Takes a focused workspace list and saves it to a focused XYE file
     @param :: focus_workspace The workspace to save out
@@ -266,8 +267,8 @@ def _delete_ws_list(workspace_list):
     Takes a list of workspaces and deletes the from the ADS
     @param :: workspace_list The workspaces to deleter
     """
-    for ws in workspace_list:
-        mantidSapi.DeleteWorkspace(Workspace=ws)
+    for workspace in workspace_list:
+        mantidSapi.DeleteWorkspace(Workspace=workspace)
 
 # ---------------------------------
 
@@ -275,11 +276,11 @@ def _delete_ws_list(workspace_list):
 
 import os
 
-inList = []
-targetDir = "D:\\ENGINX Test Data\\SplitEvent"
-for file in os.listdir(targetDir):
-    inList.append(targetDir + "\\" + file)
-    print file
+in_list = []
+target_dir = "D:\\ENGINX Test Data\\SplitEvent"
+for filename in os.listdir(target_dir):
+    in_list.append(target_dir + "\\" + filename)
+    print "Found " + filename
 
 
-convert_event_ws_to_histo_gss(van_file="ENGINX00246043.nxs",cer_file="ENGINX00249918.nxs", input_file_list=inList)
+convert_event_ws_to_histo_gss(van_file="ENGINX00246043.nxs", cer_file="ENGINX00249918.nxs", input_file_list=in_list)
