@@ -1,14 +1,14 @@
 import mantid.api as mantidApi
 import mantid.simpleapi as mantidSapi
 
-#pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments
 def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", detector_indicies="",
                                   gsas_cal_fname="", out_fname_pattern="", out_f_dir="", rebin_param=""):
     """
     Runs a calibration using the input vanadium and cerium oxide
     runs then saves this as a .prm file. Using this calibration
     it then converts the list of event workspaces to histogram
-    workspaces and saves them out as .gss files.
+    workspaces and saves them out as focused XYE files.
 
     @param :: van_file The name of the file containing the
      vanadium calibration run
@@ -20,7 +20,7 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
      workspaces to process and save
 
     @param :: bank Optional: The banks to use for calibration and focusing
-     defaults to 'all' if not specified
+     defaults to 'all' if not specified - Not fully implemented, only affects calibration
 
     @param :: detector_indicies Optional: The detectors to use for focusing
 
@@ -29,29 +29,38 @@ def convert_event_ws_to_histo_gss(van_file, cer_file, input_file_list, bank="", 
 
     @param :: out_fname_pattern Optional: Allows the user to specify a custom naming
      scheme for the focused files. This will have the suffix '_<fileNumber>' if a list
-     of files is used where the 2nd file on the list would be '<out_fname_pattern>_2'
+     of files is used where the 2nd file on the list would be '<out_fname_pattern>_2' - Not implemented yet
 
     @param :: out_f_dir Optional: Allows the user to select where to save output files
-    
+
     @param :: rebin_param Optional: Allows the user to override the rebin parameters
     """
-    
-    #Next perform the calibration
+
+    # Next perform the calibration
     van_curves, van_integral = _calibrate(van_file_name=van_file, cer_file_name=cer_file, bank=bank, gsas_cal_fname=gsas_cal_fname)
 
     for input_file in input_file_list:
-        #Load run data
-        input_workspace = _load_run_data(input_file)
-    
-        #Rebin all event workspaces to histogram workspace
-        rebinned_ws = _convert_workspace(input_workspace, rebin_param)
-    
-        #Focus each workspace
-        focused_ws = _focus_workspace(rebinned_workspace=rebinned_ws,\
+        # Load run data
+        input_ws = _load_run_data(input_file)
+
+        # Rebin all event workspaces to histogram workspace
+        rebinned_ws = _convert_workspace(input_ws, rebin_param)
+
+        # Focus each workspace
+        focused_ws_list = _focus_workspace(rebinned_workspace=rebinned_ws,\
             van_integral_ws=van_integral, van_curves_ws=van_curves)
-    
-        #Finally save each run
-        _save_gss_file(focused_ws)
+
+        # Finally save each run
+        _save_focused_XYE_file(focused_workspace=focused_ws_list, save_path=out_f_dir)
+
+        # Tidy all to save memory space
+        deleteList = [input_ws, rebinned_ws]
+        deleteList.extend(focused_ws_list)
+        _delete_ws_list(deleteList)
+
+    # Remove the vanadium curves and integral
+    deleteList = [van_curves, van_integral]
+    _delete_ws_list(deleteList)
 
 def _load_van_calib(van_file_name):
     """
@@ -63,12 +72,11 @@ def _load_van_calib(van_file_name):
 
 def _load_cer_calib(cer_file_name):
     """
-    Attempts to load a cerium oxide calibration file at
-     the file path input
+    Attempts to load a cerium oxide calibration file at the file path input
     @param :: cer_file_name The name of the cerium run
     """
-    mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)  
-    
+    mantidSapi.Load(Filename=cer_file_name, OutputWorkspace=cer_file_name)
+
 def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     """
     Runs the calibration using the vanadium and cerium
@@ -81,17 +89,18 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     @returns :: The vanadium curves and integration workspaces
     """
 
-        #Load to check all data exists
-    #First vanadium and cerium calibration runs
+        # Load to check all data exists
+    # First vanadium and cerium calibration runs
     _load_van_calib(van_file_name)
     _load_cer_calib(cer_file_name)
 
     van_integral_ws = "van_integral_ws"
     van_curves_ws = "van_curves_ws"
 
-    #Apply vanadium correction before calibration
+    # Apply vanadium correction before calibration
     mantidSapi.EnggVanadiumCorrections(
-        VanadiumWorkspace=van_file_name, OutIntegrationWorkspace=van_integral_ws, OutCurvesWorkspace=van_curves_ws)
+        VanadiumWorkspace=van_file_name, OutIntegrationWorkspace=van_integral_ws,\
+        OutCurvesWorkspace=van_curves_ws)
 
     # Create lists for multiple return values which can be n length long
 
@@ -104,49 +113,49 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     if bank == "":
         print "Calibrating both banks"
         for i in range(2):
-            #TODO wrap in its own function
-        
+            # TODO wrap in its own function
+
             # Calibration for bank one and two
             # We could use zip() however EnggCalibrate fails if we nest it so just use longer method
             tmp_a, tmp_c, tmp_zero, tmp_fitted = mantidSapi.EnggCalibrate(
                 InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
                 VanCurvesWorkspace=van_curves_ws, Bank=str(i+1))
-                
+
             # We only need difc and tZero so comment out the other lines if they need them
             difC_cal.append(tmp_c)
             tZero_cal.append(tmp_zero)
-            #tmp_fitted.append(tmp_fitted)
-            #difA_cal.append(tmp_a)
+            # tmp_fitted.append(tmp_fitted)
+            # difA_cal.append(tmp_a)
 
     else:
         print "Calibrating specified bank"
         tmp_a, tmp_c, tmp_zero, tmp_fitted = mantidSapi.EnggCalibrate(
                 InputWorkspace=cer_file_name, VanIntegrationWorkspace=van_integral_ws,
                 VanCurvesWorkspace=van_curves_ws, Bank=bank)
-                
+
         # We only need difc and tZero so comment out the other lines if they need them
         difC_cal.append(tmp_c)
         tZero_cal.append(tmp_zero)
-        #tmp_fitted.append(tmp_fitted)
-        #difA_cal.append(tmp_a)
+        # tmp_fitted.append(tmp_fitted)
+        # difA_cal.append(tmp_a)
 
-    
-    #Strip the file names so they are run number only
+
+    # Strip the file names so they are run number only
     van_run_number = ''.join(i for i in van_file_name if i.isdigit())
     cer_run_number = ''.join(i for i in cer_file_name if i.isdigit())
-    
-    #Then strip any leading zeros
+
+    # Then strip any leading zeros
     van_run_number = van_run_number.lstrip("0")
     cer_run_number = cer_run_number.lstrip("0")
-    
-    #EnggUtils expects a bank list
+
+    # EnggUtils expects a bank list
     bank_list = []
-    
-    #If calibration save file name not specified generate it
+
+    # If calibration save file name not specified generate it
     if gsas_cal_fname == "":
         if bank == "":
             gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_all_banks.prm'
-            
+
         else:
             gsas_cal_fname='ENGINX_' + van_run_number + '_' + cer_run_number + '_bank_' + str(bank)
             # Cast bank to list for EnggUtils
@@ -157,39 +166,38 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
     EnggUtils.write_ENGINX_GSAS_iparam_file(
         output_file=gsas_cal_fname, difc=difC_cal, tzero=tZero_cal, bank_names=bank_list,
         ceria_run=cer_file_name, vanadium_run=van_file_name)
-        
-    #To end tidy up any workspaces
-    #First hard coded output from enggCalibrate
+
+    # To end tidy up any workspaces
+    # First hard coded output from enggCalibrate
     mantidSapi.DeleteWorkspace("engg_fit_ws_dsp")
     mantidSapi.DeleteWorkspace("engg_van_ws_dsp")
-    
-    #tmp created workspaces
+
+    # tmp created workspaces
     mantidSapi.DeleteWorkspace(tmp_fitted)
-   
-    #Loaded calibration workspaces
+
+    # Loaded calibration workspaces
     mantidSapi.DeleteWorkspace(van_file_name)
     mantidSapi.DeleteWorkspace(cer_file_name)
-    
+
     return van_curves_ws, van_integral_ws
-    
-    
+
 def _load_run_data(file_path):
     """
-    Attempts to load the run specified into a workspace 
+    Attempts to load the run specified into a workspace
     for later processing
     @param :: file_path The path of the event workspaces to load
     @returns :: The loaded workspace
     """
-    
-    #Trim any trailing '.nxs' if present
-    loaded_ws_name = file_path
+
+    # Trim any trailing '.nxs' if present
+    loaded_ws_name = os.path.basename(file_path)
     if loaded_ws_name.endswith('.nxs'):
         loaded_ws_name = loaded_ws_name[:-4]
-    
+
     mantidSapi.Load(Filename=file_path, OutputWorkspace=loaded_ws_name)
-    
+
     return loaded_ws_name
-    
+
 def _convert_workspace(input_workspace, params):
     """
     Rebins the event workspace and converts into an histogram workspace
@@ -201,53 +209,76 @@ def _convert_workspace(input_workspace, params):
     rebin_workspace = input_workspace + '_rebin'
     if params == "":
         # Use hardcoded default rebin parameters
-        # 0.5-4 Angstroms limit 
-        params = "0.5, -0.00050000, 4"
+
+        # 0.5 - 4 Angstroms * 18400 (Average difC value)
+        # Therefore Domain: 9200 <= D => 73600
+        params = "9200, -0.0005, 73600"
     mantidSapi.Rebin(InputWorkspace=input_workspace, OutputWorkspace=rebin_workspace, \
         Params=params, PreserveEvents=False)
-    
+
     return rebin_workspace
-    
+
 def _focus_workspace(rebinned_workspace, van_integral_ws, van_curves_ws):
     """
     Focuses the histogram workspace using 'EnggFocus'
     @param :: rebinned_workspace Workspace to focus
     @param :: The generated vanadium integral workspaces
     @param :: The workspace containing the vanadium curves
-    @returns :: The focused workspaces
+    @returns :: A list of focused workspaces
     """
-    
-    #Trim 'rebin' first as we use string names and "<name>_rebin" will be passed in
+
+    # Trim 'rebin' first as we use string names and "<name>_rebin" will be passed in
     rebin_workspace_name = rebinned_workspace
     if rebin_workspace_name.endswith('_rebin'):
         rebin_workspace_name = rebin_workspace_name[:-6]
     rebin_workspace_name = rebin_workspace_name + '_focussed'
-    
-    #Next gen file name for banks one and two
+
+    # Next gen file name for banks one and two
     bank_one_ws = rebin_workspace_name + '_bank_1'
     bank_two_ws = rebin_workspace_name + '_bank_2'
-    
+
+    # Focus both workspaces
+    # TODO respect user input for banks
     mantidSapi.EnggFocus(InputWorkspace=rebinned_workspace, OutputWorkspace=bank_one_ws,\
         VanIntegrationWorkspace=van_integral_ws, VanCurvesWorkspace=van_curves_ws, Bank='1')
-        
+
     mantidSapi.EnggFocus(InputWorkspace=rebinned_workspace, OutputWorkspace=bank_two_ws,\
         VanIntegrationWorkspace=van_integral_ws, VanCurvesWorkspace=van_curves_ws, Bank='2')
-        
-    return bank_one_ws, bank_two_ws
 
-def _save_gss_file(focused_workspace):
-    """
-    Takes a focused workspace and saves it to a GS files
-    @param :: _focus_workspace The workspace to save out
-    """
+    focusList = []
+    focusList.append(bank_one_ws)
+    focusList.append(bank_two_ws)
 
-#TODO remove hardcoded file paths used during testing
+    return focusList
+
+def _save_focused_XYE_file(focused_workspace, save_path):
+    """
+    Takes a focused workspace list and saves it to a focused XYE file
+    @param :: focus_workspace The workspace to save out
+    @param :: save_path The path to save the files in
+    """
+    for ws_name in focused_workspace:
+        out_file_name = save_path + ws_name + '.ascii'
+        mantidSapi.SaveFocusedXYE(InputWorkspace=ws_name, Filename=out_file_name, SplitFiles=False)
+
+def _delete_ws_list(workspace_list):
+    """
+    Takes a list of workspaces and deletes the from the ADS
+    @param :: workspace_list The workspaces to deleter
+    """
+    for ws in workspace_list:
+        mantidSapi.DeleteWorkspace(Workspace=ws)
+
+# ---------------------------------
+
+# TODO remove hardcoded file paths used during testing
 
 import os
 
 inList = []
-for file in os.listdir("D:\\ENGINX Test Data\\SplitEvent"):
-    inList.append(file)
+targetDir = "D:\\ENGINX Test Data\\SplitEvent"
+for file in os.listdir(targetDir):
+    inList.append(targetDir + "\\" + file)
     print file
 
 
