@@ -1,4 +1,4 @@
-import mantid.api as mantidApi
+from mantid import config
 import mantid.simpleapi as mantidSapi
 
 # pylint: disable=too-many-arguments
@@ -162,10 +162,16 @@ def _calibrate(van_file_name, cer_file_name, bank, gsas_cal_fname):
             # Cast bank to list for EnggUtils
             bank_list.append(bank)
 
+    # Save out to last directory in list of data search directories which should be output
+    data_search_dirs = mantid.config.getDataSearchDirs()
+    full_cal_output_path = data_search_dirs[-1] + gsas_cal_fname
+            
+    print "Output calibration filename " + gsas_cal_fname
+            
     # Save out calibration
     import EnggUtils
     EnggUtils.write_ENGINX_GSAS_iparam_file(
-        output_file=gsas_cal_fname, difc=difC_cal, tzero=tZero_cal, bank_names=bank_list,
+        output_file=full_cal_output_path, difc=difC_cal, tzero=tZero_cal, bank_names=bank_list,
         ceria_run=cer_file_name, vanadium_run=van_file_name)
 
     # To end tidy up any workspaces
