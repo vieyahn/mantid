@@ -87,8 +87,7 @@ void SortPeaksWorkspace::exec() {
 
     // Perform the sorting.
     std::vector<std::pair<std::string, bool>> sortCriteria;
-    sortCriteria.push_back(
-        std::pair<std::string, bool>(columnToSortBy, sortAscending));
+    sortCriteria.emplace_back(columnToSortBy, sortAscending);
     outputWS->sort(sortCriteria);
     setProperty("OutputWorkspace", outputWS);
   } catch (std::invalid_argument &) {

@@ -189,7 +189,7 @@ int NexusFileIO::writeNexusProcessedHeader(const std::string &title,
   }
 
   attributes.emplace_back("URL");
-  avalues.push_back(
+  avalues.emplace_back(
       "http://www.nexusformat.org/instruments/xml/NXprocessed.xml");
   attributes.emplace_back("Version");
   avalues.emplace_back("1.0");
@@ -1263,7 +1263,7 @@ int getNexusEntryTypes(const std::string &fileName,
          NX_OK) {
     std::string nxc(nxclass);
     if (nxc.compare("NXentry") == 0)
-      entryList.push_back(nxname);
+      entryList.emplace_back(nxname);
   }
   // for each entry found, look for "analysis" or "definition" text data fields
   // and return value plus entry name
@@ -1288,7 +1288,7 @@ int getNexusEntryTypes(const std::string &fileName,
             continue;
           value[dims[0]] = '\0';
           // return e.g entryName "analysis"/definition "muonTD"
-          definition.push_back(value);
+          definition.emplace_back(value);
           entryName.push_back(entry);
           delete[] value;
           NXclosegroup(fileH); // close data group, then entry

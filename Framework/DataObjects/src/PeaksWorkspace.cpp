@@ -152,7 +152,7 @@ void PeaksWorkspace::addPeak(const Geometry::IPeak &ipeak) {
   if (dynamic_cast<const Peak *>(&ipeak)) {
     peaks.push_back((const Peak &)ipeak);
   } else {
-    peaks.push_back(Peak(ipeak));
+    peaks.emplace_back(ipeak);
   }
 }
 

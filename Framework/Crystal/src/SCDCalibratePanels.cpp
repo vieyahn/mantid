@@ -306,8 +306,8 @@ void SCDCalibratePanels::exec() {
   // Try again to optimize L1
   if (changeL1)
     findL1(nPeaks, peaksWs);
-  parameter_workspaces.push_back("params_L1");
-  fit_workspaces.push_back("fit_L1");
+  parameter_workspaces.emplace_back("params_L1");
+  fit_workspaces.emplace_back("fit_L1");
   std::sort(parameter_workspaces.begin(), parameter_workspaces.end());
   std::sort(fit_workspaces.begin(), fit_workspaces.end());
 

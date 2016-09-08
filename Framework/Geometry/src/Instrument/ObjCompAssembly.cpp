@@ -223,7 +223,7 @@ void ObjCompAssembly::getChildren(std::vector<IComponent_const_sptr> &outVector,
   for (int i = 0; i < this->nelements(); i++) {
     boost::shared_ptr<IComponent> comp = this->getChild(i);
     if (comp) {
-      outVector.push_back(comp);
+      outVector.emplace_back(comp);
       // Look deeper, on option.
       if (recursive) {
         boost::shared_ptr<ICompAssembly> assemb =
@@ -342,7 +342,7 @@ void ObjCompAssembly::testIntersectionWithChildren(
     boost::shared_ptr<Geometry::IComponent> comp = this->getChild(i);
     if (ICompAssembly_sptr childAssembly =
             boost::dynamic_pointer_cast<ICompAssembly>(comp)) {
-      searchQueue.push_back(comp);
+      searchQueue.emplace_back(comp);
     }
     // Check the physical object intersection
     else if (IObjComponent *physicalObject =

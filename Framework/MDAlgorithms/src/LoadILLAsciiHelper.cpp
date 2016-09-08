@@ -397,7 +397,7 @@ void ILLParser::startParseSpectra() {
 
     } else if (line.find("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
                          "FFFFFFFFFFFFFFFFFFFFFFFFFFF") != std::string::npos) {
-      spectraHeaders.push_back(std::map<std::string, std::string>());
+      spectraHeaders.emplace_back();
       parseFieldNumeric(spectraHeaders.back(), floatWith);
     } else if (line.find("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
                          "SSSSSSSSSSSSSSSSSSSSSSSSSSS") != std::string::npos) {

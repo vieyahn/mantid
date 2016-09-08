@@ -1258,8 +1258,8 @@ Carries out algebraic division
 
   for (cc = Flist.begin(); cc != Flist.end(); ++cc) {
     int itemCnt(0);
-    U.push_back(Acomp(0)); // intersection Unit
-    V.push_back(Acomp(0)); // intersection Unit
+    U.emplace_back(0); // intersection Unit
+    V.emplace_back(0); // intersection Unit
     Acomp &Uitem = U.back();
     Acomp &Vitem = V.back();
     int cell;

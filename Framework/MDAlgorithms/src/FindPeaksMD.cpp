@@ -601,9 +601,9 @@ void FindPeaksMD::exec() {
 
   // Do a sort by bank name and then descending bin count (intensity)
   std::vector<std::pair<std::string, bool>> criteria;
-  criteria.push_back(std::pair<std::string, bool>("RunNumber", true));
-  criteria.push_back(std::pair<std::string, bool>("BankName", true));
-  criteria.push_back(std::pair<std::string, bool>("bincount", false));
+  criteria.emplace_back("RunNumber", true);
+  criteria.emplace_back("BankName", true);
+  criteria.emplace_back("bincount", false);
   peakWS->sort(criteria);
 
   // Save the output

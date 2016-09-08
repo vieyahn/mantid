@@ -793,7 +793,7 @@ LSFJobManager::genOutputStatusInfo(const std::string &resp,
                                std::to_string(i) +
                                "could not produce a complete table workspace.");
 
-    info.push_back(RemoteJobInfo());
+    info.emplace_back();
 
     Poco::XML::Element *id = el->getChildElement("id");
     if (id) {

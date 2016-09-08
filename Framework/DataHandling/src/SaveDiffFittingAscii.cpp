@@ -53,8 +53,8 @@ void SaveDiffFittingAscii::init() {
 
   std::vector<std::string> formats;
 
-  formats.push_back("AppendToExistingFile");
-  formats.push_back("OverwriteFile");
+  formats.emplace_back("AppendToExistingFile");
+  formats.emplace_back("OverwriteFile");
   declareProperty("OutMode", "AppendToExistingFile",
                   boost::make_shared<Kernel::StringListValidator>(formats),
                   "Over write the file or append data to existing file");
@@ -73,7 +73,7 @@ void SaveDiffFittingAscii::exec() {
         "Please provide an input table workspace to be saved.");
 
   std::vector<API::ITableWorkspace_sptr> input_ws;
-  input_ws.push_back(
+  input_ws.emplace_back(
       boost::dynamic_pointer_cast<DataObjects::TableWorkspace>(tbl_ws));
 
   processAll(input_ws);

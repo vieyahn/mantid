@@ -212,7 +212,7 @@ std::vector<IAlgorithm_const_sptr> AlgorithmManagerImpl::runningInstancesOf(
   for (const auto &currentAlgorithm : m_managed_algs) {
     if (currentAlgorithm->name() == algorithmName &&
         currentAlgorithm->isRunning()) {
-      theRunningInstances.push_back(currentAlgorithm);
+      theRunningInstances.emplace_back(currentAlgorithm);
     }
   }
 

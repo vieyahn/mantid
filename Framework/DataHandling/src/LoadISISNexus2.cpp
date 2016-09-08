@@ -725,12 +725,11 @@ LoadISISNexus2::prepareSpectraBlocks(std::map<int64_t, std::string> &monitors,
   for (const auto &dataBlock : dataBlocks) {
     auto min = dataBlock.getMinSpectrumID();
     if (isMonitor(min)) {
-      m_spectraBlocks.push_back(
-          SpectraBlock(min, min, true, monitors.find(min)->second));
+      m_spectraBlocks.emplace_back(min, min, true, monitors.find(min)->second);
       includedMonitors.push_back(min);
     } else {
       auto max = dataBlock.getMaxSpectrumID();
-      m_spectraBlocks.push_back(SpectraBlock(min, max, false, ""));
+      m_spectraBlocks.emplace_back(min, max, false, "");
     }
   }
 

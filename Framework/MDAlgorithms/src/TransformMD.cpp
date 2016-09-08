@@ -188,7 +188,7 @@ void TransformMD::exec() {
         // Find the extents
         extents.push_back(dim->getMinimum());
         extents.push_back(dim->getMaximum());
-        names.push_back(std::string(dim->getName()));
+        names.emplace_back(dim->getName());
         units.push_back(dim->getUnits());
       }
       Algorithm_sptr create_alg = createChildAlgorithm("CreateMDWorkspace");

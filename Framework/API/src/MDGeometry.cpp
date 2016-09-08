@@ -37,7 +37,7 @@ MDGeometry::MDGeometry(const MDGeometry &other)
     // Copy the dimension
     auto dim =
         boost::make_shared<MDHistoDimension>(other.getDimension(d).get());
-    dimensions.push_back(dim);
+    dimensions.emplace_back(dim);
   }
   this->initGeometry(dimensions);
 
@@ -46,19 +46,17 @@ MDGeometry::MDGeometry(const MDGeometry &other)
   for (it = other.m_transforms_FromOriginal.begin();
        it != other.m_transforms_FromOriginal.end(); ++it) {
     if (*it)
-      m_transforms_FromOriginal.push_back(
-          CoordTransform_const_sptr((*it)->clone()));
+      m_transforms_FromOriginal.emplace_back((*it)->clone());
     else
-      m_transforms_FromOriginal.push_back(CoordTransform_const_sptr());
+      m_transforms_FromOriginal.emplace_back();
   }
 
   for (it = other.m_transforms_ToOriginal.begin();
        it != other.m_transforms_ToOriginal.end(); ++it) {
     if (*it)
-      m_transforms_ToOriginal.push_back(
-          CoordTransform_const_sptr((*it)->clone()));
+      m_transforms_ToOriginal.emplace_back((*it)->clone());
     else
-      m_transforms_ToOriginal.push_back(CoordTransform_const_sptr());
+      m_transforms_ToOriginal.emplace_back();
   }
 
   // Copy the references to the original workspaces
@@ -155,7 +153,7 @@ MDGeometry::getNonIntegratedDimensions() const {
   VecIMDDimension_const_sptr vecCollapsedDimensions;
   for (const auto &current : this->m_dimensions) {
     if (!current->getIsIntegrated()) {
-      vecCollapsedDimensions.push_back(current);
+      vecCollapsedDimensions.emplace_back(current);
     }
   }
   return vecCollapsedDimensions;
@@ -212,8 +210,7 @@ void MDGeometry::addDimension(
 /** Add a dimension
  * @param dim :: bare pointer to the dimension object   */
 void MDGeometry::addDimension(Mantid::Geometry::IMDDimension *dim) {
-  m_dimensions.push_back(
-      boost::shared_ptr<Mantid::Geometry::IMDDimension>(dim));
+  m_dimensions.emplace_back(dim);
 }
 
 // --------------------------------------------------------------------------------------------

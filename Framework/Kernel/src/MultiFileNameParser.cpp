@@ -487,7 +487,7 @@ parseToken(std::vector<std::vector<unsigned int>> &parsedRuns,
 
   // E.g. "2012".
   if (matchesFully(token, Regexs::SINGLE)) {
-    runs.push_back(std::vector<unsigned int>(1, rangeDetails[0]));
+    runs.emplace_back(1, rangeDetails[0]);
   }
   // E.g. "2012:2020".
   else if (matchesFully(token, Regexs::RANGE)) {
@@ -575,11 +575,11 @@ std::vector<std::vector<unsigned int>> generateRange(unsigned int from,
     while (currentRun <= to) {
       if (addRuns) {
         if (runs.empty())
-          runs.push_back(std::vector<unsigned int>(1, currentRun));
+          runs.emplace_back(1, currentRun);
         else
           runs.at(0).push_back(currentRun);
       } else {
-        runs.push_back(std::vector<unsigned int>(1, currentRun));
+        runs.emplace_back(1, currentRun);
       }
 
       currentRun += stepSize;
@@ -590,11 +590,11 @@ std::vector<std::vector<unsigned int>> generateRange(unsigned int from,
     while (currentRun >= to) {
       if (addRuns) {
         if (runs.empty())
-          runs.push_back(std::vector<unsigned int>(1, currentRun));
+          runs.emplace_back(1, currentRun);
         else
           runs.at(0).push_back(currentRun);
       } else {
-        runs.push_back(std::vector<unsigned int>(1, currentRun));
+        runs.emplace_back(1, currentRun);
       }
 
       // Guard against case where stepSize would take us into negative

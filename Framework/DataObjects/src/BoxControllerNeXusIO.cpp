@@ -31,7 +31,7 @@ BoxControllerNeXusIO::BoxControllerNeXusIO(API::BoxController *const bc)
   m_BlockSize[1] = 4 + m_bc->getNDims();
 
   for (auto &EventHeader : EventHeaders) {
-    m_EventsTypeHeaders.push_back(EventHeader);
+    m_EventsTypeHeaders.emplace_back(EventHeader);
   }
 
   m_EventsTypesSupported.resize(2);

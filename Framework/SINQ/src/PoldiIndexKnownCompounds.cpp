@@ -553,8 +553,7 @@ PoldiIndexKnownCompounds::getIndexCandidatePairs(
       PoldiPeak_sptr currentCandidate = currentCandidateCollection->peak(p);
 
       if (isCandidate(peak, currentCandidate)) {
-        indexCandidates.push_back(
-            IndexCandidatePair(peak, currentCandidate, i));
+        indexCandidates.emplace_back(peak, currentCandidate, i);
       }
     }
   }

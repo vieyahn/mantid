@@ -234,7 +234,7 @@ createRingOfCylindricalDetectors(const double R_min, const double R_max,
         auto det =
             boost::make_shared<Detector>(os.str(), ic + 1, detShape, nullptr);
         det->setPos(x, y, z0);
-        groupMembers.push_back(det);
+        groupMembers.emplace_back(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(ck(det);
       }
 
       ic++;

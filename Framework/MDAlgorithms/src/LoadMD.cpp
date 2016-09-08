@@ -415,7 +415,7 @@ void LoadMD::loadDimensions2() {
             MDFrameArgument(frame, units));
     m_file->getData(axis);
     m_file->closeData();
-    m_dims.push_back(boost::make_shared<MDHistoDimension>(
+    m_dims.emplace_back(boost::make_shared<MDHistoDimension>(
         long_name, splitAxes[d - 1], *mdFrame,
         static_cast<coord_t>(axis.front()), static_cast<coord_t>(axis.back()),
         axis.size() - 1));

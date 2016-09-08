@@ -606,12 +606,12 @@ PlotPeakByLogValue::makeNames() const {
       if (wsg) {
         std::vector<std::string> wsNames = wsg->getNames();
         for (auto &wsName : wsNames) {
-          nameList.push_back(InputData(wsName, wi, -1, period, start, end));
+          nameList.emplace_back(wsName, wi, -1, period, start, end);
         }
         continue;
       }
     }
-    nameList.push_back(InputData(name, wi, spec, period, start, end));
+    nameList.emplace_back(name, wi, spec, period, start, end);
   }
   return nameList;
 }

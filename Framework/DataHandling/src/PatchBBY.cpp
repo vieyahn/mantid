@@ -92,7 +92,7 @@ void PatchBBY::init() {
   // Declare the Filename algorithm property. Mandatory. Sets the path to the
   // file to load.
   exts.clear();
-  exts.push_back(".tar");
+  exts.emplace_back(".tar");
   declareProperty(Kernel::make_unique<API::FileProperty>(
                       FilenameStr, "", API::FileProperty::Load, exts),
                   "The filename of the stored data to be patched");

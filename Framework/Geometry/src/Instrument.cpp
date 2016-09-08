@@ -880,9 +880,9 @@ void Instrument::appendPlottable(
       Detector *d = dynamic_cast<Detector *>(c);
       ObjComponent *o = dynamic_cast<ObjComponent *>(c);
       if (d)
-        lst.push_back(IObjComponent_const_sptr(d, NoDeleting()));
+        lst.emplace_back(d, NoDeleting());
       else if (o)
-        lst.push_back(IObjComponent_const_sptr(o, NoDeleting()));
+        lst.emplace_back(o, NoDeleting());
       else
         g_log.error() << "Unknown comp type\n";
     }

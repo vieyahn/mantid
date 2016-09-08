@@ -32,7 +32,7 @@ GeneralDomainCreator::GeneralDomainCreator(
 
   auto nDomainColumns = fun.getNumberDomainColumns();
   if (nDomainColumns > 0) {
-    m_domainColumnNames.push_back("ArgumentColumn");
+    m_domainColumnNames.emplace_back("ArgumentColumn");
     for (size_t i = 1; i < nDomainColumns; ++i) {
       m_domainColumnNames.push_back(m_domainColumnNames.front() + "_" +
                                     std::to_string(i));
@@ -41,8 +41,8 @@ GeneralDomainCreator::GeneralDomainCreator(
 
   auto nDataColumns = fun.getNumberValuesPerArgument();
   if (nDataColumns > 0) {
-    m_dataColumnNames.push_back("DataColumn");
-    m_weightsColumnNames.push_back("WeightsColumn");
+    m_dataColumnNames.emplace_back("DataColumn");
+    m_weightsColumnNames.emplace_back("WeightsColumn");
     for (size_t i = 1; i < nDataColumns; ++i) {
       auto si = "_" + std::to_string(i);
       m_dataColumnNames.push_back(m_dataColumnNames.front() + si);

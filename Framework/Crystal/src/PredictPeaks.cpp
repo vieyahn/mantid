@@ -154,7 +154,7 @@ void PredictPeaks::exec() {
     // Sort peaks by run number so that peaks with equal goniometer matrices are
     // adjacent
     std::vector<std::pair<std::string, bool>> criteria;
-    criteria.push_back(std::pair<std::string, bool>("RunNumber", true));
+    criteria.emplace_back("RunNumber", true);
 
     peaksWS->sort(criteria);
 
@@ -186,7 +186,7 @@ void PredictPeaks::exec() {
         gonioVec.push_back(goniometerMatrix);
       } catch (std::runtime_error &e) {
         // If there is no goniometer matrix, use identity matrix instead.
-        gonioVec.push_back(DblMatrix(3, 3, true));
+        gonioVec.emplace_back(3, 3, true);
 
         g_log.error()
             << "Error getting the goniometer rotation matrix from the "
@@ -200,7 +200,7 @@ void PredictPeaks::exec() {
   // If there's no goniometer matrix at this point, push back an identity
   // matrix.
   if (gonioVec.empty()) {
-    gonioVec.push_back(DblMatrix(3, 3, true));
+    gonioVec.emplace_back(3, 3, true);
   }
 
   setInstrumentFromInputWorkspace(inputExperimentInfo);

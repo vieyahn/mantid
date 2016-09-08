@@ -385,7 +385,7 @@ void LoadSassena::exec() {
   int nvalidSets = 4;
   const char *validSets[] = {"fq", "fq0", "fq2", "fqt"};
   for (int iSet = 0; iSet < nvalidSets; iSet++)
-    this->m_validSets.push_back(validSets[iSet]);
+    this->m_validSets.emplace_back(validSets[iSet]);
 
   // open the HDF5 file for reading
   m_filename = this->getPropertyValue("Filename");

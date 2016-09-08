@@ -55,8 +55,8 @@ namespace {
  */
 std::vector<std::string> functions() {
   std::vector<std::string> propOptions;
-  propOptions.push_back("Hat");
-  propOptions.push_back("Gaussian");
+  propOptions.emplace_back("Hat");
+  propOptions.emplace_back("Gaussian");
   return propOptions;
 }
 

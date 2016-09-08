@@ -326,7 +326,7 @@ public:
           Mantid::Kernel::DataServiceSort::Sorted);
       if (isOptional()) // Insert an empty option
       {
-        vals.push_back("");
+        vals.emplace_back("");
       }
       // Copy-construct a temporary workspace property to test the validity of
       // each workspace
